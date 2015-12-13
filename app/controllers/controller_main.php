@@ -15,5 +15,8 @@ class Controller_Main extends Controller {
 	function action_cabinet_E4() {
 		$this->view->generate('view_cabinet_E4.php', 'view_template.php');
 	}
+	function action_cabinet_A5() {
+		$this->view->generate('view_cabinet_A5.php', 'view_template.php');
+	}
 }
 ?>

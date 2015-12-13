@@ -76,6 +76,7 @@ class Controller_Login extends Controller {
 		unset($_SESSION['CompanyName']);
 		unset($_SESSION['access']);
 		unset($_SESSION['AccessLevel']);
+		Fn::redirectToController("main");
 	}
 	function action_forgot() {
 		$cnn = new Cnn();

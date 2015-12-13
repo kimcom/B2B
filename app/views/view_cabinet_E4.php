@@ -90,14 +90,10 @@ $(document).ready(function () {
 	var slideWidth = $('#slider ul li').width();
 	var slideHeight = $('#slider ul li').height();
 	var sliderUlWidth = slideCount * slideWidth;
-	
 	$('#slider').css({ width: slideWidth, height: slideHeight });
-	
 	$('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
-	
     $('#slider ul li:last-child').prependTo('#slider ul');
-
-    function moveLeft() {
+    moveLeft = function () {
         $('#slider ul').animate({
             left: + slideWidth
         }, 600, function () {
@@ -105,8 +101,7 @@ $(document).ready(function () {
             $('#slider ul').css('left', '');
         });
     };
-
-    function moveRight() {
+    moveRight = function () {
         $('#slider ul').animate({
             left: - slideWidth
         }, 600, function () {
@@ -114,19 +109,11 @@ $(document).ready(function () {
             $('#slider ul').css('left', '');
         });
     };
-
-    $('a.control_prev').click(function () {
-        moveLeft();
-    });
-
-    $('a.control_next').click(function () {
-        moveRight();
-    });
-	
+    $('a.control_prev').click(function () { moveLeft(); });
+    $('a.control_next').click(function () { moveRight(); });
 	var intervalID = setInterval(function(){
 		$(".control_next").click();
    	}, 5000);
-
 });    
 </script>
 <style>
@@ -362,25 +349,25 @@ a.control_prev, a.control_next {
   <ul>
 	<li><!--Первый слайд с баннерами-->
 		<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" id="slide_1_1" src="/image/banners/banner_karlie.jpg">
-				</a>
-			</div>
-			<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" id="slide_1_2" src="/image/banners/banner-delipet12345-340x147-798x330.png">
-				</a>
-			</div>
-			<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" id="slide_1_3" src="/image/banners/banner_brit.jpg">
-				</a>
-			</div>
-			<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" id="slide_1_4" src="/image/banners/last1.jpg">
-				</a>
-			</div>
+			<a class="navbar-header p0" href="..">
+				<img class="floatL h110" id="slide_1_1" src="/image/banners/banner_karlie.jpg">
+			</a>
+		</div>
+		<div class="navbar-header ml2">
+			<a class="navbar-header p0" href="..">
+				<img class="floatL h110" id="slide_1_2" src="/image/banners/banner-delipet12345-340x147-798x330.png">
+			</a>
+		</div>
+		<div class="navbar-header ml2">
+			<a class="navbar-header p0" href="..">
+				<img class="floatL h110" id="slide_1_3" src="/image/banners/banner_brit.jpg">
+			</a>
+		</div>
+		<div class="navbar-header ml2">
+			<a class="navbar-header p0" href="..">
+				<img class="floatL h110" id="slide_1_4" src="/image/banners/last1.jpg">
+			</a>
+		</div>
 	</li>
 	<li><!--Второй слайд с баннерами-->
 		<div class="navbar-header ml2">

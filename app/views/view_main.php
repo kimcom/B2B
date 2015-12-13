@@ -14,5 +14,8 @@ $(document).ready(function () {
 			<div class="form-group mb10 w400 center-block floatL">
 				<button type="button" class="btn btn-lg btn-info w150 minw150 maxw150" onclick="window.location.href = '/main/cabinet_E4';">Вариант E4</button>
 			</div>
+			<div class="form-group mb10 w400 center-block floatL">
+				<button type="button" class="btn btn-lg btn-info w150 minw150 maxw150" onclick="window.location.href = '/main/cabinet_A5';">Вариант A5</button>
+			</div>
 	</div>
 </div>
