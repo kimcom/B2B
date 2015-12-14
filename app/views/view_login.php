@@ -44,7 +44,11 @@ $(document).ready(function () {
 		sendRequest($("#user").val(),$("#pass").val());
 	});
 	$("a").click(function (){
-		if(this.id=='a_register') {$("#div_register").dialog("open");$("#reg_username").focus();}
+		if(this.id=='a_register') {
+			$("#div_register").dialog("open");
+			$('#captcha').attr('src', '/engine/captcha?' + Math.random());
+			$("#reg_username").focus();
+		}
 		if(this.id=='a_forgot') $("#div_forgot").dialog("open");
 	});
 	$("#dialog").dialog({
@@ -247,7 +251,7 @@ $(document).ready(function () {
 		</div>
 		<div class="input-group w100p">
 			<span class="input-group-addon w25p p5 h75">Проверочный<br>код:</span>
-			<img class="form-control	w50p h75" src="/engine/captcha" id="captcha"><br>
+			<img class="form-control w50p h75" src="" id="captcha"><br>
 			<span class="input-group-btn w25p">
 				<a class="btn btn-default w100p h75" type="button" onclick="$('#captcha').attr('src', $('#captcha').attr('src')+'?'+Math.random());"><span class="mt40">Обновить код</span></a>
 			</span>

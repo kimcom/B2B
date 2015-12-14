@@ -444,17 +444,20 @@ input[type='text'], input[type='password'], textarea {
     height: 12px;
     margin-right: 5px;
 }
-//slider
+/*slider*/
 #slider {
     position: relative;
+    box-sizing: border-box;
     overflow: hidden;
+/*    float:left;*/
+    height: 110px;
 }
 #slider ul {
     position: relative;
     margin: 0;
     padding: 0;
-    height: 110px;
     list-style: none;
+    height: 110px;
 }
 #slider ul li {
     position: relative;
@@ -462,34 +465,15 @@ input[type='text'], input[type='password'], textarea {
     float: left;
     margin: 0;
     padding: 0;
-    width: 1097px;
-    height: 110px;
     text-align: center;
-    /*line-height: 100px;*/
 }
-a.control_prev, a.control_next {
-    position: absolute;
-    z-index: 999;
+#slider ul li div{
+    display: block;
+    float: left;
+}
+#slider ul li div a{
     display: block;
     height: 110px;
-    width: 20px;
-    color: black;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-    opacity: 0.6;
-    cursor: pointer;
-    background: black;
-}
-a.control_prev:hover, a.control_next:hover {
-    opacity: 0.3;
-    -webkit-transition: all 0.2s ease;
-}
-a.control_next { right: 0; }
-.slider_option {
-    position: relative;
-    width: 160px;
-    font-size: 18px;
 }
 a.control_prev, a.control_next {
     position: absolute;
@@ -505,22 +489,50 @@ a.control_prev, a.control_next {
     cursor: pointer;
     background: blue;
 }
+a.control_prev:hover, a.control_next:hover {
+    opacity: 0.3;
+    -webkit-transition: all 0.2s ease;
+}
+a.control_next { right: 0; }
+/*.slider_option {
+    position: relative;
+    width: 160px;
+    font-size: 18px;
+}*/
 /* 1й слайд с баннерами*/
-#slide_1_1 {}
+/*#slide_1_1 {}
 #slide_1_2 { width: 280px; }
 #slide_1_3 { width: 289px; }
 #slide_1_4 { width: 220px; }
-/* 2й слайд с баннерами*/
+ 2й слайд с баннерами
 #slide_2_1 { width: 270px; }
 #slide_2_2 { width: 335px; }
 #slide_2_3 { width: 285px; }
 #slide_2_4 { width: 197px; }
-/* 3й слайд с баннерами*/
+ 3й слайд с баннерами
 #slide_3_1 { width: 280px; }
 #slide_3_2 { width: 250px; }
 #slide_3_3 { width: 290px; }
-#slide_3_4 { width: 265px; }
+#slide_3_4 { width: 265px; }*/
 
+.banner-fixed-top{
+    position: relative;
+    padding-right: 0;
+    padding-left: 0;
+    min-height: 110px;
+    max-height: 110px;
+    right: 0;
+    left: 0;
+    top: 0px;
+    float: left;
+    z-index: 1030;
+}
+.navbar-menu{
+/*    position: fixed;*/
+    /*    margin-top: 110px;
+    top: 110px;
+    left:222px;*/
+}
 
 /*перебиваем bootstrap*/
 .navbar-collapse > ul {
