@@ -1,4 +1,0 @@
-2015-12-14 11:28:39 captcha set: 2862	md5:1ec3e7af38e33222bde173fecaef6bfa
-2015-12-14 11:28:48 captcha set: 2862	md5:1ec3e7af38e33222bde173fecaef6bfa	md5:1ec3e7af38e33222bde173fecaef6bfa
-2015-12-14 11:28:48 captcha set: 1945	md5:2d00f43f07911355d4151f13925ff292
-2015-12-14 11:34:20 logon: user:alik доступ разрешен!

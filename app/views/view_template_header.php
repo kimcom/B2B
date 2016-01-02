@@ -11,8 +11,12 @@
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?<?php echo rand(1111111111, 9999999999);?>">
         <link rel="stylesheet" type="text/css" href="../../css/<?php echo $_SESSION['bs_style'];?>/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.css">
-		<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.structure.css">
 		<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.theme.css">
+		<!--		<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.structure.css">
+		<link rel="stylesheet" type="text/css" href="../../css/jqgrid/jquery-ui-1.10.3.custom.css">-->
+<!--		<link rel="stylesheet" type="text/css" href="../../css/jqgrid/ui.jqgrid.css">-->
+		<link rel="stylesheet" type="text/css" href="../../css/jqgrid/ui.jqgrid-bootstrap-ui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/jqgrid/ui.jqgrid-bootstrap.css">
 <!--        <link rel="stylesheet" type="text/css" href="../../css/<?php echo $_SESSION['bs_style'];?>/bootstrap-theme.css">
 		<link rel="stylesheet" type="text/css" href="../../css/signin.css">
 		<link rel="stylesheet" type="text/css" href="../../css/alik-theme/jquery-ui-1.10.3.custom.css">
@@ -21,12 +25,16 @@
 		<link rel="stylesheet" type="text/css" href="../../css/select2.css">
 		<link rel="stylesheet" type="text/css" href="../../css/slidorion.css">-->
         <link rel="stylesheet" type="text/css" href="../../css/fs.css">
+<!--		<link rel="stylesheet" type="text/css" href="../../css/fs_A15.css">-->
 
 		<script src="../../js/jquery-1.11.3.js" type="text/javascript"></script>
 <!--		<script src="../../js/jquery-2.1.4.js" type="text/javascript"></script>-->
 		<script src="../../js/bootstrap.js" type="text/javascript"></script>
-		<script src="../../js/jquery-ui.js" type="text/javascript"></script>
-<!--		<script src="../../js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+		<script src="../../js/jquery-ui.js" type="text/javascript"></script><!--
+		<script src="../../js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>-->
+		<script src="../../js/i18n/grid.locale-ru.js" type="text/javascript"></script>
+		<script src="../../js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<!--
 		<script src="../../js/i18n/grid.locale-en.js" type="text/javascript"></script>
 		<script src="../../js/i18n/grid.locale-ru.js" type="text/javascript"></script>
 		<script src="../../js/i18n/datepicker-ru.js" type="text/javascript"></script>
@@ -38,13 +46,12 @@
 		<script src="../../js/select2.min.js" type="text/javascript"></script>
 		<script src="../../js/jquery.easing.js" type="text/javascript"></script>
 		<script src="../../js/jquery.slidorion.min.js" type="text/javascript"></script>-->
-		
-<!--		<style type="text/css">
+		<style type="text/css">
             body {
-                padding-top: 60px;
-                padding-bottom: 0px;
-                min-height: 660px;
+/*                padding-top: 140px;
+                padding-bottom: 0px;*/
+/*                min-height: 600px;*/
             }
-        </style>-->
+        </style>
     </head>
 	<body>

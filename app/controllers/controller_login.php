@@ -43,24 +43,6 @@ class Controller_Login extends Controller {
 		Fn::debugToLog("logon", "user:".$data['username'].' доступ разрешен!');
 		die('success');
 	}
-//function to parse the http auth header
-	function http_digest_parse($txt) {
-	// protect against missing data
-	$needed_parts = array('nonce' => 1, 'nc' => 1, 'cnonce' => 1, 'qop' => 1, 'username' => 1, 'uri' => 1, 'response' => 1);
-	$data = array();
-
-	$keys = implode('|', array_keys($needed_parts));
-	preg_match_all('@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
-//	Fn::debugToLog("matches", json_encode($matches));
-
-	foreach ($matches as $m) {
-		$data[$m[1]] = $m[3] ? $m[3] : $m[4];
-		unset($needed_parts[$m[1]]);
-	}
-
-	return $needed_parts ? false : $data;
-}
-
 	function action_logout() {
 		unset($_SESSION['sitename']);
 		unset($_SESSION['titlename']);
@@ -76,7 +58,7 @@ class Controller_Login extends Controller {
 		unset($_SESSION['CompanyName']);
 		unset($_SESSION['access']);
 		unset($_SESSION['AccessLevel']);
-		Fn::redirectToController("main");
+		Fn::redirectToController("");
 	}
 	function action_forgot() {
 		$cnn = new Cnn();
@@ -85,6 +67,24 @@ class Controller_Login extends Controller {
 	function action_register() {
 		$cnn = new Cnn();
 		$cnn->user_register();
+	}
+
+//function to parse the http auth header
+	function http_digest_parse($txt) {
+		// protect against missing data
+		$needed_parts = array('nonce' => 1, 'nc' => 1, 'cnonce' => 1, 'qop' => 1, 'username' => 1, 'uri' => 1, 'response' => 1);
+		$data = array();
+
+		$keys = implode('|', array_keys($needed_parts));
+		preg_match_all('@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
+//	Fn::debugToLog("matches", json_encode($matches));
+
+		foreach ($matches as $m) {
+			$data[$m[1]] = $m[3] ? $m[3] : $m[4];
+			unset($needed_parts[$m[1]]);
+		}
+
+		return $needed_parts ? false : $data;
 	}
 }
 ?>

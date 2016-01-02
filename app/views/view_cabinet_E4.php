@@ -20,9 +20,9 @@ $(document).ready(function () {
 //	},3000);
 
 	create_div = function (parent) {
-		$.each($("#div_desktop > #div_window"),function (){
-			console.log(this);
-		});
+//		$.each($("#div_desktop > #div_window"),function (){
+//			console.log(this);
+//		});
 		div = $("#div_window").clone();
 		tbl = $("#tbl").clone();
 		// $(div).find("IMG").css({float: 'left'});

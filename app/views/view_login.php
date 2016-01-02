@@ -1,6 +1,8 @@
 <script src="/js/ajaxtcr.js" type="text/javascript"></script> 
+<script src="//ulogin.ru/js/ulogin.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+	$(document.body).css('padding-top', '0');
 	var imgload = false;
 	$("#img_main").load(function () {
 	    imgload = true;
@@ -84,7 +86,7 @@ $(document).ready(function () {
 					$("#div_forgot").dialog("close");
 					$("#dialog").css('background-color', '');
 				} else {
-					console.log(json.sql);
+					//console.log(json.sql);
 					$("#dialog").css('background-color', '#FFE3E2');
 				}
 				$("#dialog>#text").html(json.message);
@@ -128,7 +130,7 @@ $(document).ready(function () {
 				$("#user").val($("#reg_username").val());
 				$("#pass").val($("#reg_pass").val());
 			}else{
-				console.log(json.sql);
+				//console.log(json.sql);
 				$("#dialog").css('background-color','#FFE3E2');
 			}
 			$("#dialog>#text").html(json.message);
@@ -147,7 +149,7 @@ $(document).ready(function () {
 			onSuccess: function (response) {
 				result = response.xhr.responseText;
 				if(result=='success'){
-					document.location = document.location.origin + "/main/cabinet";
+					document.location = document.location.origin + "/main/index";
 				}else{
 					$("#dialog").css('background-color','#FFE3E2');
 					$("#dialog>#text").html(result);
@@ -255,6 +257,9 @@ $(document).ready(function () {
 			<span class="input-group-btn w25p">
 				<a class="btn btn-default w100p h75" type="button" onclick="$('#captcha').attr('src', $('#captcha').attr('src')+'?'+Math.random());"><span class="mt40">Обновить код</span></a>
 			</span>
+		</div>
+		<div class="input-group w100p">
+			<div id="uLogin" data-ulogin="display=small;fields=first_name,last_name;providers=vkontakte,odnoklassniki,mailru,facebook;hidden=other;redirect_uri=http://egor.tor.pp.ua/login/reg"></div>
 		</div>
 		<button id="btn_register" class="btn btn-lg btn-primary btn-block" type="button">Регистрация</button>
 	</div>

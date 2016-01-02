@@ -10,6 +10,34 @@ class Cnn {
 		}
 	}
 //controller login
+	public function user_list() {
+//		$name = "%" . $filter["name"] . "%";
+//		$address = "%" . $filter["address"] . "%";
+//		$country_id = $filter["country_id"];
+//		$sql = "SELECT * FROM clients WHERE name LIKE :name AND address LIKE :address AND (:country_id = 0 OR country_id = :country_id)";
+//		$q->bindParam(":name", $name);
+//		$q->bindParam(":address", $address);
+//		$q->bindParam(":country_id", $country_id);
+		$stmt = $this->db->prepare("CALL pr_login('user_list', @id, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $username, PDO::PARAM_STR);
+		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
+		$stmt->bindParam(3, $email, PDO::PARAM_STR);
+		$stmt->bindParam(4, $fio, PDO::PARAM_STR);
+		$stmt->bindParam(5, $post, PDO::PARAM_STR);
+		$stmt->bindParam(6, $company, PDO::PARAM_STR);
+		$stmt->bindParam(7, $phone, PDO::PARAM_STR);
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) return false;
+		$result = array();
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($rowset as $row) {
+				array_push($result, ($row));
+			}
+		} while ($stmt->nextRowset());
+//Fn::debugToLog("json", json_encode($result));
+		echo json_encode($result);
+	}
 	public function user_find($username) {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::debugToLog("username", $username);
@@ -70,7 +98,108 @@ class Cnn {
 //		$_SESSION['error_msg'] = "";
 //		return true;
 	}
-	
+
+	function createTree($category, $lft = 0, $rgt = null) {
+		$tree = array();
+		foreach ($category as $cat => $range) {
+			if ($range['lft'] == $lft + 1 && (is_null($rgt) || $range['rgt'] < $rgt)) {
+				$cell = array();
+				$cell['CatID']   = $range['CatID'];
+				$cell['ParentID']   = $range['ParentID'];
+				$cell['tags'] = array($range['cnt']);
+				$cell['childs'] = $range['cnt'];
+				$cell['text'] = $range['Name'];
+				if ($range['cnt'] > 0)
+					$cell['nodes'] = $this->createTree($category, $range['lft'], $range['rgt']);
+				array_push($tree,$cell);
+				$lft = $range['rgt'];
+			}
+		}
+		return $tree;
+	}
+	public function tree() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		
+		$stmt = $this->db->prepare("CALL pr_tree_b2b('', @id, ?)");
+		$stmt->bindParam(1, $parentid, PDO::PARAM_STR);
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) return false;
+		$tree = array();
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$tree = $this->createTree($rowset, $rowset[0]['lft']-1);
+			break;
+		} while ($stmt->nextRowset());
+//Fn::debugToLog("json tree", json_encode($tree));
+		echo json_encode($tree);
+	}
+	public function get_JSgrid() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		$url = urldecode($_SERVER['QUERY_STRING']);
+Fn::debugToLog("url", $url);
+		$stmt = $this->db->prepare("CALL pr_JSgrid(?, @id, ?)");
+		$stmt->bindParam(1, $action, PDO::PARAM_STR);
+		$stmt->bindParam(2, $url, PDO::PARAM_STR);
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$result = array();
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			if (!empty($rowset[0]['_rows_count'])) continue;
+			foreach ($rowset as $row) {
+				array_push($result, ($row));
+			}
+		} while ($stmt->nextRowset());
+Fn::debugToLog("json", json_encode($result));
+		echo json_encode($result);
+	}
+
+//goods
+	public function order_edit(){
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "";
+//		$response->sql = "";
+		$_SESSION['ClientID'] = 1;
+//
+		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes)");
+		$stmt->bindParam(":action", $action);
+		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
+		$stmt->bindParam(":_OrderID", $_SESSION['CurrentOrderID']);
+		$stmt->bindParam(":_GoodID", $goodid);
+		$stmt->bindParam(":_Qty", $qty);
+		$stmt->bindParam(":_Info", $info);
+		$stmt->bindParam(":_Status", $status);
+		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
+		$stmt->bindParam(":_DeliveryAddress", $deliveryAddress);
+		$stmt->bindParam(":_Notes", $notes);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+			$response->success = false;
+			$response->message = "Ошибка при изменении заказа!";
+			//$response->sql = $ar[1] . ' ' . $ar[2];
+		} else {
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+				if ($rowset) {
+					foreach ($rowset as $row) {
+						$response->success = ($row[0] != 0);
+						$response->message = $row[1];
+						//$response->sql = $row[1];
+						break;
+					}
+				}
+			} while ($stmt->nextRowset());
+		}
+//Fn::debugToLog("resp", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
 	public function user_find_by_email() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
@@ -143,7 +272,7 @@ $message = "
 		if (md5($captcha) != $_SESSION['randomnr2']) {
 			$response->success = false;
 			$response->message = "Неверный проверочный код!";
-			$response->sql = "";
+			//$response->sql = "";
 			header("Content-type: application/json;charset=utf-8");
 			echo json_encode($response);
 			return;
@@ -163,7 +292,7 @@ $message = "
 			$ar = $stmt->errorInfo();
 			$response->success = false;
 			$response->message = "Ошибка при регистрации пользователя!";
-			$response->sql = $ar[1] . ' ' . $ar[2];
+			//$response->sql = $ar[1] . ' ' . $ar[2];
 		} else {
 			do {
 				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
@@ -171,7 +300,7 @@ $message = "
 					foreach ($rowset as $row) {
 						$response->success = ($row[0] != 0);
 						$response->message = $row[1];
-						$response->sql = $row[1];
+						//$response->sql = $row[1];
 						break;
 					}
 				}

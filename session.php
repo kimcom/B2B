@@ -2,12 +2,14 @@
 session_save_path("d:\\sites\\Session");
 session_start();
 	$_SESSION['bs_style'] = 'bs-default';
-	//$_SESSION['bs_style'] = 'bs-journal';
-	//$_SESSION['bs_style'] = 'bs-paper';
-	//$_SESSION['bs_style'] = 'bs-readable';
-	//$_SESSION['bs_style'] = 'bs-simplex';
+	//$_SESSION['bs_style'] = 'bs-cerulean'; //A15
+
+//	$_SESSION['bs_style'] = 'bs-journal';
+//	$_SESSION['bs_style'] = 'bs-paper';
+//	$_SESSION['bs_style'] = 'bs-readable';
+//	$_SESSION['bs_style'] = 'bs-simplex';
 	$_SESSION['nav_style'] = 'default';
-	//$_SESSION['nav_style'] = 'inverse';
+	//$_SESSION['nav_style'] = 'inverse'; //A15
 
 	$_SESSION['server_port'] = '3306';
 	$_SESSION['server_user'] = 'b2b';
@@ -27,6 +29,8 @@ if (!isset($_SESSION['adminEmail']))
 	$_SESSION['adminEmail'] = 'kimcom@ukr.net';
 if (!isset($_SESSION['UserID']))
     $_SESSION['UserID'] = 0;
+if (!isset($_SESSION['ClientID']))
+    $_SESSION['ClientID'] = 0;
 if (!isset($_SESSION['UserName']))
     $_SESSION['UserName'] = "";
 if (!isset($_SESSION['UserEMail']))

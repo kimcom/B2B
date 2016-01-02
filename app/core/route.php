@@ -36,10 +36,15 @@ class Route {
 		}
 		//проверяем есть ли доступ к системе
 //Fn::debugToLog("test", 'access='.$_SESSION['access'].' $controller_name='.$controller_name);
-//		if ($_SESSION['access'] == '' && $controller_name != 'login' && $action_name != 'captcha') {
-//			Fn::redirectToController('login');
-//			return;
-//		}
+//$_SESSION['access'] = true;
+		if ($controller_name == 'main' && $action_name == 'index') {
+			Fn::redirectToControllerAndAction('main', 'cabinet_A0');
+			return;
+		}
+		if ($_SESSION['access'] == '' && $controller_name != 'login' && $action_name != 'captcha') {
+			Fn::redirectToController('login');
+			return;
+		}
 //		if ($_SESSION['access'] && $controller_name == 'main' && $action_name == 'index') {
 //			Fn::redirectToControllerAndAction('main','cabinet');
 //			return;
