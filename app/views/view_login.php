@@ -139,8 +139,10 @@ $(document).ready(function () {
 	});
 
 	setTimeout(function (){
+	    imgload = true;
+	    $(window).resize();
 		if ($("#user").val()!='') $("#btn_logon").focus();
-    }, 200);
+    }, 500);
 
 	sendRequest = function (username, password) {
 		var url = document.location.origin + "/login/logon";

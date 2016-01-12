@@ -43,18 +43,6 @@ class Controller_Engine extends Controller {
 		imagedestroy($im);
 	}
 	
-//	public function action_testlistusers(){
-//		$cnn = new Cnn();
-//		$cnn->user_list();
-//	}
-//	public function action_tree1() {
-//		$cnn = new Cnn();
-//		$cnn->tree1();
-//	}
-//	public function action_tree2() {
-//		$cnn = new Cnn();
-//		$cnn->tree();
-//	}
 	public function action_catalog() {
 		$cnn = new Cnn();
 		$cnn->tree();
@@ -63,9 +51,40 @@ class Controller_Engine extends Controller {
 		$cnn = new Cnn();
 		$cnn->get_JSgrid();
 	}
+
 	public function action_order_edit() {
 		$cnn = new Cnn();
 		$cnn->order_edit();
+	}
+	public function action_order_info() {
+		$cnn = new Cnn();
+		$cnn->order_info();
+	}
+	public function action_order_info_full() {
+		$cnn = new Cnn();
+		$cnn->order_info_full();
+	}
+
+	public function action_tree_NS() {
+		$cnn = new Cnn();
+		$cnn->tree_NS();
+	}
+//	public function action_goods_list2() {
+//		$cnn = new Cnn();
+//		$cnn->goods_list();
+//	}
+	
+	function action_jqgrid3() {
+		$cnn = new Cnn();
+		return $cnn->get_jqgrid3();
+	}
+	function action_select2() {//for select2
+		$cnn = new Cnn();
+		return $cnn->select2();
+	}
+	function action_select_search() {//for select2
+		$cnn = new Cnn();
+		return $cnn->select_search();
 	}
 
 	public function action_tree_json() {

@@ -29,7 +29,7 @@ if(!$.jgrid.hasOwnProperty("regional")) {
 }
 $.jgrid.regional["ru"] = {
 	defaults : {
-		recordtext: "Просмотр {0} - {1} из {2}",
+		recordtext: "{0}-{1} из {2}",
 		emptyrecords: "Нет записей для просмотра",
 		loadtext: "Загрузка...",
 		pgtext : "Стр. {0} из {1}",

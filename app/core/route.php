@@ -38,7 +38,7 @@ class Route {
 //Fn::debugToLog("test", 'access='.$_SESSION['access'].' $controller_name='.$controller_name);
 //$_SESSION['access'] = true;
 		if ($controller_name == 'main' && $action_name == 'index') {
-			Fn::redirectToControllerAndAction('main', 'cabinet_A0');
+			Fn::redirectToControllerAndAction('main', 'orders');
 			return;
 		}
 		if ($_SESSION['access'] == '' && $controller_name != 'login' && $action_name != 'captcha') {

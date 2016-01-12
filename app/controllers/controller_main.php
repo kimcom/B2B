@@ -21,8 +21,19 @@ class Controller_Main extends Controller {
 	function action_cabinet_A5() {
 		$this->view->generate('view_cabinet_A5.php', 'view_template.php');
 	}
-	function action_cabinet_A0() {
-		$this->view->generate('view_cabinet_A0.php', 'view_template.php');
+	
+	function action_catalog() {
+		$this->view->generate('view_catalog.php', 'view_template.php');
+	}
+	function action_orders() {
+		$this->view->generate('view_orders.php', 'view_template.php');
+	}
+
+	function action_cabinet_A0_test() {
+		$this->view->generate('view_cabinet_A0_test.php', 'view_template.php');
+	}
+	function action_cabinet_A1() {
+		$this->view->generate('view_cabinet_A1.php', 'view_template.php');
 	}
 	function action_table() {
 		$this->view->generate('view_table.php', 'view_template.php');
