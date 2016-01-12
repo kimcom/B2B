@@ -2,7 +2,21 @@
 <script src="//ulogin.ru/js/ulogin.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	$(document.body).css('padding-top', '0');
+$(document.body).css('padding-top', '0');
+	
+	preview = function(token){
+		$.getJSON("//ulogin.ru/token.php?host=" + encodeURIComponent(location.toString()) + "&token=" + token + "&callback=?", function (data) {
+			data = $.parseJSON(data.toString());
+			if (!data.error) {
+				$("#reg_username").val(data.nickname);
+				$("#reg_email").val(data.email);
+				$("#reg_fio").val(data.first_name + " " + data.last_name);
+				$("#reg_phone").val(data.phone);
+				$("#reg_pass").focus();
+			}	
+		});
+	}
+		
 	var imgload = false;
 	$("#img_main").load(function () {
 	    imgload = true;
@@ -260,8 +274,14 @@ $(document).ready(function () {
 				<a class="btn btn-default w100p h75" type="button" onclick="$('#captcha').attr('src', $('#captcha').attr('src')+'?'+Math.random());"><span class="mt40">Обновить код</span></a>
 			</span>
 		</div>
-		<div class="input-group w100p">
-			<div id="uLogin" data-ulogin="display=small;fields=first_name,last_name;providers=vkontakte,odnoklassniki,mailru,facebook;hidden=other;redirect_uri=http://egor.tor.pp.ua/login/reg"></div>
+		<div class="input-group center mt5 w100p">
+			<div id="uLogin" data-ulogin="
+				display=panel;
+				optional=nickname,email,first_name,last_name,bdate,sex,phone,photo,city,country,manual;
+				providers=vkontakte,odnoklassniki,facebook,twitter,google,mailru;
+				redirect_uri=;
+				callback=preview">
+			</div>
 		</div>
 		<button id="btn_register" class="btn btn-lg btn-primary btn-block" type="button">Регистрация</button>
 	</div>

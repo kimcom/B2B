@@ -9,7 +9,7 @@
 ?>
 <script type="text/javascript">
 $(document).ready(function() {
-
+	
   // свойства диалогового окна
   $("#error_dialog").dialog({
     autoOpen: false, modal: true, width: 600,
