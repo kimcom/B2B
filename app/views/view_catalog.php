@@ -46,7 +46,7 @@ $(document).ready(function () {
 		});
 	}
 	formatQty = function (cellValue, options, rowObject) {
-		var html = '<input type="number" class="TAC editable inline-edit-cell" style="line-height:17px;width:60%;" onchange="good_edit(this,'+options.rowId+',$(this).val());">' + 
+		var html = '<input type="number" class="TAC editable inline-edit-cell" style="line-height:17px;width:60%;" min=0 onchange="good_edit(this,'+options.rowId+',$(this).val());">' + 
 				   '<span class="ml10 mr10 glyphicon glyphicon-remove" onclick="good_edit($(this).prev(),'+options.rowId+',0);"></span>';
 		return html;
     }
@@ -88,10 +88,22 @@ $(document).ready(function () {
 			},
 			{label:'Цена',			name:'Price',		index:'Price',		width: 60, sorttype: "number", search: false, align: "right"},
 			{label:'В уп.',			name:'Unit_in_pack',index:'Unit_in_pack',width:60, sorttype: "number", search: false, align: "center"},
-			{label:'Налич.',		name:'FreeBalance', index:'FreeBalance',width: 60, sorttype: "number", search: false, align: "center"},
+			{label:'Налич.',		name:'FreeBalance', index:'FreeBalance',width: 60, sorttype: "number", search: true, align: "center",
+				stype:'integer',
+				searchoptions: { clearSearch:false,
+					dataInit: function (element) {
+						p = $(this).jqGrid('getGridParam', 'postData');
+					    p.FreeBalance = true;
+						$(element).prop("checked",true);
+						$(element).css('margin-left','15px');
+						$(element).width("18px");
+						$(element).attr("type", "checkbox");
+						$(element).change(function(e){ $("#grid1").trigger('triggerToolbar'); });
+					}
+			    }
+			},
 			{label:'Заказ',			name:'Qty',			index:'Qty',		width: 90, sorttype: "number", search: false, align: "center", 
-				editable: true,
-				formatter: formatQty,
+				formatter: formatQty
 			},
 		],
 		rowNum: 20,
@@ -110,6 +122,10 @@ $(document).ready(function () {
 	});
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: false, cloneToTop: true});
 	$("#grid1").jqGrid('filterToolbar', { autosearch: true, searchOnEnter: true,
+		beforeSearch: function () {
+			p = $(this).jqGrid('getGridParam', 'postData');
+			if($("#gs_FreeBalance").prop("checked")) p.FreeBalance = true;
+		},
 		afterSearch: function () {
 			p = $(this).jqGrid('getGridParam', 'postData');
 			flt = '';

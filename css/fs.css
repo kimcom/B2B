@@ -37,6 +37,7 @@
 .maxw450 {max-width: 450px;}
 .maxw600 {max-width: 600px;}
 .maxw800 {max-width: 800px;}
+.maxw900 {max-width: 900px;}
 .maxw1000 {max-width:1000px;}
 
 .ofy{
@@ -322,7 +323,7 @@ input:focus{
 }
 input[type='text'], input[type='password'], textarea {
 /*    background: #FFF;*/
-    background: #FCFCFC;
+    background: #FDFEFE;
     border: 1px solid #CCCCCC;
 /*    margin-left: 0px;
     margin-right: 0px;*/
@@ -460,7 +461,6 @@ input[type='text'], input[type='password'], textarea {
     float: left;
     z-index: 1030;
 }*/
-
 /*перебиваем bootstrap*/
 .navbar {
     margin-bottom: 10px;
@@ -564,6 +564,18 @@ li {
     margin-left: -30%;
     padding-left: 0;
 }*/
+/*.carousel-img-center>.item>img{
+    position: fixed;
+    left:50%; 
+    top:0%;
+    margin-left: -25%;
+}
+.carousel2-img-center>.item>img{
+    position: fixed;
+    left:50%; 
+    top:0%;
+    margin-left: -32%;
+}*/
 .carousel-caption-login {
     position: absolute;
     display: block;
@@ -613,6 +625,42 @@ li {
     background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, .0001)), to(rgba(127, 127, 0, .5)));
     background-image:         linear-gradient(to right, rgba(0, 0, 0, .0001) 0%, rgba(127, 127, 0, .5) 100%);
 }*/
+/*slider*/
+.slider-text{
+    width: 489px;
+    height: 483px;
+    background: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    z-index: 20;
+    /*left: 24%;*/
+}
+.slider-text h3{
+    font: 30px "PFDinTextCompPro-Medium";
+    text-transform: uppercase;
+    color: #2b414d;
+    padding: 30px;
+}
+.slider-text p{
+    font: 20px "pfdintextcomppro-regular";
+    color: #2b414d;
+    padding: 30px;
+}
+.slider-text a{
+    font: 18px "PFDinTextCompPro-Medium";
+    text-transform: uppercase;
+    color: #2b414d;
+    width: 10px;
+    height: 17px;
+    background: url("/bitrix/templates/nature/img/ar-right.png") no-repeat scroll center right;
+    padding-right: 30px;
+    padding-left: 40px;
+}
+.slider-text a:hover{
+    text-decoration: underline;
+}
 
 /*.ui-corner-bottom0{
     border-top-left-radius: 4px;

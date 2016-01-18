@@ -24,7 +24,7 @@ if (!isset($_SESSION['company']))
 if (!isset($_SESSION['dbname']))
 	$_SESSION['dbname'] = 'b2b';
 if (!isset($_SESSION['siteEmail']))
-	$_SESSION['siteEmail'] = 'b2b@tor.pp.ua';
+	$_SESSION['siteEmail'] = 'b2b@priroda.ua';
 if (!isset($_SESSION['adminEmail']))
 	$_SESSION['adminEmail'] = 'kimcom@ukr.net';
 if (!isset($_SESSION['UserID']))

@@ -68,10 +68,13 @@ Fn::debugToLog("logon", "Bad response! user:".$data['username']." send:".$data['
 // ok, valid username & password
 		$_SESSION['access'] = true;
 Fn::debugToLog("logon", "user:".$data['username'].' доступ разрешен!');
-Fn::debugToLog("$_SESSION", json_encode($_SESSION));
+//Fn::debugToLog("$_SESSION", json_encode($_SESSION));
 		die('success');
 	}
 	function action_logout() {
+		unset($_SESSION['banners1']);
+		unset($_SESSION['banners2']);
+		
 		unset($_SESSION['sitename']);
 		unset($_SESSION['titlename']);
 		unset($_SESSION['company']);
@@ -96,6 +99,10 @@ Fn::debugToLog("$_SESSION", json_encode($_SESSION));
 	function action_register() {
 		$cnn = new Cnn();
 		$cnn->user_register();
+	}
+	function action_sendmail() {
+		$cnn = new Cnn();
+		$cnn->user_sendmail();
 	}
 
 //function to parse the http auth header

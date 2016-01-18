@@ -8,33 +8,12 @@
 	if ($url=='/main/profile' || $url == '/main/setting') $active20 = 'active';
 ?>
 
-<!--<script src="/js/jquery.bxslider.min.js"></script>
-<link href="/css/jquery.bxslider.css" rel="stylesheet"/>-->
-<script type="text/javascript">
-$(document).ready(function () {
-//	$('.bxslider').removeClass("hidden");
-//	$('.bxslider').bxSlider({
-//	    //mode: 'fade',
-//	    pager: false,
-//	    auto: true,
-//	    speed: 3000,
-//	    adaptiveHeight: true,
-//	    responsive: true,
-//	});
-//	$(window).resize(function () {
-//	    var slideWidth = $(window).width();
-//	    $("#div_banners").width(slideWidth - 250);
-//	});
-//	$(window).resize();
-	//$("body").attr({'style': 'background:url("/image/blue_sky.jpg") no-repeat center center fixed;'});
-});
-</script>
 <nav class="navbar navbar-<?php echo $_SESSION['nav_style']; ?>" role="navigation">
 	<div class="container-fluid p0">
 		<!-- Название компании и кнопка, которая отображается для мобильных устройств группируются для лучшего отображения при свертывание -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
+				<span class="sr-only"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -47,23 +26,32 @@ $(document).ready(function () {
 		<div class="collapse navbar-collapse navbar-menu" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="minw100 <?php echo $active1; ?>"><a href="/main/orders">Заказы</a></li>
+<?php
+if ($_SESSION['ClientID'] != 0) {
+?>
 				<li class="minw100 <?php echo $active2; ?>"><a href="/main/catalog">Каталог</a></li>
-				<li class="minw100 <?php echo $active3; ?>"><a href="/main/my_goods">Мои товары</a></li>
+				<li class="minw100 <?php echo $active3; ?>"><a href="/main/templates">Шаблоны</a></li>
+<?php } ?>
 				<li class="minw100 <?php echo $active4; ?>"><a href="/main/news">Новинки</a></li>
 				<li class="minw100 <?php echo $active5; ?>"><a href="/main/promo">Акции</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+<?php
+if (1==0 && $_SESSION['ClientID'] != 0) {
+?>
 				<form class="navbar-left navbar-form" role="search">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Введите артикул">
 					</div>
 					<button type="submit" class="btn btn-default">Поиск</button>
 				</form>
+<?php } ?>
 				<li class="minw100 dropdown <?php echo $active20; ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Малинин Олег<b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['ClientName'];?><b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="/main/profile">Профиль</a></li>
-						<li><a href="/main/setting">Настройки</a></li>
+						<li><a href="/engine/banners?id=1">Баннер 1 - <?php echo ($_SESSION['banners1']) ? 'выключить' : 'включить';?></a></li>
+						<li><a href="/engine/banners?id=2">Баннер 2 - <?php echo ($_SESSION['banners2']) ? 'выключить' : 'включить';?></a></li>
 						<li class="divider"></li>
 						<li><a href="/login/logout">Выход</a></li>
 					</ul>

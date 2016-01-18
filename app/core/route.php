@@ -1,6 +1,7 @@
 <?php
 class Route {
 	static function start() {
+//Fn::debugToLog("REQUEST_URI", urldecode($_SERVER['REQUEST_URI']));
 		$pos = strpos($_SERVER['REQUEST_URI'], 'favicon.ico');
 		if ($pos !== FALSE)
 			Route::toFavicon();

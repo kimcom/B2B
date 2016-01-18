@@ -24,6 +24,7 @@
         <link rel="stylesheet" type="text/css" href="../../css/jquery.dataTables.min.css">
 		<link rel="stylesheet" type="text/css" href="../../css/slidorion.css">-->
 		<link rel="stylesheet" type="text/css" href="../../css/select2.css">
+		<link rel="stylesheet" type="text/css" href="/css/flexslider.css">
         <link rel="stylesheet" type="text/css" href="../../css/fs.css">
 <!--		<link rel="stylesheet" type="text/css" href="../../css/fs_A15.css">-->
 
@@ -36,6 +37,7 @@
 		<script src="../../js/jquery.jqGrid.min.js" type="text/javascript"></script>
 		<script src="../../js/select2.min.js" type="text/javascript"></script>
 		<script src="../../js/bootstrap3-typeahead.js" type="text/javascript"></script>
+		<script src="/js/jquery.flexslider.js"></script>
 <!--		<script src="../../js/jquery.jqGrid.js" type="text/javascript"></script>-->
 <!--
 		<script src="../../js/i18n/grid.locale-en.js" type="text/javascript"></script>

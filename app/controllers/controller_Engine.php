@@ -1,16 +1,11 @@
 <?php
 class Controller_Engine extends Controller {
-	public function action_captcha_check() {
-		if (md5($_POST['norobot']) == $_SESSION['randomnr2']) {
-			echo "Отлично , кажется, что вы не робот";
-		} else {
-			echo "вы весьма надоедливый бот!";
-		}
-	}
 	public function action_captcha() {
 	// создаем случайное число и сохраняем в сессии
 		$randomnr = rand(1000, 9999);
 		$_SESSION['randomnr2'] = md5($randomnr);
+//Fn::debugToLog("captcha set", $randomnr);
+//Fn::debugToLog("captcha set", $_SESSION['randomnr2']);
 		//создаем изображение
 		$im = imagecreatetruecolor(120, 60);
 
@@ -52,6 +47,10 @@ class Controller_Engine extends Controller {
 		$cnn->get_JSgrid();
 	}
 
+	public function action_order_export_csv() {
+		$cnn = new Cnn();
+		$cnn->order_export_csv();
+	}
 	public function action_order_edit() {
 		$cnn = new Cnn();
 		$cnn->order_edit();
@@ -123,5 +122,11 @@ class Controller_Engine extends Controller {
 	
 	public function action_404() {
 		$this->view->generate('view_template_404.php', 'view_template.php');
+	}
+	public function action_banners() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		if ($id=='1') $_SESSION['banners1'] = $_SESSION['banners1'] == false;
+		if ($id=='2') $_SESSION['banners2'] = $_SESSION['banners2'] == false;
+		header('Location:' . $_SERVER['HTTP_REFERER']);
 	}
 }

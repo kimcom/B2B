@@ -1,0 +1,831 @@
+2016-01-14 15:17:56 route action отсутствует:: Controller_main/action_%22Client,OrderID%22,%22State%22,%22Delivery%22,%22Notes%22%22%D0%A7%D0%B5%D0%BA%D0%B0%D0%BD%D0%BE%D0%B2%20%D0%9C.%D0%98.%22,%228%22,%22%D0%BF%D1%80%D0%B5%D0%B4%D0%B2%D0%B0%D1%80%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%22,%22ddddd2222333333334544%22,%22%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%87%D0%B0%D0%BD%D0%B8%D0%B5%D1%86%D1%83%D0%B0%D1%86%D0%B0%22%22GoodID%22,%22Article%22,%22Name%22,%22Info%22,%22Qty%22,%22PriceBase%22,%22DiscountPercent%22,%22Discount%22,%22Price%22,%22Sum%22%223030%22,%22706773%20
+2016-01-14 15:38:09 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452778689755&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 15:39:58 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778797798&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:03 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778803835&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:04 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778804821&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:06 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778806778&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:10 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778810533&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:14 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778814114&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:14 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778814844&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:15 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778815770&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:17 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778817482&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:20 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452778820236&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 15:40:56 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452778856620&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 15:43:36 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452779016068&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:06:35 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780395961&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:07:19 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780438857&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:07:19 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780439930&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:07:20 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780440793&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:07:21 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780441568&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:07:41 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780461497&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:09:59 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452780599051&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 16:10:09 jqgrid3 url: action=good_list_b2b&sid=5&group=3648&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452780609136&rows=20&page=1&sidx=Name&sord=asc&FreeBalance=true
+2016-01-14 16:10:13 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(1) "1"
+}
+
+2016-01-14 16:10:14 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "1"
+}
+
+2016-01-14 16:10:15 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(1) "1"
+}
+
+2016-01-14 16:11:07 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780666922&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:16:03 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780963292&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:16:11 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780971888&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:16:13 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452780973861&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:16:59 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781019226&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:17:09 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781029418&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:17:24 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781044550&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:19:09 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781149003&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:19:25 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781165590&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:19:38 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781178115&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:19:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781193672&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:20:14 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781214025&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:20:26 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781226488&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:20:32 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781232397&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:21:00 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781260473&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:21:10 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781270236&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:07 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781387638&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:15 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781395747&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:17 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781397732&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:19 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781399904&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:23 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781403512&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:52 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781432303&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:57 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781437012&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:23:58 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781438127&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:24:08 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781448498&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:26:06 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781566648&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:26:07 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781567534&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 16:26:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452781613068&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:05:52 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452787552890&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:05:57 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "5110"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(4) "dddd"
+}
+
+2016-01-14 18:06:03 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "6637"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(3) "ddd"
+}
+
+2016-01-14 18:06:28 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452787588418&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:06:32 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(4) "ffff"
+}
+
+2016-01-14 18:06:43 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452787603801&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:06:47 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "3030"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(3) "ddd"
+}
+
+2016-01-14 18:06:59 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452787619053&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:07:02 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "3030"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(7) "ddd2222"
+}
+
+2016-01-14 18:13:04 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(8) "ffff3333"
+}
+
+2016-01-14 18:13:33 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(11) "ffff3333444"
+}
+
+2016-01-14 18:13:39 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(1) "2"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:13:39 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(1) "3"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:13:39 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(1) "4"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:13:39 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(1) "5"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:13:43 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(19) "order_edit_delivery"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(26) "ddddd2222333333334544xxxxx"
+  ["notes"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:13:58 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788038469&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:14:03 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(19) "order_edit_delivery"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(27) "ddddd2222333333334544xxxxx2"
+  ["notes"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:14:55 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788095879&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:15:01 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(19) "order_edit_delivery"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(28) "ddddd2222333333334544xxxxx23"
+  ["notes"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:15:04 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(16) "order_edit_notes"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(1) "0"
+  ["notes"]=>
+  string(33) "примечаниецуаца222"
+}
+
+2016-01-14 18:15:25 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788125960&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:15:30 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(19) "order_edit_delivery"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(29) "ddddd2222333333334544xxxxx233"
+  ["notes"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:16:07 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "1265"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:16:23 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788183911&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:16:27 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(19) "order_edit_delivery"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(30) "ddddd2222333333334544xxxxx2333"
+  ["notes"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:16:30 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(16) "order_edit_notes"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(1) "0"
+  ["notes"]=>
+  string(34) "примечаниецуаца2223"
+}
+
+2016-01-14 18:16:52 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(3) "444"
+}
+
+2016-01-14 18:16:57 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "2"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:17:23 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788243972&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:17:27 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "3"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:17:28 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "4"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:17:31 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788251863&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:17:37 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(6) "444555"
+}
+
+2016-01-14 18:17:40 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788260614&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:17:49 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "5110"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(5) "dddd1"
+}
+
+2016-01-14 18:17:50 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "6637"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(4) "ddd2"
+}
+
+2016-01-14 18:17:51 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(20) "order_edit_good_info"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(0) ""
+  ["info"]=>
+  string(1) "3"
+}
+
+2016-01-14 18:17:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788273183&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:17:58 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6637"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:18:01 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(1) "2"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:18:01 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(1) "3"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:18:01 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(1) "4"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:18:01 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(1) "5"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:18:04 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "6998"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:18:09 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(6) {
+  ["action"]=>
+  string(19) "order_edit_delivery"
+  ["goodid"]=>
+  string(1) "0"
+  ["qty"]=>
+  string(1) "0"
+  ["info"]=>
+  string(1) "0"
+  ["delivery"]=>
+  string(5) "ddddd"
+  ["notes"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:18:11 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788291324&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:21:35 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(1) {
+  ["action"]=>
+  string(12) "order_delete"
+}
+
+2016-01-14 18:21:37 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452788497820&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 18:21:44 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(1) {
+  ["action"]=>
+  string(12) "order_delete"
+}
+
+2016-01-14 18:22:32 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452788552010&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:22:59 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(1) {
+  ["action"]=>
+  string(12) "order_delete"
+}
+
+2016-01-14 18:31:31 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789091364&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:31:34 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789094020&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:32:43 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789163955&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:32:44 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789164934&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:32:45 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789165909&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:32:46 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789166726&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:32:49 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789169699&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:32:50 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789170549&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:33:00 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789179709&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:33:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789233245&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:34:57 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789297485&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:00 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789300603&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:06 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789306207&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:10 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789310298&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:11 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789311100&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:12 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789312064&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:18 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789318157&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:20 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789320307&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:21 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789321267&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:23 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789323626&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:27 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789327866&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:35:47 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789347140&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:36:48 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789408061&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:36:48 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789408890&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:36:50 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789410370&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:36:52 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789412300&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:36:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789413002&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:37:11 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(1) {
+  ["action"]=>
+  string(12) "order_delete"
+}
+
+2016-01-14 18:37:13 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452789433472&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 18:40:57 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789657171&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:41:03 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789663800&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:41:12 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789672222&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:42:15 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789735827&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:42:39 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789759839&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:42:44 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789764703&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:42:47 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789767325&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:42:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789773114&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:43:37 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789816775&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:43:39 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789819350&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:43:43 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "7759"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:43:44 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "7896"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:43:44 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "7905"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:43:44 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(4) "7942"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:43:46 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789826918&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:43:49 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789829356&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:43:51 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789831178&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:46:10 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452789970303&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:49:58 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790198384&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:49:59 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790199262&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:50:00 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790200173&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:50:02 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790202353&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:51:55 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790315243&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:51:56 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790316142&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:51:56 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790316922&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:51:57 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790317630&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:00 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790320461&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:01 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790321399&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:06 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790326597&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:13 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790333234&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:14 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790334203&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:15 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790335034&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:15 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790335898&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:17 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790337420&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:44 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790364461&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:45 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790365366&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:46 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790366067&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:52:46 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790366818&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:53:37 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "5"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:53:37 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(4) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "6"
+  ["info"]=>
+  string(0) ""
+}
+
+2016-01-14 18:53:41 param
+C:/Sites/B2B/index.php
+/engine/order_edit
+: array(3) {
+  ["action"]=>
+  string(10) "order_edit"
+  ["goodid"]=>
+  string(3) "824"
+  ["qty"]=>
+  string(1) "0"
+}
+
+2016-01-14 18:53:47 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790427649&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:53:48 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790428446&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:53:49 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790429348&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:53:50 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790430076&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:53:52 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790432376&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:22 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790462659&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:26 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790466766&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:27 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790467819&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:48 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790487977&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:48 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790488787&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:49 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790489627&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:54:50 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790490332&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:56:51 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790611468&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 18:56:58 jqgrid3 url: action=good_list_b2b&sid=5&group=1511&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790618215&rows=20&page=1&sidx=Name&sord=asc&FreeBalance=true
+2016-01-14 18:56:59 jqgrid3 url: action=good_list_b2b&sid=5&group=1511&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790619784&rows=20&page=2&sidx=Name&sord=asc&FreeBalance=true
+2016-01-14 18:57:01 jqgrid3 url: action=good_list_b2b&sid=5&group=1511&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790621219&rows=20&page=3&sidx=Name&sord=asc&FreeBalance=true
+2016-01-14 18:57:02 jqgrid3 url: action=good_list_b2b&sid=5&group=1511&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790622019&rows=20&page=4&sidx=Name&sord=asc&FreeBalance=true
+2016-01-14 18:58:00 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790680919&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:01 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790681893&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:02 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790682618&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:04 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790684129&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:11 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790691349&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 18:58:14 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790694119&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:20 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790700623&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:23 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790703490&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:24 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790704539&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:26 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790706872&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:27 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790707619&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:29 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790709860&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:30 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790710810&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:58:31 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=50&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790711763&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:59:48 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790788342&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:59:49 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790789546&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:59:51 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790791216&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:59:53 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790793499&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:59:55 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790795645&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 18:59:58 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790798860&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 19:00:20 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790820478&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 19:01:08 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790867814&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 19:01:09 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=10&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790869035&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 19:01:09 jqgrid3 url: action=order_list_b2b&grouping=OrderID&o.Status=20&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes&_search=false&nd=1452790869800&rows=20&page=1&sidx=o.OrderID&sord=desc&o.ClientID=735
+2016-01-14 19:01:42 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452790902064&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 19:18:12 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452791892728&rows=20&page=1&sidx=Name&sord=asc
+2016-01-14 20:49:05 jqgrid3 url: action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=Unit_in_pack&f5=FreeBalance&f6=Order&_search=false&nd=1452797345071&rows=20&page=1&sidx=Name&sord=asc
