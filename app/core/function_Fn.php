@@ -99,7 +99,7 @@ class Fn {
 		return number_format($num, 2, '.', '');
 	}
 
-	public static function nfx($num, $count) {
+	public static function nfx($num, $count = 0) {
 		return number_format($num, $count, '.', '');
 	}
 
@@ -122,5 +122,55 @@ class Fn {
 		return is_null($var) ? $default : $var;
 	}
 
+	public static function csv_to_array2($file_name) {
+		$values = array();
+		$row = 1;
+		$handle = fopen($file_name, "r");
+		//Fn::debugToLog("csv_to_array2", $handle);
+		if ($handle !== FALSE) {
+			//while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+			while (!feof($handle)) {
+				$data = fgets($handle, 1000);
+				if ($data == null) break;
+				$data = iconv('cp1251','utf-8', $data);
+				$data = str_getcsv($data,',');
+				$num = count($data);
+				//$data[$num++] = $row;
+				array_push($values, ($data));
+				//echo "Строка $row ($num полей): ".json_encode($data)."<br>";//.' '.json_encode($data)."\n";
+					//for ($c=0; $c < $num; $c++) {
+					//echo $data[$c] . "<br />\n";
+					//}
+				$row++;
+			}
+			fclose($handle);
+		}
+		//echo json_encode($values);
+		return $values;
+	}
+
+	public static function session_unset($full = false){
+		unset($_SESSION['UserID']);
+		unset($_SESSION['UserName']);
+		unset($_SESSION['UserEMail']);
+		unset($_SESSION['UserPost']);
+		unset($_SESSION['ClientID']);
+		unset($_SESSION['ClientName']);
+		unset($_SESSION['StoreID']);
+		unset($_SESSION['access']);
+		unset($_SESSION['AccessLevel']);
+		unset($_SESSION['CurrentOrderID']);
+		unset($_SESSION['ViewRemain']);
+		if ($full) {
+			unset($_SESSION['banners1']);
+			unset($_SESSION['banners2']);
+			unset($_SESSION['sitename']);
+			unset($_SESSION['titlename']);
+			unset($_SESSION['company']);
+			unset($_SESSION['dbname']);
+			unset($_SESSION['siteEmail']);
+			unset($_SESSION['adminEmail']);
+		}
+	}
 }
 ?>

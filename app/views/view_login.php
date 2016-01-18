@@ -1,5 +1,5 @@
 <script src="/js/ajaxtcr.js" type="text/javascript"></script> 
-<script src="//ulogin.ru/js/ulogin.js"></script>
+<script src="/ulogin.ru/js/ulogin.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 $(document.body).css('padding-top', '0');
@@ -137,12 +137,18 @@ $(document.body).css('padding-top', '0');
 			phone:		$("#reg_phone").val(),
 			captcha:	$("#reg_captcha").val()
 		}, function (json) {
-//			console.log(json);
+			//console.log(json);
 			if (json.success) {
+				$('#captcha').attr('src','');
 				$("#div_register").dialog("close");
 				$("#dialog").css('background-color','');
 				$("#user").val($("#reg_username").val());
 				$("#pass").val($("#reg_pass").val());
+				$.post("/login/sendmail",{
+					email:		$("#reg_email").val(),
+					fio:		$("#reg_fio").val(),
+					captcha:	$("#reg_captcha").val()
+				}, function (json) {	});
 			}else{
 				//console.log(json.sql);
 				$("#dialog").css('background-color','#FFE3E2');

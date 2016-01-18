@@ -778,7 +778,8 @@ a.g-menu-item, a.soptclass, a.clearsearchclass {
 	width: 12px;
 	height: 12px;
 	right: 1px;
-	bottom: 1px;
+	margin-left: -5px;
+	bottom: 0;
 }
 .ui-top-corner {
 	border-top-left-radius: 5px;

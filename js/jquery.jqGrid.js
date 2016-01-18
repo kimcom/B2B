@@ -13103,9 +13103,11 @@ $.jgrid.extend({
 					});
 				if($t.p.ExpandColClick === true) {
 					$($t.rows[i].cells[expCol])
-						.find("span.cell-wrapper")
+						//.find("span.cell-wrapper")
+						.find("span.cell-wrapper,input.cell-wrapper")
 						.css("cursor","pointer")
 						.bind("click",function(e) {
+//console.log(e.target); //by alik
 							var target = e.target || e.srcElement,
 							ind2 =$.jgrid.stripPref($t.p.idPrefix,$(target,$t.rows).closest("tr.jqgrow")[0].id),
 							pos = $t.p._index[ind2];
@@ -13119,6 +13121,9 @@ $.jgrid.extend({
 								}
 							}
 							$($t).jqGrid("setSelection",ind2);
+							if (e.target.tagName=='INPUT')
+							    if (e.target.type=='checkbox')
+								return true;
 							return false;
 						});
 				}

@@ -57,14 +57,16 @@ class Cnn {
 			$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
 			if ($rowset) {
 				foreach ($rowset as $row) {
-					$_SESSION['UserID'] = $row[UserID];
-					$_SESSION['UserName'] = $row[Username];
-					$_SESSION['UserEMail'] = $row[Email];
-					$_SESSION['UserPost'] = $row[Post];
-					$_SESSION['ClientID'] = $row[CompanyID];
-					$_SESSION['ClientName'] = $row[CompanyName];
-					$_SESSION['AccessLevel'] = $row[AccessLevel];
+					$_SESSION['UserID'] = $row['UserID'];
+					$_SESSION['UserName'] = $row['Username'];
+					$_SESSION['UserEMail'] = $row['Email'];
+					$_SESSION['UserPost'] = $row['Post'];
+					$_SESSION['ClientID'] = $row['CompanyID'];
+					$_SESSION['ClientName'] = $row['CompanyName'];
+					$_SESSION['StoreID'] = $row['StoreID'];
+					$_SESSION['AccessLevel'] = $row['AccessLevel'];
 					$_SESSION['CurrentOrderID'] = $row['CurrentOrderID'];
+					$_SESSION['ViewRemain'] = $row['ViewRemain'];
 					$_SESSION['access'] = true;
 					$result = $row['Userpass'];
 					break;
@@ -140,9 +142,9 @@ class Cnn {
 		echo json_encode($response);
 	}
 	public function user_register() {
-		foreach ($_REQUEST as $arg => $val)
-			${$arg} = $val;
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 		$response = new stdClass();
+//Fn::paramToLog();
 		if (md5($captcha) != $_SESSION['randomnr2']) {
 			$response->success = false;
 			$response->message = "Неверный проверочный код!";
@@ -151,7 +153,6 @@ class Cnn {
 			echo json_encode($response);
 			return;
 		}
-//Fn::paramToLog();
 		$stmt = $this->db->prepare("CALL pr_login('user_register', @id, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $username, PDO::PARAM_STR);
 		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
@@ -180,6 +181,22 @@ class Cnn {
 				}
 			} while ($stmt->nextRowset());
 		}
+//Fn::debugToLog("resp", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
+	public function user_sendmail() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		$response = new stdClass();
+		$response->success = true;
+		$response->message = "Сообщение успешно отправлено!";
+		if (md5($captcha) != $_SESSION['randomnr2']) {
+			$response->success = false;
+			$response->message = "Неверный проверочный код!";
+			header("Content-type: application/json;charset=utf-8");
+			echo json_encode($response);
+			return;
+		}
 		if ($response->success) {
 			$subject = 'Регистрация аккаунта в инф. системе ';
 			$message = "
@@ -197,18 +214,59 @@ class Cnn {
 ------------------
 " . $_SESSION['adminEmail'] . "
 ";
+//Fn::debugToLog("send", 'start');
 			$sended = Mail::smtpmail($email, $fio, $subject, $message);
+//Fn::debugToLog("send", 'stop');
 			if (!$sended) {
 				$response->success = false;
 				$response->message = "Ошибка при отправке сообщения с информацией о Вашем доступе!";
 			}
+//Fn::debugToLog("send", 'start');
 			$sended = Mail::smtpmail($_SESSION['adminEmail'], $fio, $subject, $message);
+//Fn::debugToLog("send", 'stop');
 		}
 //Fn::debugToLog("resp", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
 
+//setting
+	public function config(){
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "Нет данных для отображения!";
+		$stmt = $this->db->prepare("call pr_setting(:action, @_id, :_UserID, :_Section, :_Object, :_Param, :_Value)");
+		$stmt->bindParam(":action", $action);
+		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
+		$stmt->bindParam(":_Section", $section);
+		$stmt->bindParam(":_Object", $object);
+		$stmt->bindParam(":_Param", $param);
+		$stmt->bindParam(":_Value", $value);
+		// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+			$response->success = false;
+			$response->message = "Ошибка!";
+		} else {
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				if($rowset){
+					$response->success = $rowset[0]['State'];
+					$response->message = $rowset[0]['Message'];
+					$response->setting = $rowset;
+				}
+				break;
+			} while ($stmt->nextRowset());
+		}
+		header("Content-type: application/json;charset=utf-8");
+//Fn::debugToLog("resp", json_encode($response));
+		echo json_encode($response);
+	}
+	
 //jsGrid
 	function createTree($category, $lft = 0, $rgt = null) {
 		$tree = array();
@@ -268,7 +326,7 @@ Fn::debugToLog("json", json_encode($result));
 	public function tree_NS() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::paramToLog();
-		$stmt = $this->db->prepare("CALL shop.pr_tree_NS('category', 'CatID', ?, ?, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_tree_b2b('category', 'CatID', ?, ?, ?, ?)");
 		$stmt->bindParam(1, $nodeid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $n_level, PDO::PARAM_STR);
 		$stmt->bindParam(3, $n_left, PDO::PARAM_STR);
@@ -323,8 +381,10 @@ Fn::debugToLog("json", json_encode($result));
 		echo json_encode($response);
 	}
 	public function get_jqgrid3() {
-		foreach ($_REQUEST as $arg => $val)
+		foreach ($_REQUEST as $arg => $val) {
 			${$arg} = $val;
+			if ($_SESSION['ViewRemain'] > 0) if (strpos($val,'FreeBalance')!==false) ${$arg} = 'Qty'.$val;
+		}
 //Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$url = urldecode($_SERVER['QUERY_STRING']);
@@ -354,6 +414,7 @@ Fn::debugToLog("json", json_encode($result));
 if ($action == 'good_list_b2b'){
 	if (isset($Name)||isset($Article)) 
 		$url = str_replace("&group=$group", "", $url);
+	$url .= '&b2bOrderID='.$_SESSION['CurrentOrderID'].'&b2bClientID='.$_SESSION['ClientID'];
 		//Fn::debugToLog('jqgrid3 проверка', "&group=$group");
 }
 if ($action == 'order_list_b2b'){
@@ -390,6 +451,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 					$i = 0;
 					$colCount = $stmt->columnCount();
 					foreach ($rowset as $row) {
+//Fn::debugToLog("row", json_encode($row));
 						$response->rows[$i]['id'] = str_replace('.', '_', $row[0]);
 						$response->rows[$i]['cell'] = array($row[$f1],
 							$row[$f2],
@@ -485,23 +547,24 @@ Fn::debugToLog("select2", json_encode($response));
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
 //Fn::paramToLog();
+		if ($orderid == '' ) $orderid = $_SESSION['CurrentOrderID'];
 		$response = new stdClass();
 		$response->success = false;
 		$response->message = "";
+		$response->orderid = null;
 //		$response->sql = "";
-//		$_SESSION['CurrentOrderID'] = 5;
-		
-//
+		if ($qty  == '') $qty = null;
+		if ($info == '') $info = null;
 		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes)");
 		$stmt->bindParam(":action", $action);
 		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
-		$stmt->bindParam(":_OrderID", $_SESSION['CurrentOrderID']);
+		$stmt->bindParam(":_OrderID", $orderid);
 		$stmt->bindParam(":_GoodID", $goodid);
 		$stmt->bindParam(":_Qty", $qty);
 		$stmt->bindParam(":_Info", $info);
 		$stmt->bindParam(":_Status", $status);
 		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
-		$stmt->bindParam(":_DeliveryAddress", $deliveryAddress);
+		$stmt->bindParam(":_DeliveryAddress", $delivery);
 		$stmt->bindParam(":_Notes", $notes);
 // вызов хранимой процедуры
 		$stmt->execute();
@@ -517,8 +580,8 @@ Fn::debugToLog("select2", json_encode($response));
 					foreach ($rowset as $row) {
 						$response->success = ($row[0] != 0);
 						$response->message = $row[1];
-						$response->row = $row;
-						//$response->sql = $row[1];
+						$response->orderid = $row['CurrentOrderID'];
+						if ($row['CurrentOrderID']!=null) $_SESSION['CurrentOrderID'] = $row['CurrentOrderID'];
 						break;
 					}
 				}
@@ -549,7 +612,7 @@ Fn::debugToLog("select2", json_encode($response));
 		$stmt->bindParam(":_Info", $info);
 		$stmt->bindParam(":_Status", $status);
 		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
-		$stmt->bindParam(":_DeliveryAddress", $deliveryAddress);
+		$stmt->bindParam(":_DeliveryAddress", $delivery);
 		$stmt->bindParam(":_Notes", $notes);
 // вызов хранимой процедуры
 		$stmt->execute();
@@ -567,14 +630,13 @@ Fn::debugToLog("select2", json_encode($response));
 						$str .= '<table id="table_order" class="table table-striped table-bordered font11 minw300 maxw300" cellspacing="0"  width="100%">';
 					foreach ($rowset as $row) {
 						$str .= '<thead>
-									<tr><th colspan=2>' . $row['Name'] . '</th></tr>
-									<tr><th colspan=2>Заказ № ' . $row['OrderID'] . '</th></tr>
-									<tr><th colspan=2>Статус: ' . (($row['Status']==0)?'предварительный':'в обработке') . '</th></tr>
+									<tr><th colspan=2 class="btn-warning" style="height:36px;vertical-align:middle;"><span class="font14 fontb">Заказ № ' . $row['OrderID'] . '</span></th></tr>
+									<tr><th colspan=2 style="height:27px;">Статус: ' . (($row['Status']==0)?'предварительный':'в обработке') . '</th></tr>
 								 </thead>';
 					}
 				}
 				if ($cnt == 2) {
-						$str .= '<thead><tr>
+						$str .= '<thead><tr style="height:24px;">
 									<th class="w100 center">Название</th>
 									<th class="w30  center">К-во</th></tr>
 								 </thead><tbody>';
@@ -615,19 +677,19 @@ Fn::debugToLog("select2", json_encode($response));
 		$response->message = "";
 		$response->html = "";
 
-//		$_SESSION['CurrentOrderID'] = 5;
 		$action = 'order_info';
-//
+		if ($orderid == '') $orderid = $_SESSION['CurrentOrderID'];
+
 		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes)");
 		$stmt->bindParam(":action", $action);
 		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
-		$stmt->bindParam(":_OrderID", $_SESSION['CurrentOrderID']);
+		$stmt->bindParam(":_OrderID", $orderid);
 		$stmt->bindParam(":_GoodID", $goodid);
 		$stmt->bindParam(":_Qty", $qty);
 		$stmt->bindParam(":_Info", $info);
 		$stmt->bindParam(":_Status", $status);
 		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
-		$stmt->bindParam(":_DeliveryAddress", $deliveryAddress);
+		$stmt->bindParam(":_DeliveryAddress", $delivery);
 		$stmt->bindParam(":_Notes", $notes);
 // вызов хранимой процедуры
 		$stmt->execute();
@@ -642,60 +704,62 @@ Fn::debugToLog("select2", json_encode($response));
 				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
 				$response->success = true;
 				if ($cnt == 1) {
-				foreach ($rowset as $row) {
-					$str .= '<h4 class="form-signin-heading center mt10 mb10 TAL">Организация: '.$row['Name'].'</h3>
-							 <div class="row">
-								<div class = "col-md-12">
-									<div class = "floatL">
-										<div class="input-group input-group-sm w300">
-										   <span class = "input-group-addon w130">Заказ №</span>
-										   <span class = "input-group-addon form-control TAC">' . $row['OrderID'] . '</span>
-										   <span class = "input-group-addon w32"></span>
+					foreach ($rowset as $row) {
+//										<h4 class="form-signin-heading center mt10 mb10 TAL floatL">Организация: '.$row['Name'].'</h3>
+						$str .= '
+								 <input id="orderid" type="hidden" value="' . $row['OrderID'] . '"/>';
+						if (!$view)
+						$str .= '
+								 <div class="row">
+									<div id="div_order_buttons" class = "col-md-12 col-xs-12 TAL hidden-print">
+<button id="good_add"	type="button" class="btn btn-primary	btn-sm minw150 mb5"><span class="glyphicon glyphicon-plus mr5"></span>Добавить товар</button>
+<button id="import"		type="button" class="btn btn-lilac		btn-sm minw150 mb5"><span class="glyphicon glyphicon-import mr5"></span>Импорт CSV</button>
+<button id="export"		type="button" class="btn btn-warning	btn-sm minw150 mb5"><span class="glyphicon glyphicon-export mr5"></span>Експорт в CSV</button>
+<button id="delete"		type="button" class="btn btn-danger		btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash mr5"></span>Удалить заказ</button>
+<button id="print"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-print mr5"></span>Печать заказа</button>
+<button id="state"		type="button" class="btn btn-success	btn-sm minw150 mb5" title="Отправить заказ поставщику?"><span class="glyphicon glyphicon-ok mr5"></span>В обработку</button>
+									</div>
+								 </div>';
+						$str .= '
+								 <div class="row">
+									<div class = "col-md-12 col-xs-12">
+										<div class = "floatL">
+											<div class="input-group input-group-sm w300">
+											   <span class = "input-group-addon w130">Заказ №</span>
+											   <span class = "input-group-addon form-control TAC">' . $row['OrderID'] . '</span>
+											   <span class = "input-group-addon w32"></span>
+											</div>
+											<div class="input-group input-group-sm w300">
+											   <span class = "input-group-addon w130">Статус:</span>
+											   <span class = "input-group-addon form-control TAC">' . $row['State'] . '</span>
+											   <span class = "input-group-addon w32"></span>
+											</div>
 										</div>
-										<div class="input-group input-group-sm w300">
-										   <span class = "input-group-addon w130">Статус:</span>
-										   <span class = "input-group-addon form-control TAC">' . $row['State'] . '</span>
-										   <span class = "input-group-addon w32"></span>
+										<div class="floatL ml10">&nbsp</div>
+										<div class="floatL">
+										   <div class="input-group input-group-sm w500">
+											  <span class = "input-group-addon w130">Адрес доставки:</span>
+											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['DeliveryAddress'].'" onchange="good_edit(\'order_edit_delivery\',this,0,0,0,$(this).val(),0);">
+											  <span class = "input-group-addon w32"></span>
+										   </div>
+										   <div class="input-group input-group-sm w500">
+											  <span class = "input-group-addon w130">Примечание:</span>
+											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['Notes'].'" onchange="good_edit(\'order_edit_notes\',this,0,0,0,0,$(this).val());">
+											  <span class = "input-group-addon w32"></span>
+										   </div>
 										</div>
 									</div>
-									<div class="floatL ml10">&nbsp</div>
-									<div class="floatL">
-									   <div class="input-group input-group-sm w500">
-										  <span class = "input-group-addon w130">Адрес доставки:</span>
-										  <input type = "text" class = "form-control" autofocus value = "'.$row['DeliveryAddress'].'">
-										  <span class = "input-group-addon w32"></span>
-									   </div>
-									   <div class="input-group input-group-sm w500">
-										  <span class = "input-group-addon w130">Примечание:</span>
-										  <input type = "text" class = "form-control" autofocus value = "'.$row['Notes'].'">
-										  <span class = "input-group-addon w32"></span>
-									   </div>
-									</div>
-								</div>
-							 </div>
-							 ';
-				}
-//						$str .= '<table id="table_header" class="table table-bordered font12 minw300 maxw1000" cellspacing="0"  width="100%">';
-//						foreach ($rowset as $row) {
-//							$str .= '<thead><tr><th colspan=8>' . $row['Name'] . '</th></tr></thead>
-//									<tbody><tr>
-//											<td colspan=1 class="w100">Заказ №</td><td colspan=1 class="w100">' . $row['OrderID'] . '</td>
-//											<td colspan=2 class="w200">Адрес доставки:</td><td colspan=4 class="w400">' . $row['DeliveryAddress'] . '</td>
-//										</tr>
-//										<tr>
-//											<td colspan=1>Статус:</td><td colspan=1>' . $row['State'] . '</td>
-//											<td colspan=2>Примечание:</td><td colspan=4>' . $row['Notes'] . '</td>
-//										</tr>
-//									 </tbody>';
-//						}
-//						$str .= '</table><br>';
+								 </div>
+								 ';
+					}
 				}
 				if ($cnt == 2) {
-					$str .= '<div class="panel panel-default mt10">';
-					$str .= '<table id="table_order" class="table table-striped table-bordered font12 minw300 maxw1000" cellspacing="0"  width="100%">';
+					$str .= '<div class="panel panel-default mt10 mr5 0maxw1000">';
+					$str .= '<table id="table_order" class="table table-striped table-bordered font12 minw400" cellspacing="0"  width="100%">';
 					$str .= '<thead><tr>
 									<th class="w100 center">Артикул</th>
 									<th class="w300 center">Название</th>
+									<th class="w100 center">Примечание</th>
 									<th class="w50  center">К-во</th>
 									<th class="w50  center">Прайс</th>
 									<th class="w30  center">%</th>
@@ -706,8 +770,26 @@ Fn::debugToLog("select2", json_encode($response));
 					foreach ($rowset as $row) {
 						$str .= '<tr>
 									<td class="TAL">' . $row['Article'] . '</td>
-									<td class="TAL">' . $row['Name'] . '</td>
-									<td class="TAC">' . $row['Quantity'] . '</td>
+									<td class="TAL">' . $row['Name'] . '</td>';
+						if (!$view){
+						$str .= '
+									<td class="TAL">
+										<input type="text" class="TAL editable inline-edit-cell" style="line-height:17px;width:100%;" min=0 onchange="good_edit(\'order_edit_good_info\',this,'. $row['GoodID'] .',null,$(this).val());" value="' . $row['Info'] . '">
+									</td>
+									<td class="TAC">
+										<input type="number" class="TAR editable inline-edit-cell" style="line-height:17px;width:60%;min-width:40px;" min=0 onchange="good_edit(\'order_edit\',this,'. $row['GoodID'] .',$(this).val(),null);" value="' . $row['Quantity'] . '">
+										<span class="ml5 mr5 glyphicon glyphicon-remove hidden-print" onclick="good_edit(\'order_edit\',$(this).prev(),'. $row['GoodID'] .',0);"></span>
+									</td>';
+						} else {
+						$str .= '
+									<td class="TAL w150">
+										' . $row['Info'] . '
+									</td>
+									<td class="TAC w70">
+										' . $row['Quantity'] . '
+									</td>';
+						}
+						$str .= '
 									<td class="TAR">' . $row['PriceBase'] . '</td>
 									<td class="TAC">' . $row['DiscountPercent'] . '</td>
 									<td class="TAR">' . $row['PriceDiscount'] . '</td>
@@ -716,15 +798,15 @@ Fn::debugToLog("select2", json_encode($response));
 								 </tr>';
 					}
 					if ($stmt->rowCount() == 0){
-						$str .= '<tr><td colspan=8 class="TAC">В заказе нет товаров</td></tr>';
+						$str .= '<tr><td colspan=9 class="TAC">В заказе нет товаров</td></tr>';
 					}
 					$str .= '</tbody>';
 				}
 				if ($cnt == 3) {
 					foreach ($rowset as $row) {
 						$str .= '<tfoot>
-									<tr><th colspan=7>Сумма скидки:</th><th class="TAR">' . $row['SumDiscount'] . '</th></tr>
-									<tr><th colspan=7>Сумма заказа:</th><th class="TAR">' . $row['Sum'] . '</th></tr>
+									<tr><th colspan=8>Сумма скидки:</th><th class="TAR">' . $row['SumDiscount'] . '</th></tr>
+									<tr><th colspan=8>Сумма заказа:</th><th class="TAR">' . $row['Sum'] . '</th></tr>
 								 </tfoot>';
 					}
 					$str .= '</table></div>';
@@ -737,5 +819,254 @@ Fn::debugToLog("select2", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
+	public function order_export_csv() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
 
+//		$_SESSION['CurrentOrderID'] = 5;
+		$action = 'order_info';
+		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes)");
+		$stmt->bindParam(":action", $action);
+		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
+		$stmt->bindParam(":_OrderID", $_SESSION['CurrentOrderID']);
+		$stmt->bindParam(":_GoodID", $goodid);
+		$stmt->bindParam(":_Qty", $qty);
+		$stmt->bindParam(":_Info", $info);
+		$stmt->bindParam(":_Status", $status);
+		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
+		$stmt->bindParam(":_DeliveryAddress", $delivery);
+		$stmt->bindParam(":_Notes", $notes);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+		} else {
+			$cnt = 1;
+			$str = '';
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+				if ($cnt == 1) {
+					foreach ($rowset as $row) {
+						$str .= '"Client";"'.$row['Name']."\"\r\n";
+						$str .= '"OrderID";"'.$row['OrderID']."\"\r\n";
+						$str .= '"State";"'.$row['State']."\"\r\n";
+						$str .= '"DT_create";"'.$row['DT_create']."\"\r\n";
+						$str .= '"DT_modi";"'.$row['DT_modi']."\"\r\n";
+						$str .= '"DT_close";"'.$row['DT_close']."\"\r\n";
+						$str .= '"Delivery";"'.$row['Delivery']."\"\r\n";
+						$str .= '"Notes";"'.$row['Notes']."\"\r\n";
+//						$str .= '"Client";"OrderID";"State";"Delivery";"Notes"'."\r\n";
+//						$str .= '"'.$row['Name'].'";"'.$row['OrderID'].'";"'.$row['State'].'";"' . $row['DeliveryAddress'] . '";"'.$row['Notes'].'"'."\r\n";
+					}
+				}
+				if ($cnt == 2) {
+					$str2 = '"GoodID";"Article";"Name";"Info";"Qty";"PriceBase";"DiscountPercent";"Discount";"Price";"Sum"'."\r\n";
+					foreach ($rowset as $row) {
+						$str2 .= '"'.$row['GoodID'].'";"'.$row['Article'].'";"'.$row['Name'].'";"'.$row['Info'].'";"'.$row['Quantity'].'";"'.$row['PriceBase'].'";"'.$row['DiscountPercent'].'";"'.$row['PriceDiscount'].'";"'.$row['Price'].'";"'.$row['Sum'].'"'."\r\n";
+					}
+				}
+				if ($cnt == 3) {
+					foreach ($rowset as $row) {
+						$str .= '"Sum";"' . $row['Sum'] . "\"\r\n";
+					}
+					$str .= "\r\n";
+				}
+				$cnt++;
+			} while ($stmt->nextRowset());
+		}
+		$str .= $str2;
+		$str = iconv('UTF-8', 'CP1251', $str);
+		
+		$userFileName = "order_".$_SESSION['CurrentOrderID'].".csv";
+		$path = 'php://output';
+		header('Content-Description: File Transfer');
+//		header('Content-Type: application/csv;charset=cp1251');
+		header("Content-Disposition: attachment; filename=\"" . $userFileName . "\";");
+		header('Content-Transfer-Encoding: binary');
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Pragma: public");
+		header('Content-Length: ' . strlen($str));
+		file_put_contents($path, $str);
+	}
+	public function order_csv_view() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "";
+		$response->html = "";
+		$str = '';
+		$str0 = '';
+		$csv = Fn::csv_to_array2('users_csv/'.$filename);
+		if ($csv === false) {
+			$response->message = 'ошибка при получении массива из файла!';
+			return;
+		}
+		$opt_ids = array_column($csv,0);
+		$str_opt_ids = implode(",", $opt_ids);
+		//echo json_encode($opt_ids).'<br>';
+		$stmt = $this->db->prepare("call pr_goods_check('goods_list', @_id, :_ClientID, :_StoreID, :_OPT_ID, :_GoodIDs)");
+		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
+		$stmt->bindParam(":_StoreID", $_SESSION['StoreID']);
+		$stmt->bindParam(":_OPT_ID", $str_opt_ids);
+		$stmt->bindParam(":_GoodIDs", $goodids);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+			$response->success = false;
+			$response->message = "Ошибка при получении информации!";
+		} else {
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				foreach ($rowset as $row) {
+					$key = array_search($row['OPT_ID'], $opt_ids);
+					if ($key!==FALSE) {
+						$csv[$key]['Price'] = $row['Price'];
+						$csv[$key]['QtyFB'] = ($_SESSION['StoreID']==23)?$row['QtyFreeBalance23']:$row['QtyFreeBalance'];
+						$csv[$key]['GoodID'] = $row['GoodID'];
+						//echo json_encode($csv[$key]) . '<br>';
+					}
+				}
+			} while ($stmt->nextRowset());
+		}
+//return;
+		$head  = '<link href="../css/bs-default/bootstrap.css" rel="stylesheet">';
+		$head .= '<link href="../css/fs.css" rel="stylesheet">';
+		//$str .= '<h4 class = "mt0">StoreID:'.$_SESSION['StoreID'].'</h4>';
+		$str0 .= '<button id = "order_import" type = "button" class = "btn btn-lilac btn-sm minw150 mb5"><span class = "glyphicon glyphicon-import mr5"></span>Загрузить заказ</button >';
+		$str0 .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые НЕ попадут в заказ:</h4>';
+		$str  .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые попадут в заказ:</h4>';
+		$tr    = '<table class = "table table-striped table-bordered font12 minw400" cellspacing = "0" width = "100%">
+					<thead><tr>
+						<th class = "w10p center">Код</th>
+						<th class = "w10p center">Артикул</th>
+						<th class = "w30p center">Название</th>
+						<th class = "w10p center">Цена<br>в файле</th>
+						<th class = "w10p center">Цена<br>текущая</th>
+						<th class = "w5p center">Разница<br>в грн.</th>
+						<th class = "w5p center">К-во</th>
+						<th class = "w10p center">Наличие</th>
+						<th class = "w10p center">Примечание</th>
+					</tr></thead><tbody>';
+		$str0 .= $tr;
+		$str  .= $tr;
+		foreach ($csv as $key => $row) {
+			if (is_array($row)) {
+				$perc = $row['Price']*100/$row[3]-100;
+				$clr_price	= (abs($perc) >= 2)?'bc13':'';
+				$clr_qty	= ($row[4]>$row['QtyFB'])?'bc3':'';
+				$msg_qty	= ($row[4]>$row['QtyFB'])?'не хватает':'достаточно';
+				$tr = '<tr>
+							<td class="TAL">'.$row[0].'</td>
+							<td class="TAL">'.$row[1].'</td>
+							<td class="TAL">'.$row[2].'</td>
+							<td class="TAR '.$clr_price.'">'.Fn::nf($row[3]).'</td>
+							<td class="TAR '.$clr_price.'">'.Fn::nf($row['Price']).'</td>
+							<td class="TAC">'.Fn::nf($row['Price']-$row[3],1).'</td>
+							<td class="TAR">'.Fn::nfx($row[4]).'</td>
+							<td class="TAC '.$clr_qty.'">'.$msg_qty.'</td>
+							<td class="TAC">'.'</td>
+						</tr>';
+				if ($row[4] > $row['QtyFB']) {$str0 .= $tr;} else {$str .= $tr;}
+			}
+		}
+		$str .= "</tbody></table>";
+		$str0 .= "</tbody></table>";
+//		echo $head;
+//		echo $str0;
+//		echo $str;
+		$response->html = $str0.  $str;
+		$response->success = true;
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
+	public function order_csv_import() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "";
+		$response->html = "";
+		$str = '';
+		$str0 = '';
+		$csv = Fn::csv_to_array2('users_csv/'.$filename);
+		if ($csv === false) {
+			$response->message = 'ошибка при получении массива из файла!';
+			return;
+		}
+		$opt_ids = array_column($csv,0);
+		$str_opt_ids = implode(",", $opt_ids);
+//echo json_encode($opt_ids).'<br>';
+		$stmt = $this->db->prepare("call pr_goods_check('goods_list', @_id, :_ClientID, :_StoreID, :_OPT_ID, :_GoodIDs)");
+		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
+		$stmt->bindParam(":_StoreID", $_SESSION['StoreID']);
+		$stmt->bindParam(":_OPT_ID", $str_opt_ids);
+		$stmt->bindParam(":_GoodIDs", $goodids);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+			$response->success = false;
+			$response->message = "Ошибка при получении информации!";
+		} else {
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				foreach ($rowset as $row) {
+					$key = array_search($row['OPT_ID'], $opt_ids);
+					if ($key!==FALSE) {
+						$csv[$key]['Price'] = $row['Price'];
+						$csv[$key]['QtyFB'] = ($_SESSION['StoreID']==23)?$row['QtyFreeBalance23']:$row['QtyFreeBalance'];
+						$csv[$key]['GoodID'] = $row['GoodID'];
+						//echo json_encode($csv[$key]) . '<br>';
+					}
+				}
+			} while ($stmt->nextRowset());
+		}
+		$stmt = $this->db->prepare("call pr_order('order_edit', @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes)");
+		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
+		$stmt->bindParam(":_OrderID", $orderid);
+		$stmt->bindParam(":_GoodID", $goodid);
+		$stmt->bindParam(":_Qty", $qty);
+		$stmt->bindParam(":_Info", $info);
+		$stmt->bindParam(":_Status", $status);
+		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
+		$stmt->bindParam(":_DeliveryAddress", $delivery);
+		$stmt->bindParam(":_Notes", $notes);
+		foreach ($csv as $key => $row) {
+			if (is_array($row)) {
+				if ($row[4] > $row['QtyFB']) continue;
+//echo json_encode($row).'<br>';
+				$goodid = $row['GoodID'];
+				$qty = $row[4];
+// вызов хранимой процедуры
+				$stmt->execute();
+				if (!Fn::checkErrorMySQLstmt($stmt)) {
+					$ar = $stmt->errorInfo();
+					$response->success = false;
+					$response->message = "Ошибка при внесении товара в заказ!";
+					break;
+				} else {
+					do {
+						$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+						if ($rowset) {
+							foreach ($rowset as $row) {
+								$response->success = ($row[0] != 0);
+								$response->message = $row[1];
+								$response->orderid = $row['CurrentOrderID'];
+								break;
+							}
+						}
+					} while ($stmt->nextRowset());
+				}
+			}
+		}
+//Fn::debugToLog('response',json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
 }

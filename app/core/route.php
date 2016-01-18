@@ -1,6 +1,7 @@
 <?php
 class Route {
 	static function start() {
+//Fn::debugToLog("REQUEST_URI", urldecode($_SERVER['REQUEST_URI']));
 		$pos = strpos($_SERVER['REQUEST_URI'], 'favicon.ico');
 		if ($pos !== FALSE)
 			Route::toFavicon();
@@ -29,10 +30,10 @@ class Route {
 		//проверяем есть ли доступ к системе
 		//Fn::debugToLog("test", 'access='.$_SESSION['access'].' $controller_name='.$controller_name);
 		//$_SESSION['access'] = true;
-		if ($controller_name == 'main' && $action_name == 'index') {
-			Fn::redirectToControllerAndAction('main', 'orders');
-			return;
-		}
+//		if ($controller_name == 'main' && $action_name == 'index') {
+//			Fn::redirectToControllerAndAction('main', 'orders');
+//			return;
+//		}
 		if ($_SESSION['access'] == '' && $controller_name != 'login' && $action_name != 'captcha') {
 			Fn::redirectToController('login');
 			return;
