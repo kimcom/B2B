@@ -3,6 +3,7 @@ class Cnn {
 	private $db = null;
 	public function __construct() {
 		try {
+			// 192.168.1.3
 			$this->db = new PDO('mysql:host=localhost;dbname=' . $_SESSION['dbname'] . ';port=' . $_SESSION['server_port'], $_SESSION['server_user'], $_SESSION['server_pass'], array(1006));
 		} catch (PDOException $e) {
 			Fn::errorToLog("PDO error!: ", $e->getMessage());

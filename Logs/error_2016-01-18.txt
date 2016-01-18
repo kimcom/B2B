@@ -1,0 +1,2 @@
+2016-01-18 18:47: stmt error 42000: 1305 PROCEDURE b2b.pr_tree_b2b does not exist
+2016-01-18 19:15: stmt error 42000: 1305 PROCEDURE b2b.pr_tree_b2b does not exist
