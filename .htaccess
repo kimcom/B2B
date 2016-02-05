@@ -12,6 +12,9 @@ Options -Indexes
 DefaultLanguage ru
 AddDefaultCharset UTF-8
 
+php_value session.gc_maxlifetime 7200
+php_value session.save_path "D:/Sites/SESSION/B2B"
+
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
