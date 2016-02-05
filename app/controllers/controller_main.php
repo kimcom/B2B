@@ -12,5 +12,10 @@ class Controller_Main extends Controller {
 	function action_orders() {
 		$this->view->generate('view_orders.php', 'view_template.php');
 	}
+	
+	function action_profile() {
+		$this->view->generate('view_profile.php', 'view_template.php');
+	}
+
 }
 ?>

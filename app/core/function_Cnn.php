@@ -229,6 +229,49 @@ class Cnn {
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
+	public function user_info_save() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		Fn::debugToLog('userID', $userID);
+//		if($_SESSION['UserID'] != $userid) return;
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "";
+		$stmt = $this->db->prepare("CALL pr_user('save', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $username, PDO::PARAM_STR);
+		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
+		$stmt->bindParam(3, $email, PDO::PARAM_STR);
+		$stmt->bindParam(4, $fio, PDO::PARAM_STR);
+		$stmt->bindParam(5, $post, PDO::PARAM_STR);
+		$stmt->bindParam(6, $companyID, PDO::PARAM_STR);
+		$stmt->bindParam(7, $company, PDO::PARAM_STR);
+		$stmt->bindParam(8, $phone, PDO::PARAM_STR);
+		$stmt->bindParam(9, $userID, PDO::PARAM_STR);
+		$stmt->bindParam(10, $accesslevel, PDO::PARAM_STR);
+		$stmt->bindParam(11, $storeID, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+			$response->success = false;
+			$response->message = "Ошибка при изменении данных!";
+			//$response->sql = $ar[1] . ' ' . $ar[2];
+		} else {
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+				if ($rowset) {
+					foreach ($rowset as $row) {
+						$response->success = ($row[0] != 0);
+						$response->message = $row[1];
+						break;
+					}
+				}
+			} while ($stmt->nextRowset());
+		}
+//Fn::debugToLog("resp", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
 
 //setting
 	public function config(){

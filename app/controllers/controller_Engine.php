@@ -137,4 +137,10 @@ class Controller_Engine extends Controller {
 		$cnn = new Cnn();
 		return $cnn->order_csv_import();
 	}
+
+	function action_user_info_save() {
+		$cnn = new Cnn();
+		return $cnn->user_info_save();
+	}
+
 }
