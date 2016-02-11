@@ -1,16 +1,11 @@
 <?php
 class Controller_Engine extends Controller {
-	public function action_captcha_check() {
-		if (md5($_POST['norobot']) == $_SESSION['randomnr2']) {
-			echo "Отлично , кажется, что вы не робот";
-		} else {
-			echo "вы весьма надоедливый бот!";
-		}
-	}
 	public function action_captcha() {
 	// создаем случайное число и сохраняем в сессии
 		$randomnr = rand(1000, 9999);
 		$_SESSION['randomnr2'] = md5($randomnr);
+//Fn::debugToLog("captcha set", $randomnr);
+//Fn::debugToLog("captcha set", $_SESSION['randomnr2']);
 		//создаем изображение
 		$im = imagecreatetruecolor(120, 60);
 
@@ -43,18 +38,6 @@ class Controller_Engine extends Controller {
 		imagedestroy($im);
 	}
 	
-//	public function action_testlistusers(){
-//		$cnn = new Cnn();
-//		$cnn->user_list();
-//	}
-//	public function action_tree1() {
-//		$cnn = new Cnn();
-//		$cnn->tree1();
-//	}
-//	public function action_tree2() {
-//		$cnn = new Cnn();
-//		$cnn->tree();
-//	}
 	public function action_catalog() {
 		$cnn = new Cnn();
 		$cnn->tree();
@@ -63,9 +46,44 @@ class Controller_Engine extends Controller {
 		$cnn = new Cnn();
 		$cnn->get_JSgrid();
 	}
+
+	public function action_order_export_csv() {
+		$cnn = new Cnn();
+		$cnn->order_export_csv();
+	}
 	public function action_order_edit() {
 		$cnn = new Cnn();
 		$cnn->order_edit();
+	}
+	public function action_order_info() {
+		$cnn = new Cnn();
+		$cnn->order_info();
+	}
+	public function action_order_info_full() {
+		$cnn = new Cnn();
+		$cnn->order_info_full();
+	}
+
+	public function action_tree_NS() {
+		$cnn = new Cnn();
+		$cnn->tree_NS();
+	}
+//	public function action_goods_list2() {
+//		$cnn = new Cnn();
+//		$cnn->goods_list();
+//	}
+	
+	function action_jqgrid3() {
+		$cnn = new Cnn();
+		return $cnn->get_jqgrid3();
+	}
+	function action_select2() {//for select2
+		$cnn = new Cnn();
+		return $cnn->select2();
+	}
+	function action_select_search() {//for select2
+		$cnn = new Cnn();
+		return $cnn->select_search();
 	}
 
 	public function action_tree_json() {
@@ -104,5 +122,11 @@ class Controller_Engine extends Controller {
 	
 	public function action_404() {
 		$this->view->generate('view_template_404.php', 'view_template.php');
+	}
+	public function action_banners() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		if ($id=='1') $_SESSION['banners1'] = $_SESSION['banners1'] == false;
+		if ($id=='2') $_SESSION['banners2'] = $_SESSION['banners2'] == false;
+		header('Location:' . $_SERVER['HTTP_REFERER']);
 	}
 }
