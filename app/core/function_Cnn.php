@@ -96,7 +96,7 @@ class Cnn {
 		if (!Fn::checkErrorMySQLstmt($stmt)) {
 			$ar = $stmt->errorInfo();
 			$response->success = false;
-			$response->message = "Ошибка восстановления доступа к системе!";
+			$response->message = "Ошибка доступа!";
 			$response->sql = $ar[1] . ' ' . $ar[2];
 		} else {
 			do {
@@ -249,6 +249,42 @@ E-mail:" . $_SESSION['adminEmail'] . "
 //Fn::debugToLog("send", 'stop');
 		}
 //Fn::debugToLog("resp", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
+	
+	public function user_feedback() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		$response = new stdClass();
+		$response->success = true;
+		$response->message = "Сообщение успешно отправлено!";
+		
+		if (md5($captcha) != $_SESSION['randomnr2']) {
+			$response->success = false;
+			$response->message = "Неверный проверочный код!";
+			header("Content-type: application/json;charset=utf-8");
+			echo json_encode($response);
+			return;
+		}
+		
+		if ($response->success) {
+//Fn::debugToLog("send", 'start');
+//Fn::debugToLog("email", $email);
+//Fn::debugToLog("fio", $fio);
+//Fn::debugToLog("subject", $subject);
+//Fn::debugToLog("message", $message);
+
+			//$sended = Mail::smtpmail($email, $fio, $subject, $message);
+			
+			$sended = Mail::smtpmail($email, $_SESSION['adminEmail'], $fio, $subject, $message);
+			if (!$sended) {
+				$response->success = false;
+				$response->message = "Ошибка при отправке сообщения!";
+				echo json_encode($response);
+			}
+		}
+//Fn::debugToLog("resp", json_encode($response));
+		Fn::debugToLog("response", $response);
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}

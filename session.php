@@ -9,7 +9,6 @@
 	//$_SESSION['bs_style'] = 'bs-readable';
 	//$_SESSION['bs_style'] = 'bs-simplex';
 	$_SESSION['nav_style'] = 'default';
-	//$_SESSION['nav_style'] = 'inverse'; //A15
 
 	$_SESSION['server_port'] = '3306';
 	$_SESSION['server_user'] = 'b2b';

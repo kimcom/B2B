@@ -7,6 +7,7 @@
 	if ($url=='/main/promo')	$active5 = 'active';
 	if ($url=='/main/helper')	$active11 = 'active';
 	if ($url=='/main/profile' || $url == '/main/setting') $active20 = 'active';
+	if ($url=='/main/feedback')	$active21 = 'active';
 ?>
 
 <nav class="navbar navbar-<?php echo $_SESSION['nav_style']; ?>" role="navigation">
@@ -52,6 +53,7 @@ if ($_SESSION['UserID'] < 10) {
 ?>
 				<li class="minw100 <?php echo $active11; ?>"><a href="/main/helper">HELPER</a></li>
 <?php } ?>
+				<li class="minw100 <?php echo $active21; ?>"><a href="/main/feedback">Связаться с нами</a></li>
 				<li class="minw100 dropdown <?php echo $active20; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['ClientName'];?><b class="caret"></b></a>
 					<ul class="dropdown-menu">

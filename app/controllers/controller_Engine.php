@@ -142,5 +142,11 @@ class Controller_Engine extends Controller {
 		$cnn = new Cnn();
 		return $cnn->user_info_save();
 	}
-
+	
+	function action_user_contact() {
+		$cnn = new Cnn();
+		return $cnn->user_contact();
+	}
+	
+	
 }

@@ -17,5 +17,9 @@ class Controller_Main extends Controller {
 		$this->view->generate('view_profile.php', 'view_template.php');
 	}
 
+	function action_feedback() {
+		$this->view->generate('view_feedback.php', 'view_template.php');
+	}
+
 }
 ?>
