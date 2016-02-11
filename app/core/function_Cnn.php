@@ -253,7 +253,7 @@ E-mail:" . $_SESSION['adminEmail'] . "
 		echo json_encode($response);
 	}
 	
-	public function user_feedback() {
+	public function feedback() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 		$response = new stdClass();
 		$response->success = true;
