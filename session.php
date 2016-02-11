@@ -19,7 +19,7 @@ if (!isset($_SESSION['dbname']))
 if (!isset($_SESSION['siteEmail']))
 	$_SESSION['siteEmail'] = 'b2b@priroda.ua';
 if (!isset($_SESSION['adminEmail']))
-	$_SESSION['adminEmail'] = 'deepsapple@mail.ru';
+	$_SESSION['adminEmail'] = 'kimcom@ukr.net';
 if (!isset($_SESSION['UserID']))
     $_SESSION['UserID'] = 0;
 if (!isset($_SESSION['UserName']))
