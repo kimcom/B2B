@@ -35,7 +35,7 @@ $(document).ready(function(){
 		if($("#message").val() < 1)		   err_msg += "<h4>- не введено сообщение</h4>";
 		
 		if(err_msg.length == ""){
-			$.post("/engine/user_contact",{
+			$.post("/engine/feedback",{
 				email: $("#email").val(),
 				fio: $("#name").val(),
 				subject: $("span.select2-chosen").html(),

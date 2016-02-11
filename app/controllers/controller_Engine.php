@@ -119,7 +119,7 @@ class Controller_Engine extends Controller {
 }';
 		
 	}
-	
+
 	public function action_404() {
 		$this->view->generate('view_template_404.php', 'view_template.php');
 	}
@@ -135,9 +135,9 @@ class Controller_Engine extends Controller {
 		return $cnn->user_info_save();
 	}
 	
-	function action_user_contact() {
+	function action_feedback() {
 		$cnn = new Cnn();
-		return $cnn->user_contact();
+		return $cnn->feedback();
 	}
 	
 	

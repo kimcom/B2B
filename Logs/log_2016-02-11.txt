@@ -1,0 +1,21 @@
+2016-02-11 14:33:19 mail_to: DeepSapple@mail.ru123
+2016-02-11 14:33:19 mail_reply: deepsapple@mail.ru
+2016-02-11 14:33:19 fio: Миргородский Е.О.
+2016-02-11 14:33:19 subject: Предлагаю...
+2016-02-11 14:33:19 message: вывывф
+2016-02-11 14:33:19 send: Date: Thu, 11 Feb 2016 14:33:19 UT
+From: =?UTF-8?B?0JDQtNC80LjQvdC40YHRgtGA0LDRhtC40Y8g0YHQsNC50YLQsCDQodC40YHRgtC10LzQsCDQtNC70Y8g0L7Qv9GC0L7QstGL0YUg0LrQu9C40LXQvdGC0L7QsiDQutC+0LzQv9Cw0L3QuNC4INCh0YPQt9C40YDRjNC1JnRyYWRlOw===?=<b2b@priroda.ua>
+Reply-To:   =?UTF-8?B?0JzQuNGA0LPQvtGA0L7QtNGB0LrQuNC5INCVLtCeLg===?= <deepsapple@mail.ru>
+To:   =?UTF-8?B?0JzQuNGA0LPQvtGA0L7QtNGB0LrQuNC5INCVLtCeLg===?= <DeepSapple@mail.ru123>
+
+2016-02-11 14:33:19 send: Date: Thu, 11 Feb 2016 14:33:19 UT
+From: =?UTF-8?B?0JDQtNC80LjQvdC40YHRgtGA0LDRhtC40Y8g0YHQsNC50YLQsCDQodC40YHRgtC10LzQsCDQtNC70Y8g0L7Qv9GC0L7QstGL0YUg0LrQu9C40LXQvdGC0L7QsiDQutC+0LzQv9Cw0L3QuNC4INCh0YPQt9C40YDRjNC1JnRyYWRlOw===?=<b2b@priroda.ua>
+Reply-To:   =?UTF-8?B?0JzQuNGA0LPQvtGA0L7QtNGB0LrQuNC5INCVLtCeLg===?= <deepsapple@mail.ru>
+To:   =?UTF-8?B?0JzQuNGA0LPQvtGA0L7QtNGB0LrQuNC5INCVLtCeLg===?= <DeepSapple@mail.ru123>
+Subject: =?UTF-8?B?0J/RgNC10LTQu9Cw0LPQsNGOLi4u=?=
+Sender: <b2b@priroda.ua>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Priority: 3X-Mailer: PHP/5.3.2вывывф
+
