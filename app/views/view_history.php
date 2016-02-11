@@ -2,12 +2,61 @@
 <div class="container bs-docs-container">
 	<h3 class="mt0">История изменений в системе B2B</h3>
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
-		<li class="active"><a href="#tab_20160201" role="tab" data-toggle="tab">2016-02-01</a></li>
+		<li class="active"><a href="#tab_20160210" role="tab" data-toggle="tab">2016-02-10</a></li>
+		<li class="0active"><a href="#tab_20160201" role="tab" data-toggle="tab">2016-02-01</a></li>
 		<li class="0active"><a href="#tab_20160125" role="tab" data-toggle="tab">2016-01-25</a></li>
 		<li class="0active"><a href="#tab_20160119" role="tab" data-toggle="tab">2016-01-19</a></li>
 	</ul>
 	<div class="tab-content">
-		<div id="tab_20160201" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+		<div id="tab_20160210" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+			<div class="bs-docs-section m10">
+				<h4 class="m0 mt5">Раздел: Управление пользователями</h4>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Форма идентификации клиента менеджером:
+							<ul>
+								<li>После регистрации пользователя сервер уведомляет по e-mail сотрудников компании.<br>
+									В письме присутствует ссылка на форму идентификации.<br>
+									Сотрудник компании должен выполнить идентификацию клиента, т.е.<br>
+									перейти по ссылке и указать компанию клиента, склад отгрузки и прочую информацию.
+								</li>
+								<li>ВНИМАНИЕ!<ul>
+										<li>После выполнения идентификации необходимо нажать кнопку "СОХРАНИТЬ ДАННЫЕ"!</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<h4 class="m0 mt5">Раздел: обмен данными</h4>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Выгрузка в 1С:
+							<ul>
+								<li>После формирования заказа пользователь нажимает кнопку "В обработку" -
+									заказ получает статус "Отправлен".<br>
+									Пользователь больше не сможет вносить изменения в этот заказ.
+								</li>
+								<li>В программе 1С (меню Сервис/Заказы B2B) - 
+									сотрудники компании могут видеть и загружать заказы со статусом "Отправлен".<br>
+									Автоматическая загрузка заказов происходит каждые 5 минут.
+									Заказы получают статус "Загружен в 1С".<br>
+								</li>
+								<li>В 1С после проведения документа "Заказ покупателя" -
+									заказ получает статус "Обработан".
+								</li>
+								<li>В 1С после формирования и проведения РН -
+									заказ получает статус "Отгружен".
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="tab_20160201" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 0active">
 			<div class="bs-docs-section m10">
 				<h4 class="m0 mt5">Раздел: Каталог</h4>
 				<div class="bs-callout bs-callout-danger">

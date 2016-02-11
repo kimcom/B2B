@@ -42,10 +42,15 @@ Fn::debugToLog("logon", "Bad response! user:".$data['username']." send:".$data['
 			die('Ошибка авторизации!<br><br>Вы ввели неправильный пароль!');
 		}
 // ok, valid username & password
-		$_SESSION['access'] = true;
-Fn::debugToLog("logon", "user:".$data['username'].' доступ разрешен!');
 //Fn::debugToLog("$_SESSION", json_encode($_SESSION));
-		die('success');
+		if ($_SESSION['access'] == true) {
+Fn::debugToLog("logon", "user:".$data['username'].' доступ разрешен!');
+			die('success');
+		}
+		if ($_SESSION['access'] == false) {
+Fn::debugToLog("logon", "user:".$data['username'].' доступ ограничен!');
+			die('wait');
+		}
 	}
 	function action_logout() {
 		Fn::session_unset(true);

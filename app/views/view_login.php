@@ -1,9 +1,9 @@
 <script src="/js/ajaxtcr.js" type="text/javascript"></script> 
-<script src="/ulogin.ru/js/ulogin.js"></script>
+<script src="http://ulogin.ru/js/ulogin.js"></script>
+<!--<script src="/js/ulogin.js"></script>-->
 <script type="text/javascript">
 $(document).ready(function () {
-$(document.body).css('padding-top', '0');
-	
+	$(document.body).css('padding-top', '0');
 	preview = function(token){
 		$.getJSON("//ulogin.ru/token.php?host=" + encodeURIComponent(location.toString()) + "&token=" + token + "&callback=?", function (data) {
 			data = $.parseJSON(data.toString());
@@ -147,6 +147,8 @@ $(document.body).css('padding-top', '0');
 				$.post("/login/sendmail",{
 					email:		$("#reg_email").val(),
 					fio:		$("#reg_fio").val(),
+					uid:		json.uid,
+					company:	$("#reg_company").val(),
 					captcha:	$("#reg_captcha").val()
 				}, function (json) {	});
 			}else{
@@ -170,7 +172,11 @@ $(document.body).css('padding-top', '0');
 		var options = {method: "GET", username: username, password: password,
 			onSuccess: function (response) {
 				result = response.xhr.responseText;
-				if(result=='success'){
+				if(result=='wait'){
+					$("#dialog").css('background-color','#FFFFFF');
+					$("#dialog>#text").html('<h3>ВНИМАНИЕ!</h3><h4><p>Доступ к системе ограничен!</p><p>Сообщите своему менеджеру!</p></h4>');
+					$("#dialog").dialog("open");
+				}else if(result=='success'){
 					document.location = document.location.origin + "/main/index";
 				}else{
 					$("#dialog").css('background-color','#FFE3E2');

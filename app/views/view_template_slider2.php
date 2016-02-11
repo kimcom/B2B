@@ -13,7 +13,7 @@
 		<li id="bx_3218110189_45">
 			<a href="">
 				<img
-					src="http://priroda.ua/upload/iblock/a83/a83db9eec443af63680d3c1f00e6e665.jpg"
+					src="http://priroda.ua/upload/iblock/83f/83fbdc0cb36d1a6c3e55ef5e4d3ee7ce.jpg"
 					alt="Слайдер-1"
 					title="Слайдер-1"
 					/>

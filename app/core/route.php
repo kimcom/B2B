@@ -38,10 +38,10 @@ class Route {
 			Fn::redirectToController('login');
 			return;
 		}
-//		if ($_SESSION['access'] && $controller_name == 'main' && $action_name == 'index') {
-//			Fn::redirectToControllerAndAction('main','cabinet');
-//			return;
-//		}
+		if ($_SESSION['access'] && $controller_name == 'login' && $action_name == 'index') {
+			Fn::redirectToControllerAndAction('main','index');
+			return;
+		}
 
 		if ($controller_name == 'css') return;
 		if ($controller_name == 'favicon.ico')

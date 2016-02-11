@@ -56,31 +56,13 @@ $(document).ready(function () {
 		onSelectRow: function (cat_id, status, e) {
 			//console.log(cat_id, status, e);
 			if (cat_id == null) cat_id = 0;
-			//row = $("#treegrid").jqGrid('getRowData',cat_id);
 			row = $("#treegrid").jqGrid('getLocalRow',cat_id);
-//			node_loaded = $("#treegrid").jqGrid('isNodeLoaded',row);
-//			if (!node_loaded) {
-//				$("#treegrid").jqGrid('reloadNode',row);
-//			}else{
-//				if (row.expanded === true) {
-//					$("#treegrid").jqGrid('collapseRow',row);
-//					$("#treegrid").jqGrid('collapseNode',row);
-//				} else {
-//					$("#treegrid").jqGrid('expandRow',row);
-//					$("#treegrid").jqGrid('expandNode',row);
-//				}
-//			}
 			if (search_global) {
 				if (row.rgt - row.lft!=1) {$('#grid1').jqGrid('clearGridData');return;}
 				newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group=" + cat_id + "&f1=Article&f2=Name&f3=Price&f4=PriceRR&f5=Margin&f6=Unit_in_pack&f7=FreeBalance&f8=FreeBalance23&f9=Qty";
 				$("#grid1").jqGrid('setGridParam', {url: newurl, page: 1, width: 800});
 				$("#grid1").jqGrid('setCaption', 'Список товаров из категории: '+row.name);
 				$("#grid1").trigger('reloadGrid');
-//			} else {
-//				newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group_search=" + cats.join(';') + "&f1=Article&f2=Name&f3=Price&f4=PriceRR&f5=Margin&f6=Unit_in_pack&f7=FreeBalance&f8=FreeBalance23&f9=Order";
-//				console.log(new Date(),newurl);
-//				$("#grid1").jqGrid('setGridParam', {url: newurl, page: 1, width: 800});
-//				$("#grid1").trigger('reloadGrid');
 			}
 		}
     });

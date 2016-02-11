@@ -143,6 +143,12 @@ $(document).ready(function () {
 		$.post('/engine/order_info_full',{action: 'order_info'}, function (json) {
 			if (json.success){
 				$("#div_order_active").html(json.html);
+				$('#select_companyID').attr("autocomplete","off").typeahead({ 
+					autoSelect: false, items: '20', minLength: 3, appendTo: "body",
+					source: function (query, proxy) {
+						$.ajax({url: '/engine/select_search?action=partners_b2b', dataType: "json", data: {name: query}, success: proxy});
+					}
+				});
 				$("#import").uploadFile({
 					url:"../engine/upload",
 					fileName:"file_csv",
@@ -266,6 +272,7 @@ $(document).ready(function () {
 		});
     }
 	order_info();
+	
 //	setTimeout(function(){
 //		$("#a_tab_1").click();
 //	}, 100);
@@ -279,13 +286,13 @@ if ($_SESSION['ClientID']!=0) {
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
 		<li class="active">	<a id="a_tab_0" href="#tab_order_action" role="tab" data-toggle="tab">Текущий заказ</a></li>
 		<li>				<a id="a_tab_1" href="#tab_order_list1"	state="0" role="tab" data-toggle="tab">Предварительные</a></li>
-		<li>				<a href="#tab_order_list2"	role="tab" state="10" data-toggle="tab">Отправленные</a></li>
+		<li>				<a href="#tab_order_list2"	role="tab" state="10,15" data-toggle="tab">Отправленные</a></li>
 		<li>				<a href="#tab_order_list3"	role="tab" state="20" data-toggle="tab">Обработанные</a></li>
 		<li>				<a href="#tab_order_list4"	role="tab" state="50" data-toggle="tab">Отгруженные</a></li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane m0 w100p min530 ui-corner-tab1 borderColor frameL border1 active" id="tab_order_action">
-				<div class="ml5 mt5" id="div_order_active" accept="text/csv"></div>
+			<div class="ml5 mt5" id="div_order_active" accept="text/csv"></div>
 		</div>
 		<div class="tab-pane m0 w100p min530 ui-corner-all borderColor frameL border1" id="tab_order_list1">
 			<div class="ml5 mt5" id="div_order_list" >

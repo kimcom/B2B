@@ -16,9 +16,9 @@
 	$_SESSION['server_pass'] = '149521';
 
 if (!isset($_SESSION['sitename']))
-    $_SESSION['sitename'] = 'Система для оптовых клиентов'.'&trade;';
+    $_SESSION['sitename'] = 'Система для оптовых клиентов компании Сузирье™';
 if (!isset($_SESSION['titlename']))
-    $_SESSION['titlename'] = 'Система для оптовых клиентов компании Сузирье'.'&trade;';
+    $_SESSION['titlename'] = 'B2B Сузирье™';
 if (!isset($_SESSION['company']))
 	$_SESSION['company'] = 'Сузирье™';
 if (!isset($_SESSION['dbname']))

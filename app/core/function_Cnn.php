@@ -68,6 +68,8 @@ class Cnn {
 					$_SESSION['CurrentOrderID'] = $row['CurrentOrderID'];
 					$_SESSION['ViewRemain'] = $row['ViewRemain'];
 					$_SESSION['access'] = true;
+					$_SESSION['access'] = false;
+					if ($_SESSION['ClientID']!=0) $_SESSION['access'] = true;
 					$result = $row['Userpass'];
 					break;
 				}
@@ -115,7 +117,7 @@ class Cnn {
 //Fn::debugToLog("resp", json_encode($response));
 		if ($response->success) {
 //оправляем сообщение пользователю
-			$subject = 'Восстановление пароля для доступа к информационной системе компании ' . $_SESSION['company'];
+			$subject = 'Восстановление пароля для доступа в ' . $_SESSION['titlename'];
 			$message = "
 Здравствуйте, " . $fio . "!
 
@@ -130,12 +132,15 @@ class Cnn {
 ------------------
 " . $_SESSION['adminEmail'] . "
 ";
-			$sended = Mail::smtpmail($email, $fio, $subject, $message);
+//Fn::debugToLog("fio", $fio);
+//Fn::debugToLog("subject", $subject);
+//Fn::debugToLog("message", $message);
+			$sended = Mail::smtpmail($email, $_SESSION['adminEmail'], $fio, $subject, $message);
 			if (!$sended) {
 				$response->success = false;
 				$response->message = "Ошибка при отправке сообщения с информацией о Вашем доступе!";
 			}
-			$sended = Mail::smtpmail($_SESSION['adminEmail'], $fio, $subject, $message . 'E-mail:' . $email);
+			$sended = Mail::smtpmail($_SESSION['adminEmail'], $email, $fio, $subject, $message . 'E-mail:' . $email);
 		}
 //Fn::debugToLog("resp", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
@@ -144,11 +149,11 @@ class Cnn {
 	public function user_register() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 		$response = new stdClass();
+		$response->uid = null;
 //Fn::paramToLog();
 		if (md5($captcha) != $_SESSION['randomnr2']) {
 			$response->success = false;
 			$response->message = "Неверный проверочный код!";
-			//$response->sql = "";
 			header("Content-type: application/json;charset=utf-8");
 			echo json_encode($response);
 			return;
@@ -167,7 +172,6 @@ class Cnn {
 			$ar = $stmt->errorInfo();
 			$response->success = false;
 			$response->message = "Ошибка при регистрации пользователя!";
-			//$response->sql = $ar[1] . ' ' . $ar[2];
 		} else {
 			do {
 				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
@@ -175,7 +179,7 @@ class Cnn {
 					foreach ($rowset as $row) {
 						$response->success = ($row[0] != 0);
 						$response->message = $row[1];
-						//$response->sql = $row[1];
+						$response->uid = $row[2];
 						break;
 					}
 				}
@@ -198,7 +202,7 @@ class Cnn {
 			return;
 		}
 		if ($response->success) {
-			$subject = 'Регистрация аккаунта в инф. системе ';
+			$subject = 'Регистрация аккаунта в инф. системе '. $_SESSION['titlename'];
 			$message = "
 Здравствуйте, " . $fio . "!
 
@@ -208,36 +212,57 @@ class Cnn {
 Вы сможете работать в нашей системе после идентификации администратором системы.
 Сообщение администратору о Вашей регистрации уже отправлено.
 
-Если вы получили это сообщение по ошибке, не предпринимайте никаких действий. 
+Если Вы получили это сообщение по ошибке, не предпринимайте никаких действий. 
 
 Успехов!
 ------------------
 " . $_SESSION['adminEmail'] . "
 ";
 //Fn::debugToLog("send", 'start');
-			$sended = Mail::smtpmail($email, $fio, $subject, $message);
+			$sended = Mail::smtpmail($email, $_SESSION['siteEmail'], $fio, $subject, $message);
+			//$sended = Mail::smtpmail($email, $_SESSION['adminEmail'], $fio, $subject, $message);
 //Fn::debugToLog("send", 'stop');
 			if (!$sended) {
 				$response->success = false;
 				$response->message = "Ошибка при отправке сообщения с информацией о Вашем доступе!";
 			}
-//Fn::debugToLog("send", 'start');
-			$sended = Mail::smtpmail($_SESSION['adminEmail'], $fio, $subject, $message);
+$message_admin = "
+Здравствуйте!
+В системе ". $_SESSION['titlename'] ."
+зарегистрирован новый пользователь:
+Имя пользователя: " . $fio . "!
+Компания:	" . $company . "!
+E-mail:		". $email ."
+
+ВНИМАНИЕ!!!
+Для ИДЕНТИФИКАЦИИ компании в которой работает пользователь,
+а также для назначения склада и других параметров, перейдите по ссылке:
+http://" . $_SERVER['HTTP_HOST'] . "/main/profile?uid=".$uid."
+
+Если Вы НЕ имеете информацию об этом клиенте - не предпринимайте никаких действий!
+
+По техническим вопросам работы системы обращайтесь к разработчику
+E-mail:" . $_SESSION['adminEmail'] . "
+";
+			//$sended = Mail::smtpmail($_SESSION['adminEmail'], $email, $fio, 'Регистрация: '.$fio, $message_admin);
+			$sended = Mail::smtpmail($_SESSION['siteEmail'], $email, $fio, 'Регистрация: '.$fio, $message_admin);
 //Fn::debugToLog("send", 'stop');
 		}
 //Fn::debugToLog("resp", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
-	public function user_info_save() {
+//profile
+	public function user_info($userVal) {
+//		if ($userVal != $_SESSION['UserID'])
+//			return;
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-		Fn::debugToLog('userID', $userID);
-//		if($_SESSION['UserID'] != $userid) return;
-		$response = new stdClass();
-		$response->success = false;
-		$response->message = "";
-		$stmt = $this->db->prepare("CALL pr_user('save', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		if (isset($userVal))
+			$userID = $userVal;
+//Fn::paramToLog();
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_user('info', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $username, PDO::PARAM_STR);
 		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
 		$stmt->bindParam(3, $email, PDO::PARAM_STR);
@@ -248,7 +273,41 @@ class Cnn {
 		$stmt->bindParam(8, $phone, PDO::PARAM_STR);
 		$stmt->bindParam(9, $userID, PDO::PARAM_STR);
 		$stmt->bindParam(10, $accesslevel, PDO::PARAM_STR);
-		$stmt->bindParam(11, $storeID, PDO::PARAM_STR);
+		$stmt->bindParam(11, $viewRemain, PDO::PARAM_STR);
+		$stmt->bindParam(12, $storeID, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			break;
+		}
+//		Fn::debugToLog("row", json_encode($row));
+		return $row;
+	}
+	public function user_info_save() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+//Fn::debugToLog('userID', $userID);
+//		if($_SESSION['UserID'] != $userid) return;
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "";
+		$stmt = $this->db->prepare("CALL pr_user('save', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $username, PDO::PARAM_STR);
+		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
+		$stmt->bindParam(3, $email, PDO::PARAM_STR);
+		$stmt->bindParam(4, $fio, PDO::PARAM_STR);
+		$stmt->bindParam(5, $post, PDO::PARAM_STR);
+		$stmt->bindParam(6, $companyID, PDO::PARAM_STR);
+		$stmt->bindParam(7, $company, PDO::PARAM_STR);
+		$stmt->bindParam(8, $phone, PDO::PARAM_STR);
+		$stmt->bindParam(9, $userID, PDO::PARAM_STR);
+		$stmt->bindParam(10, $accesslevel, PDO::PARAM_STR);
+		$stmt->bindParam(11, $viewRemain, PDO::PARAM_STR);
+		$stmt->bindParam(12, $storeID, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		if (!Fn::checkErrorMySQLstmt($stmt)) {
@@ -267,6 +326,12 @@ class Cnn {
 					}
 				}
 			} while ($stmt->nextRowset());
+		}
+		if($response->success) {
+			if($_SESSION['UserID']===$userID) {
+				$this->user_find($username);
+				$response->reload = true;
+			}
 		}
 //Fn::debugToLog("resp", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
@@ -532,8 +597,8 @@ Fn::debugToLog('jqgrid3 url', $url);
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		//if ($action != 'unit') $type = $_SESSION['UserID'];
 		//if ($action == 'point')	$type = $_SESSION['UserID'];
-$name = null;
-$type = 1;
+//$name = "";
+//$type = 1;
 		$stmt = $this->db->prepare("CALL shop.pr_select2(?, @id, ?, ?)");
 		$stmt->bindParam(1, $action, PDO::PARAM_STR);
 		$stmt->bindParam(2, $name, PDO::PARAM_STR);
@@ -553,13 +618,14 @@ $type = 1;
 				}
 			}
 		} while ($stmt->nextRowset());
-Fn::debugToLog("select2", json_encode($response));
+//Fn::debugToLog("select2", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
 	public function select_search() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
+//Fn::paramToLog();
 		$type = 1;
 		$stmt = $this->db->prepare("CALL shop.pr_select2(?, @id, ?, ?)");
 		$stmt->bindParam(1, $action, PDO::PARAM_STR);
@@ -580,7 +646,7 @@ Fn::debugToLog("select2", json_encode($response));
 				}
 			}
 		} while ($stmt->nextRowset());
-//Fn::debugToLog("", json_encode($response));
+//Fn::debugToLog("select_search", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
@@ -778,7 +844,7 @@ Fn::debugToLog("select2", json_encode($response));
 											   <span class = "input-group-addon w32"></span>
 											</div>
 										</div>
-										<div class="floatL ml10">&nbsp</div>
+										<div class="floatL ml5">&nbsp</div>
 										<div class="floatL">
 										   <div class="input-group input-group-sm w500">
 											  <span class = "input-group-addon w130">Адрес доставки:</span>
@@ -788,6 +854,14 @@ Fn::debugToLog("select2", json_encode($response));
 										   <div class="input-group input-group-sm w500">
 											  <span class = "input-group-addon w130">Примечание:</span>
 											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['Notes'].'" onchange="good_edit(\'order_edit_notes\',this,0,0,0,0,$(this).val());">
+											  <span class = "input-group-addon w32"></span>
+										   </div>
+										</div>
+										<div class="floatL ml5">&nbsp</div>
+										<div class="floatL">
+										   <div class="input-group input-group-sm w300">
+											  <span class = "input-group-addon w70">Заказчик:</span>
+											  <input id="select_companyID" class="form-control" type="text" data-provide="typeahead" autocomplete="off">										
 											  <span class = "input-group-addon w32"></span>
 										   </div>
 										</div>

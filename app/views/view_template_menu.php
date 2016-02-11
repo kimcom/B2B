@@ -26,15 +26,15 @@
 		<!-- Группируем ссылки, формы, выпадающее меню и прочие элементы -->
 		<div class="collapse navbar-collapse navbar-menu" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="minw100 <?php echo $active1; ?>"><a href="/main/orders">Заказы</a></li>
 <?php
 if ($_SESSION['ClientID'] != 0) {
 ?>
+				<li class="minw100 <?php echo $active1; ?>"><a href="/main/orders">Заказы</a></li>
 				<li class="minw100 <?php echo $active2; ?>"><a href="/main/catalog">Каталог</a></li>
-				<li class="minw100 <?php echo $active3; ?>"><a href="/main/templates">Шаблоны</a></li>
+<!--				<li class="minw100 <?php echo $active3; ?>"><a href="/main/templates">Шаблоны</a></li>-->
 <?php } ?>
-				<li class="minw100 <?php echo $active4; ?>"><a href="/main/news">Новинки</a></li>
-				<li class="minw100 <?php echo $active5; ?>"><a href="/main/promo">Акции</a></li>
+<!--				<li class="minw100 <?php echo $active4; ?>"><a href="/main/news">Новинки</a></li>
+				<li class="minw100 <?php echo $active5; ?>"><a href="/main/promo">Акции</a></li>-->
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 <?php
@@ -50,7 +50,7 @@ if (1==0 && $_SESSION['ClientID'] != 0) {
 <?php
 if ($_SESSION['UserID'] < 10) {
 ?>
-					<li class="minw100 <?php echo $active11; ?>"><a href="/main/helper">HELPER</a></li>
+				<li class="minw100 <?php echo $active11; ?>"><a href="/main/helper">HELPER</a></li>
 <?php } ?>
 				<li class="minw100 dropdown <?php echo $active20; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['ClientName'];?><b class="caret"></b></a>
