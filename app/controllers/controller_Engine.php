@@ -129,4 +129,16 @@ class Controller_Engine extends Controller {
 		if ($id=='2') $_SESSION['banners2'] = $_SESSION['banners2'] == false;
 		header('Location:' . $_SERVER['HTTP_REFERER']);
 	}
+
+	function action_user_info_save() {
+		$cnn = new Cnn();
+		return $cnn->user_info_save();
+	}
+	
+	function action_user_contact() {
+		$cnn = new Cnn();
+		return $cnn->user_contact();
+	}
+	
+	
 }

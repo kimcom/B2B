@@ -20,10 +20,10 @@ $(document).ready(function () {
 	$("#grid1").jqGrid({
 		caption: "Список заказов",
 		mtype: "GET",
-//		url: "/engine/jqgrid3?action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes",
 		styleUI: 'Bootstrap',
-//		responsive: true,
-		scroll: 1, height: 397, // если виртуальная подгрузка страниц
+		scroll: 1, height: 397, // если виртуальная подгрузка страни
+		//url: "/engine/jqgrid3?action=order_list_b2b&grouping=OrderID&o.Status=0&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes",
+		//responsive: true,
 		//height: 'auto', //если надо управлять страницами
 		//multiSort: true,
 		datatype: "json",

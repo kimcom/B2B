@@ -1,271 +1,132 @@
+<?php
+if (isset($_SESSION['UserID'])) {
+	$cnn = new Cnn();
+	$row = $cnn->user_info($_SESSION['UserID']);
+} else {
+	return;
+}
+?>
 <script type="text/javascript">
-$(document).ready(function () {
-//	$(".userdiv").resizable();
-//	$(".userdiv").draggable();
+$(document).ready(function(){
+	// генерация капчи
+	$('#captcha').attr('src', '/engine/captcha?' + Math.random());
 	
-//	$("#draggable0").resizable();
-//	$("#draggable0").draggable();
-
-//	setTimeout(function () {
-//		div = $("#draggable0").clone();
-//		$(div).css({position:'relative',left:0,top:$(div).css("top"),width:$(div).css("width"),height:$(div).css("height"),margin:5,float:'left',background: '#F4FAFF'});
-//		$("#div_desktop").append($(div[0]));
-//		$( div ).animate({
-//			left: 0,
-//			top:  0,
-//			height: 200,
-//			width:  340,
-//			opacity: 1
-//		}, 1000);
-//	},3000);
-
-	create_div = function (parent) {
-		$.each($("#div_desktop > #div_window"),function (){
-			console.log(this);
-		});
-		div = $("#div_window").clone();
-		tbl = $("#tbl").clone();
-		//$(div).find("IMG").css({float: 'left'});
-		//$(div).find("A H6").css({position: 'relative', left: 0, top: 0, margin: 10, color: '#1B4796'});
-		//$(div).css({position: 'relative', left: 0, top: 0, margin: 10, color: '#1B4796'});
-		$(div).find("#ui-id-1").html($(parent).find("A H6").html());
-		$(div).attr("data_src");
-		$(div).removeClass("hide");
-		$(tbl).removeClass("hide");
-		$(div).css({position: 'relative', left: 0, top: 0, width: 0, height: 0, margin: 5, float: 'left', color: '#1B4796', background0: '#F4FAFF', border: '2px solid #FFFFFF', 'border-radius': 4, 'z-index':110});
-		$(div).append($(tbl));
-		$("#div_desktop").append($(div[0]));
-		$(div).animate({
-			left: 0,
-			top: 0,
-			height: 200,
-			width: 520,
-			opacity: 1
-		}, 500);
-	}
-	$(".userdiv").click(function (){
-		create_div(this);
-		$("#div_desktop > #div_window").resizable();
-		$("#div_desktop > #div_window").draggable();
+	// диалоговое окно
+	$("#dialog").dialog({
+		autoOpen: false, modal: true, width: 400,
+		buttons: [{text: "Закрыть", click: function () {
+			$(this).dialog("close");
+		}}],
+		show: {effect: "explode", duration: 200},
+	    hide: {effect: "explode", duration: 300}
 	});
 	
-//		$("#div_desktop .userdiv0").resizable();
-//		$("#div_desktop .userdiv0").draggable();
-
-//console.log($("#div_title").html());
-
-//		$("#div_title").dialog({
-//			autoOpen: true, modal: false, position:'relative', left:0,top:0,width:340,height:200,
-//			show: {effect: "explode", duration: 1000},
-//			hide: {effect: "explode", duration: 1000},
-//			open: function (event, ui) {
-//			//$("[aria-describedby=div_register] > .ui-dialog-titlebar").remove();
-//			}
-//		});
-
-
-	var newtop = 158;
-	$.each($(".userdiv"),function (index,div){
-		$(div).css({left:0,top:newtop});
-		newtop += $(div).height()+2;
-	});
-	var newleft = 241; newtop = 111;
-	$.each($(".userdiv2"),function (index,div){
-		$(div).css({left:newleft,top:newtop});
-		newleft += $(div).width()+2;
-	});
+	// выбор темы сообщения
+	var a_select_topic = [{id: 1, text: 'Нашел ошибку'}, {id: 2, text: 'Предлагаю...'}, {id: 3, text: 'Здравствуйте!'}];
+	$("#select_topic").select2({data: a_select_topic, placeholder: "Выберите тему"});
 	
-//	divs = $(".userdiv");
-//	console.log(divs);
-//	for (i = 0; i < divs.length; i++){
-//	//for (var div in divs){
-//		console.log(divs[i]);
-//	}
-});
+	// обработка кнопки "Отправить"
+	$("#send_email").click(function(){
+		err_msg = "";
+		
+		if($("#name").val().length < 1)	   err_msg += "<h4>- не указано имя</h4>";
+		if($("#email").val().length < 1)   err_msg += "<h4>- не указан e-mail</h4>";
+		if($("#select_topic").val() == "") err_msg += "<h4>- не указана тема сообщения";
+		if($("#message").val() < 1)		   err_msg += "<h4>- не введено сообщение</h4>";
+		
+		if(err_msg.length == ""){
+			$.post("/engine/user_contact",{
+				email: $("#email").val(),
+				fio: $("#name").val(),
+				subject: $("span.select2-chosen").html(),
+				message: $("#message").val(),
+				captcha: $("#reg_captcha").val()
+				}, function (json) {
+						if(json.success != false){	
+							$("#dialog>#text").html("<h4>Сообщение успешно отправлено!</h4>");
+							$("#dialog").dialog("open");
+
+							$("#reg_captcha").val("");
+							$("#select_topic").select2("val", -1);
+							$("#message").val("");
+						}else{
+							$("#dialog>#text").html();
+							$("#dialog").dialog("open");
+						}
+					}
+			);
+		}else{
+			$("#dialog>#text").html(err_msg);
+			$("#dialog").dialog("open");
+		}
+	});
+})
 </script>
+
+<link href="/css/docs.min.css" rel="stylesheet">
+
+<div class="container-fluid min530" id="contact-main-container">
+	<div class="bs-docs-section w40p ml30">
+		<div class="bs-callout bs-callout-info" id="parent_s2id_select_topic">
+			<h3 style="color:#3F2DB1;margin-top:0px;">Здесь Вы можете отправить нам сообщение:</h3>
+			<h4>Ваше имя:</h4>
+			<input id="name" type="text" class="form-control TAL w100p" value="<?php echo $row['FIO']; ?>">
+			
+			<h4 style="margin-top:5px">Ваше E-mail:</h4>
+			<input id="email" type="email" class="form-control TAL w100p" value="<?php echo $row['Email']; ?>">
+			
+			<h4 style="margin-top:5px">Тема сообщения:</h4>
+			<div id="select_topic" class="w100p"></div>
+			
+			<h4 style="margin-top:8px">Сообщение:</h4>
+			<textarea id="message" class="form-control w100p" rows="4"></textarea>
+
+		<!-- КАПЧА -->
+		<div style="margin-top:10px" class="input-group w100p">
+				<span class="input-group-addon w25p p5 h75">Проверочный<br>код:</span>
+				<img class="form-control w50p h75" src="" id="captcha"><br>
+				<span class="input-group-addon w25p">
+					<span id="refresh_captcha" class="glyphicon glyphicon-refresh" type="button" onclick="$('#captcha').attr('src', $('#captcha').attr('src')+'?'+Math.random());" style="font-size:21px"></span>
+				</span>
+			</div>
+			<div class="input-group w100p">
+				<span class="input-group-addon w25p p5"></span>
+				<input id="reg_captcha" type="text" class="form-control w50p TAC" placeholder="Проверочный код" required>
+				<span class="input-group-addon w25p"></span>
+			</div>
+
+		<button style="margin-top:10px" id="send_email" type="button" class="btn btn-success btn-sm minw150 mb5 w100p" title="Отправить"><span class="glyphicon glyphicon-ok mr5"></span>Отправить</button>
+		</div>	
+	</div>
+	</div>
+
+<div id="dialog" title="Отправка сообщения:">
+    <p id='text'></p>
+</div>
+
 <style>
-
-	body{
-/*		background-color: #A7DDFF;*/
-		background: url(/image/blue_sky.jpg) 10%;
-	}
-	.bgi{
-	}
-	.navbar {
-		margin-bottom: 0;
-	}
-
-	.button-panel {
-		min-height: 640px;
-		width: 80px;
-/*		background: #FFFFFF;*/
-/*		background: url(/image/small_steps.png);*/
+	body {
+		background: url(/image/email.jpg) no-repeat;
+		background-size: 40%;
+		background-position-x: 85%;
+		background-position-y: 60%;
 	}
 	
-	.userdiv {
+	#parent_s2id_select_topic {
 		position: absolute;
-/*		color: #777777;*/
-		background: #00E537;
-		border: 2px solid #FFFFFF;
-		border-radius: 4px;
-/*		box-shadow: 1px 1px 2px 1px #FFFFFF;*/
-		opacity: 1;
-		width: 80px;
-		height: 80px;
-		z-index: 1500;
 	}
 	
-	.userdiv2 {
-		position: absolute;
-/*		color: #FFFFFF;*/
-		background: #00E537;
-/*		color: #082B6D;
-		background: #19FF71;*/
-
-/*		background: #A7DDFF;*/
-		border: 2px solid #FFFFFF; /*#1A4796;	*/
-		border-radius: 4px;
-/*		box-shadow: 1px 1px 2px 1px #AAAAAA;*/
-		opacity: 1;
-		width: 152px;
-		height: 42px;
-		z-index: 1500;
+	#refresh_captcha{
+		transition: 0.4s;
 	}
 	
-	.userdiv img {
-		width: 40px;
-		margin-left: 20px;
-		margin-top: 10px;
-		text-align: center;
+	#refresh_captcha:hover{
+		color: blue;
+		cursor:pointer;
+		transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		-ms-transform: rotate(180deg);
+		-webkit-transform: rotate(180deg);
+		-o-transform: rotate(180deg);
 	}
-
-	.userdiv2 img {
-		width: 20px;
-		margin-left: 5px;
-	}
-
-/*	.logo {
-		width: 320px;
-		border: 1px solid black;
-		height: 150px;
-	}
-	
-	.logo h1 {
-		color: #ECF5FE;
-	}*/
-	
-	
 </style>
-
-<nav class="navbar navbar-<?php echo $_SESSION['nav_style']; ?>navbar-fixed-top2" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-			<a class="navbar-brand h150 p0" href="..">
-				<img class="floatL h150" src="/image/logo.png">
-			</a>
-        </div>
-        <div class="navbar-collapse collapse">
-			<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" src="/image/banners/banner_karlie.jpg">
-				</a>
-			</div>
-			<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" src="/image/banners/banner_brit.jpg">
-				</a>
-			</div>
-			<div class="navbar-header ml2">
-				<a class="navbar-header p0" href="..">
-					<img class="floatL h110" src="/image/banners/banner_all_750x417.jpg">
-				</a>
-			</div>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
-
-<div class="ontop">
-	<a class="p0" href="..">
-		<img class="floatN w200" src="/image/banners/now_eat_160_600.jpg">
-	</a>
-</div>
-
-<div class="container-fluid p0">
-	<div id="draggable20" class=" userdiv2">
-		<a style="text-decoration:none;"><h5 class="TAC c0">Прайс<img src="/image/icons/price_list.png"></h5></a>
-	</div>
-	<div id="draggable21" class=" userdiv2">
-		<a style="text-decoration:none;"><h5 class="TAC c0">Акции<img src="/image/icons/stock.png"></h5></a>
-	</div>
-	<div id="draggable22" class=" userdiv2">
-		<a style="text-decoration:none;"><h5 class="TAC c0">Новинки<img src="/image/icons/new.png"></h5></a>
-	</div>
-	<div id="draggable23" class=" userdiv2">
-		<a style="text-decoration:none;"><h5 class="TAC c0">Баллы<img src="/image/icons/scores.png"></h5></a>
-	</div>
-	<div id="draggable24" class=" userdiv2">
-		<a style="text-decoration:none;"><h5 class="TAC c0">Контакты<img src="/image/icons/contacts.png"></h5></a>
-	</div>
-	<div id="draggable25" class=" userdiv2">
-		<a style="text-decoration:none;"><h5 class="TAC c0">Помощь<img src="/image/icons/help.png"></h5></a>
-	</div>
-</div>
-
-<div class="button-panel floatL">
-	<div id="draggable1" class="userdiv">
-		<img src="/image/icons/catalog.png">
-		<a style="text-decoration:none;"><h6 class="TAC c0">Каталог</h6></a>
-	</div>
-	<div id="draggable2" class="userdiv">
-		<img src="/image/icons/active.png">
-		<a style="text-decoration:none;"><h6 class="TAC c0 mt0">Текущий заказ</h6></a>
-	</div>
-	<div id="draggable3" class="userdiv">
-		<img src="/image/icons/history.png">
-		<a style="text-decoration:none;"><h6 class="TAC c0 mt0">Список заказов</h6></a>
-	</div>
-	<div id="draggable0" class="userdiv">
-		<img src="/image/icons/favorites.png">
-		<a style="text-decoration:none;"><h6 class="TAC c0 mt0">Постоянные товары</h6></a>
-	</div>
-	<div id="draggable4" class="userdiv">
-		<img src="/image/icons/balance.png">
-		<a style="text-decoration:none;"><h6 class="TAC c0">Баланс</h6></a>
-	</div>
-	<div id="draggable5" class="userdiv">
-		<img src="/image/icons/settings.png">
-		<a style="text-decoration:none;"><h6 class="TAC c0">Настройки</h6></a>
-	</div>
-</div>
-<div id="div_window" class="hide ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable">
-	<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix ui-draggable-handle bc2">
-		<span id="ui-id-1" class="ui-dialog-title">&nbsp;</span>
-		<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Закрыть" 
-				onclick="console.log($(this).parent().parent().remove());">
-			<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-		</button>
-	</div>
-</div>
-<table id="tbl" class="table table-striped table-hover table-bordered table-responsive w100p hide" cellspacing="0">
-<!--	<thead><tr><th colspan="6"><h4 class='TAC mt5 mb5' >Результаты выполнения:</h4></th></tr>-->
-<tr><th>№ п-п</th><th>GoodID</th><th>Артикул</th><th>Название</th><th>Старое знач.</th><th>Новое знач.</th></tr>
-</thead>
-<tbody>
-	<tr class="hide0">
-		<td class="TAC">1</td>
-		<td class="TAC">2</td>
-		<td class="TAC">3</td>
-		<td class="TAC">4</td>
-		<td class="TAC">5</td>
-		<td class="TAC">6</td>
-	</tr>
-</tbody>
-</table>
-<div id="div_desktop"  class="container-fluid p0 bgi h600">
-</div>

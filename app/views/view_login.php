@@ -60,12 +60,12 @@ $(document.body).css('padding-top', '0');
 		sendRequest($("#user").val(),$("#pass").val());
 	});
 	$("a").click(function (){
-		if(this.id=='a_register') {
+		if(this.id == 'a_register') {
 			$("#div_register").dialog("open");
 			$('#captcha').attr('src', '/engine/captcha?' + Math.random());
 			$("#reg_username").focus();
 		}
-		if(this.id=='a_forgot') $("#div_forgot").dialog("open");
+		if(this.id == 'a_forgot') $("#div_forgot").dialog("open");
 	});
 	$("#dialog").dialog({
 		autoOpen: false, modal: true, width: 400, //height: 300,

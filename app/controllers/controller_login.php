@@ -4,8 +4,8 @@ class Controller_Login extends Controller {
 		$this->view->generate('view_login.php', 'view_template.php');
 	}
 	function action_logon() {
-//		$_SESSION['access'] = false;
-//		$_SESSION['access'] = true;
+	//$_SESSION['access'] = false;
+	//$_SESSION['access'] = true;
 		$realm = 'B2B';
 		if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
 			header('HTTP/1.1 401 Unauthorized');
@@ -16,7 +16,7 @@ class Controller_Login extends Controller {
 		$users = array();
 		$cnn = new Cnn();
 		$res = $cnn->user_find($data['username']);
-		if($res==false){
+		if($res == false){
 			unset($_SESSION['UserID']);
 			unset($_SESSION['UserName']);
 			unset($_SESSION['UserEMail']);

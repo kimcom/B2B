@@ -10,6 +10,7 @@ class Cnn {
 			die();
 		}
 	}
+
 //controller login
 	public function user_list() {
 //		$name = "%" . $filter["name"] . "%";
@@ -93,7 +94,7 @@ class Cnn {
 		if (!Fn::checkErrorMySQLstmt($stmt)) {
 			$ar = $stmt->errorInfo();
 			$response->success = false;
-			$response->message = "Ошибка восстановления доступа к системе!";
+			$response->message = "Ошибка доступа!";
 			$response->sql = $ar[1] . ' ' . $ar[2];
 		} else {
 			do {
@@ -228,6 +229,41 @@ class Cnn {
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
+	
+	public function user_feedback() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		$response = new stdClass();
+		$response->success = true;
+		$response->message = "Сообщение успешно отправлено!";
+		
+		if (md5($captcha) != $_SESSION['randomnr2']) {
+			$response->success = false;
+			$response->message = "Неверный проверочный код!";
+			header("Content-type: application/json;charset=utf-8");
+			echo json_encode($response);
+		}
+		
+		if ($response->success) {
+//Fn::debugToLog("send", 'start');
+//Fn::debugToLog("email", $email);
+//Fn::debugToLog("fio", $fio);
+//Fn::debugToLog("subject", $subject);
+//Fn::debugToLog("message", $message);
+
+			//$sended = Mail::smtpmail($email, $fio, $subject, $message);
+			
+			$sended = Mail::smtpmail($email, $_SESSION['adminEmail'], $fio, $subject, $message);
+			if (!$sended) {
+				$response->success = false;
+				$response->message = "Ошибка при отправке сообщения!";
+				echo json_encode($response);
+			}
+		}
+//Fn::debugToLog("resp", json_encode($response));
+		Fn::debugToLog("response", $response);
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
 
 //jsGrid
 	function createTree($category, $lft = 0, $rgt = null) {
@@ -284,6 +320,7 @@ Fn::debugToLog("url", $url);
 Fn::debugToLog("json", json_encode($result));
 		echo json_encode($result);
 	}
+
 //jqGrid
 	public function tree_NS() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
@@ -849,4 +886,80 @@ Fn::debugToLog("select2", json_encode($response));
 		file_put_contents($path, $str);
 	}
 
+//profile
+	public function user_info($userVal) {
+	if($userVal != $_SESSION['UserID']) return;
+	foreach ($_REQUEST as $arg => $val)
+		${$arg} = $val;
+	if (isset($userVal))
+		$userID = $userVal;
+//Fn::paramToLog();
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+	$stmt = $this->db->prepare("CALL pr_user('info', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$stmt->bindParam(1, $username, PDO::PARAM_STR);
+	$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
+	$stmt->bindParam(3, $email, PDO::PARAM_STR);
+	$stmt->bindParam(4, $fio, PDO::PARAM_STR);
+	$stmt->bindParam(5, $post, PDO::PARAM_STR);
+	$stmt->bindParam(6, $companyID, PDO::PARAM_STR);
+	$stmt->bindParam(7, $company, PDO::PARAM_STR);
+	$stmt->bindParam(8, $phone, PDO::PARAM_STR);
+	$stmt->bindParam(9, $userID, PDO::PARAM_STR);
+	$stmt->bindParam(10, $accesslevel, PDO::PARAM_STR);
+	$stmt->bindParam(11, $storeID, PDO::PARAM_STR);
+// вызов хранимой процедуры
+	$stmt->execute();
+	if (!Fn::checkErrorMySQLstmt($stmt))
+		return false;
+	$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+	foreach ($rowset as $row) {
+		break; 
+	}
+//		Fn::debugToLog("row", json_encode($row));
+	return $row;
+}
+
+	public function user_info_save(){
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+Fn::debugToLog('userID',$userID);
+//		if($_SESSION['UserID'] != $userid) return;
+		$response = new stdClass();
+		$response->success = false;
+		$response->message = "";
+		$stmt = $this->db->prepare("CALL pr_user('save', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $username, PDO::PARAM_STR);
+		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
+		$stmt->bindParam(3, $email, PDO::PARAM_STR);
+		$stmt->bindParam(4, $fio, PDO::PARAM_STR);
+		$stmt->bindParam(5, $post, PDO::PARAM_STR);
+		$stmt->bindParam(6, $companyID, PDO::PARAM_STR);
+		$stmt->bindParam(7, $company, PDO::PARAM_STR);
+		$stmt->bindParam(8, $phone, PDO::PARAM_STR);
+		$stmt->bindParam(9, $userID, PDO::PARAM_STR);
+		$stmt->bindParam(10, $accesslevel, PDO::PARAM_STR);
+		$stmt->bindParam(11, $storeID, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt)) {
+			$ar = $stmt->errorInfo();
+			$response->success = false;
+			$response->message = "Ошибка при изменении данных!";
+			//$response->sql = $ar[1] . ' ' . $ar[2];
+		} else {
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+				if ($rowset) {
+					foreach ($rowset as $row) {
+						$response->success = ($row[0] != 0);
+						$response->message = $row[1];
+						break;
+					}
+				}
+			} while ($stmt->nextRowset());
+		}
+//Fn::debugToLog("resp", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
 }

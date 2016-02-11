@@ -6,6 +6,7 @@
 	if ($url=='/main/news')		$active4 = 'active';
 	if ($url=='/main/promo')	$active5 = 'active';
 	if ($url=='/main/profile' || $url == '/main/setting') $active20 = 'active';
+	if ($url=='/main/feedback')	$active21 = 'active';
 ?>
 
 <nav class="navbar navbar-<?php echo $_SESSION['nav_style']; ?>" role="navigation">
@@ -46,6 +47,7 @@ if (1==0 && $_SESSION['ClientID'] != 0) {
 					<button type="submit" class="btn btn-default">Поиск</button>
 				</form>
 <?php } ?>
+				<li class="minw100 <?php echo $active21; ?>"><a href="/main/feedback">Связаться с нами</a></li>
 				<li class="minw100 dropdown <?php echo $active20; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['ClientName'];?><b class="caret"></b></a>
 					<ul class="dropdown-menu">

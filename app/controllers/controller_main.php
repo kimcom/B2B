@@ -21,7 +21,7 @@ class Controller_Main extends Controller {
 	function action_cabinet_A5() {
 		$this->view->generate('view_cabinet_A5.php', 'view_template.php');
 	}
-	
+
 	function action_catalog() {
 		$this->view->generate('view_catalog.php', 'view_template.php');
 	}
@@ -41,5 +41,14 @@ class Controller_Main extends Controller {
 	function action_tree() {
 		$this->view->generate('view_tree.php', 'view_template.php');
 	}
+	
+	function action_profile() {
+		$this->view->generate('view_profile.php', 'view_template.php');
+	}
+
+	function action_feedback() {
+		$this->view->generate('view_feedback.php', 'view_template.php');
+	}
+
 }
 ?>
