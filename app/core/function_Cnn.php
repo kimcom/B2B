@@ -40,9 +40,10 @@ class Cnn {
 	}
 	public function user_find($username) {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
-//Fn::debugToLog("username", $username);
+//Fn::paramToLog();
+//Fn::debugToLog("username", urldecode($username));
 		$stmt = $this->db->prepare("CALL pr_login('user_find', @id, ?, ?, ?, ?, ?, ?, ?)");
-		$stmt->bindParam(1, $username, PDO::PARAM_STR);
+		$stmt->bindParam(1, urldecode($username), PDO::PARAM_STR);
 		$stmt->bindParam(2, $userpass, PDO::PARAM_STR);
 		$stmt->bindParam(3, $email, PDO::PARAM_STR);
 		$stmt->bindParam(4, $fio, PDO::PARAM_STR);
@@ -59,6 +60,7 @@ class Cnn {
 				foreach ($rowset as $row) {
 					$_SESSION['UserID'] = $row['UserID'];
 					$_SESSION['UserName'] = $row['Username'];
+					$_SESSION['UserFIO'] = $row['FIO'];
 					$_SESSION['UserEMail'] = $row['Email'];
 					$_SESSION['UserPost'] = $row['Post'];
 					$_SESSION['ClientID'] = $row['CompanyID'];
@@ -71,6 +73,7 @@ class Cnn {
 					$_SESSION['access'] = false;
 					if ($_SESSION['ClientID']!=0) $_SESSION['access'] = true;
 					$result = $row['Userpass'];
+//Fn::debugToLog("row", json_encode($row));
 					break;
 				}
 			}
@@ -255,6 +258,8 @@ E-mail:" . $_SESSION['adminEmail'] . "
 	
 	public function feedback() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+//Fn::paramToLog();
+
 		$response = new stdClass();
 		$response->success = true;
 		$response->message = "Сообщение успешно отправлено!";
@@ -262,29 +267,17 @@ E-mail:" . $_SESSION['adminEmail'] . "
 		if (md5($captcha) != $_SESSION['randomnr2']) {
 			$response->success = false;
 			$response->message = "Неверный проверочный код!";
-			header("Content-type: application/json;charset=utf-8");
-			echo json_encode($response);
-			return;
 		}
 		
 		if ($response->success) {
-//Fn::debugToLog("send", 'start');
-//Fn::debugToLog("email", $email);
-//Fn::debugToLog("fio", $fio);
-//Fn::debugToLog("subject", $subject);
-//Fn::debugToLog("message", $message);
-
-			//$sended = Mail::smtpmail($email, $fio, $subject, $message);
-			
-			$sended = Mail::smtpmail($email, $_SESSION['adminEmail'], $fio, $subject, $message);
+			$message = "Сообщение от пользователя: ".$fio."\r\nE-mail:	".$email."\r\n\r\n".$message;
+			$sended = Mail::smtpmail($_SESSION['adminEmail'], $email, $fio, $fio." >>> ".$subject, $message);
 			if (!$sended) {
 				$response->success = false;
 				$response->message = "Ошибка при отправке сообщения!";
-				echo json_encode($response);
 			}
 		}
 //Fn::debugToLog("resp", json_encode($response));
-		Fn::debugToLog("response", $response);
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 	}
@@ -700,17 +693,19 @@ Fn::debugToLog('jqgrid3 url', $url);
 //		$response->sql = "";
 		if ($qty  == '') $qty = null;
 		if ($info == '') $info = null;
+		if ($clientid == '' || $_SESSION['ClientID']!=-1) $clientid = $_SESSION['ClientID'];
+//Fn::debugToLog('set', $clientid.' '.  $orderid.' '.  $_SESSION['UserID']);
 		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes)");
-		$stmt->bindParam(":action", $action);
-		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
-		$stmt->bindParam(":_OrderID", $orderid);
-		$stmt->bindParam(":_GoodID", $goodid);
-		$stmt->bindParam(":_Qty", $qty);
-		$stmt->bindParam(":_Info", $info);
-		$stmt->bindParam(":_Status", $status);
-		$stmt->bindParam(":_UserID", $_SESSION['UserID']);
+		$stmt->bindParam(":action",		$action);
+		$stmt->bindParam(":_ClientID",	$clientid);
+		$stmt->bindParam(":_OrderID",	$orderid);
+		$stmt->bindParam(":_GoodID",	$goodid);
+		$stmt->bindParam(":_Qty",		$qty);
+		$stmt->bindParam(":_Info",		$info);
+		$stmt->bindParam(":_Status",	$status);
+		$stmt->bindParam(":_UserID",	$_SESSION['UserID']);
 		$stmt->bindParam(":_DeliveryAddress", $delivery);
-		$stmt->bindParam(":_Notes", $notes);
+		$stmt->bindParam(":_Notes",		$notes);
 // вызов хранимой процедуры
 		$stmt->execute();
 		if (!Fn::checkErrorMySQLstmt($stmt)) {
@@ -775,32 +770,36 @@ Fn::debugToLog('jqgrid3 url', $url);
 						$str .= '<table id="table_order" class="table table-striped table-bordered font11 minw300 maxw300" cellspacing="0"  width="100%">';
 					foreach ($rowset as $row) {
 						$str .= '<thead>
-									<tr><th colspan=2 class="btn-warning" style="height:36px;vertical-align:middle;"><span class="font14 fontb">Заказ № ' . $row['OrderID'] . '</span></th></tr>
-									<tr><th colspan=2 style="height:27px;">Статус: ' . (($row['Status']==0)?'предварительный':'в обработке') . '</th></tr>
+									<tr><th colspan=4 class="btn-warning" style="height:36px;vertical-align:middle;"><span class="font14 fontb">Заказ № ' . $row['OrderID'] . '</span></th></tr>
+									<tr><th colspan=4 style="height:27px;">Статус: ' . (($row['Status']==0)?'предварительный':'в обработке') . '</th></tr>
 								 </thead>';
 					}
 				}
 				if ($cnt == 2) {
 						$str .= '<thead><tr style="height:24px;">
 									<th class="w100 center">Название</th>
-									<th class="w30  center">К-во</th></tr>
+									<th class="w30  center">К-во</th>
+									<th class="w30  center">Цена</th>
+									<th class="w30  center">Сумма</th></tr>
 								 </thead><tbody>';
 					foreach ($rowset as $row) {
 						$str .= '<tr>
 									<td class="TAL">' . $row['Name'] . '</td>
 									<td class="TAR">' . $row['Quantity'] . '</td>
+									<td class="TAR">' . $row['Price'] . '</td>
+									<td class="TAR">' . $row['Sum'] . '</td>
 								 </tr>';
 					}
 					if ($stmt->rowCount() == 0) {
-						$str .= '<tr><td colspan=2 class="TAC">В заказе нет товаров</td></tr>';
+						$str .= '<tr><td colspan=4 class="TAC">В заказе нет товаров</td></tr>';
 					}
 					$str .= '</tbody>';
 				}
 				if ($cnt == 3) {
 					foreach ($rowset as $row) {
 						$str .= '<thead>
-									<tr><th>Сумма скидки:</th><th class="TAR">' . $row['SumDiscount'] . '</th></tr>
-									<tr><th>Сумма заказа:</th><th class="TAR">' . $row['Sum'] . '</th></tr>
+									<tr><th colspan=3>Сумма скидки:</th><th class="TAR">' . $row['SumDiscount'] . '</th></tr>
+									<tr><th colspan=3>Сумма заказа:</th><th class="TAR">' . $row['Sum'] . '</th></tr>
 								 </thead>';
 					}
 						$str .= '</table>';
@@ -819,6 +818,8 @@ Fn::debugToLog('jqgrid3 url', $url);
 //Fn::paramToLog();
 		$response = new stdClass();
 		$response->success = false;
+		$response->clientid = $_SESSION['ClientID'];
+		$response->orderid = "";
 		$response->message = "";
 		$response->html = "";
 
@@ -850,7 +851,9 @@ Fn::debugToLog('jqgrid3 url', $url);
 				$response->success = true;
 				if ($cnt == 1) {
 					foreach ($rowset as $row) {
-//										<h4 class="form-signin-heading center mt10 mb10 TAL floatL">Организация: '.$row['Name'].'</h3>
+						$response->clientid = $row['ClientID'];
+						$response->orderid	= $row['OrderID'];
+//						<h4 class="form-signin-heading center mt10 mb10 TAL floatL">Организация: '.$row['Name'].'</h3>
 						$str .= '
 								 <input id="orderid" type="hidden" value="' . $row['OrderID'] . '"/>';
 						if (!$view)
@@ -872,38 +875,47 @@ Fn::debugToLog('jqgrid3 url', $url);
 											<div class="input-group input-group-sm w300">
 											   <span class = "input-group-addon w130">Заказ №</span>
 											   <span class = "input-group-addon form-control TAC">' . $row['OrderID'] . '</span>
-											   <span class = "input-group-addon w32"></span>
+											   <span class = "input-group-addon w10"></span>
 											</div>
 											<div class="input-group input-group-sm w300">
 											   <span class = "input-group-addon w130">Статус:</span>
 											   <span class = "input-group-addon form-control TAC">' . $row['State'] . '</span>
-											   <span class = "input-group-addon w32"></span>
+											   <span class = "input-group-addon w10"></span>
 											</div>
 										</div>
 										<div class="floatL ml5">&nbsp</div>
 										<div class="floatL">
-										   <div class="input-group input-group-sm w500">
+										   <div class="input-group input-group-sm w450">
 											  <span class = "input-group-addon w130">Адрес доставки:</span>
 											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['DeliveryAddress'].'" onchange="good_edit(\'order_edit_delivery\',this,0,0,0,$(this).val(),0);">
-											  <span class = "input-group-addon w32"></span>
+											  <span class = "input-group-addon w10"></span>
 										   </div>
-										   <div class="input-group input-group-sm w500">
+										   <div class="input-group input-group-sm w450">
 											  <span class = "input-group-addon w130">Примечание:</span>
 											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['Notes'].'" onchange="good_edit(\'order_edit_notes\',this,0,0,0,0,$(this).val());">
-											  <span class = "input-group-addon w32"></span>
+											  <span class = "input-group-addon w10"></span>
 										   </div>
 										</div>
 										<div class="floatL ml5">&nbsp</div>
 										<div class="floatL">
 										   <div class="input-group input-group-sm w300">
-											  <span class = "input-group-addon w70">Заказчик:</span>
-											  <input id="select_companyID" class="form-control" type="text" data-provide="typeahead" autocomplete="off">										
-											  <span class = "input-group-addon w32"></span>
+											  <span class = "input-group-addon w80">Заказчик:</span>
+									';
+						if (!$view) {$str .= '<div id="select_companyID" class="w200"></div>';} else 
+									{$str .= '<span class = "input-group-addon form-control w210 TAL">' . $row['Name'] . '</span>';}
+						$str .= '
+											  <span class = "input-group-addon w10"></span>
+										   </div>
+										   <div class="input-group input-group-sm w300">
+											  <span class = "input-group-addon w80">Автор:</span>
+											  <span class = "input-group-addon form-control w210 TAL">' . $row['FIO'] . '</span>
+											  <span class = "input-group-addon w10"></span>
 										   </div>
 										</div>
 									</div>
 								 </div>
 								 ';
+//											  <input id="select_companyID" class="form-control" type="text" data-provide="typeahead" autocomplete="off">
 					}
 				}
 				if ($cnt == 2) {

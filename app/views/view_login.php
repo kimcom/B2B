@@ -57,7 +57,7 @@ $(document).ready(function () {
 		}
 	});
 	$("#btn_logon").click(function (){
-		sendRequest($("#user").val(),$("#pass").val());
+		sendRequest(encodeURIComponent($("#user").val()),encodeURIComponent($("#pass").val()));
 	});
 	$("a").click(function (){
 		if(this.id == 'a_register') {
@@ -167,9 +167,25 @@ $(document).ready(function () {
     }, 500);
 
 	sendRequest = function (username, password) {
+		//console.log(navigator.userAgent);
 		var url = document.location.origin + "/login/logon";
-
-		var options = {method: "GET", username: username, password: password,
+		if (navigator.userAgent.search('Firefox')>0 && username!=decodeURI(username)){
+			$.post(url,{username: username, userpass: password, method:'open'},function(result){
+				if(result=='wait'){
+					$("#dialog").css('background-color','#FFFFFF');
+					$("#dialog>#text").html('<h3>ВНИМАНИЕ!</h3><h4><p>Доступ к системе ограничен!</p><p>Сообщите своему менеджеру!</p></h4>');
+					$("#dialog").dialog("open");
+				} else if (result == 'success') {
+					document.location = document.location.origin + "/main/index";
+				} else {
+					$("#dialog").css('background-color', '#FFE3E2');
+					$("#dialog>#text").html(result);
+					$("#dialog").dialog("open");
+			    }
+			});
+			return;
+		}
+		var options = {method: "POST", username: username, password: password,
 			onSuccess: function (response) {
 				result = response.xhr.responseText;
 				if(result=='wait'){
@@ -185,7 +201,7 @@ $(document).ready(function () {
 				}
 			},
 			onFail: function (response, message) {
-				//console.log('fail',response,message);
+				console.log('fail',response,message);
 			}
 		};
 		AjaxTCR.comm.sendRequest(url, options);

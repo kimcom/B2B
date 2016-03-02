@@ -54,8 +54,12 @@ if ($_SESSION['UserID'] < 10) {
 				<li class="minw100 <?php echo $active11; ?>"><a href="/main/helper">HELPER</a></li>
 <?php } ?>
 				<li class="minw100 <?php echo $active21; ?>"><a href="/main/feedback">Связаться с нами</a></li>
-				<li class="minw100 dropdown <?php echo $active20; ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['ClientName'];?><b class="caret"></b></a>
+				<li class="minw176 dropdown <?php echo $active20; ?>">
+					<a href="#" class="dropdown-toggle" style="padding-top: 5px;padding-bottom: 5px;" data-toggle="dropdown">
+						<?php echo $_SESSION['ClientName'];?><br>
+						<?php echo $_SESSION['UserFIO'];?>
+						<b class="caret"></b>
+					</a>
 					<ul class="dropdown-menu">
 						<li><a href="/main/profile">Профиль</a></li>
 						<li><a href="/engine/banners?id=1">Баннер 1 - <?php echo ($_SESSION['banners1']) ? 'выключить' : 'включить';?></a></li>

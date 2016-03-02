@@ -2,13 +2,126 @@
 <div class="container bs-docs-container">
 	<h3 class="mt0">История изменений в системе B2B</h3>
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
-		<li class="active"><a href="#tab_20160210" role="tab" data-toggle="tab">2016-02-10</a></li>
+		<li class="active"><a href="#tab_20160220" role="tab" data-toggle="tab">2016-02-20</a></li>
+		<li class="0active"><a href="#tab_20160213" role="tab" data-toggle="tab">2016-02-13</a></li>
+		<li class="0active"><a href="#tab_20160212" role="tab" data-toggle="tab">2016-02-12</a></li>
+		<li class="0active"><a href="#tab_20160210" role="tab" data-toggle="tab">2016-02-10</a></li>
 		<li class="0active"><a href="#tab_20160201" role="tab" data-toggle="tab">2016-02-01</a></li>
 		<li class="0active"><a href="#tab_20160125" role="tab" data-toggle="tab">2016-01-25</a></li>
 		<li class="0active"><a href="#tab_20160119" role="tab" data-toggle="tab">2016-01-19</a></li>
 	</ul>
 	<div class="tab-content">
-		<div id="tab_20160210" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+		<div id="tab_20160220" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+			<div class="bs-docs-section m10">
+				<h4 class="m0 mt5">Раздел: Каталог</h4>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Таблица `Список товаров`:
+							<ul>
+								<li>Добавлена колонка `Бренд`</li>
+								<li>Добавлена колонка `Цена ОПТ`</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Таблица `Заказ`:
+							<ul>
+								<li>Добавлена колонка `Цена`.</li>
+								<li>Добавлена колонка `Сумма`.</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="bs-callout bs-callout-danger">
+					<h4>Статус: Изменения</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Таблица `Список товаров`:
+							<ul>
+								<li>При наборе заказа менеджером, теперь показывает цену со скидкой клиента.</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="tab_20160213" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 0active">
+			<div class="bs-docs-section m10">
+				<h4 class="m0 mt5">Раздел: Заказы</h4>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Вкладка `Текущий заказ`:
+							<ul>
+								<li>Добавлено поле выбора заказчика.</li>
+								<li>Добавлено информационное поле `Автор`.</li>
+								<li>ВНИМАНИЕ!<ul>
+										<li>Только сотрудники компании могут менять заказчика<br>
+											для пользователей партнеров эта функция запрещена!
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Вкладка `Предварительные заказы`:
+							<ul>
+								<li>В списке заказов добавлены колонки `Партнер` и `Автор`.</li>
+								<li>В списке заказов для сотрудников компании отображаются заказы всех партнеров.</li>
+								<li>Для сотрудников компании добавлена возможность корректировки любого заказа.</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="tab_20160212" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 0active">
+			<div class="bs-docs-section m10">
+				<h4 class="m0 mt5">Раздел: Вход в систему</h4>
+				<div class="bs-callout bs-callout-danger">
+					<h4>Статус: Изменение</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Форма идентификации пользователя:
+							<ul>
+								<li>Исправлена ошибка входа в систему через браузер Mozilla FireFox.
+								</li>
+								<li>ВНИМАНИЕ!<ul>
+										<li>Ошибка проявляется только для пользователей,<br>
+											у которых логин в систему содержит кириллицу (русские буквы)!
+										</li>
+										<li>Рекомендуется при регистрации в имени пользователя<br>
+											использовать только латиницу!
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<h4 class="m0 mt5">Раздел: обратная связь</h4>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>Форма обратной связи:
+							<ul>
+								<li>Реализована возможность отправки сообщения разработчику
+								</li>
+								<li>Форма доступна при нажатии на меню "Связаться с нами"
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="tab_20160210" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 0active">
 			<div class="bs-docs-section m10">
 				<h4 class="m0 mt5">Раздел: Управление пользователями</h4>
 				<div class="bs-callout bs-callout-info">

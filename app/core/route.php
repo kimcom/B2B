@@ -34,7 +34,7 @@ class Route {
 //			Fn::redirectToControllerAndAction('main', 'orders');
 //			return;
 //		}
-		if ($_SESSION['access'] == '' && $controller_name != 'login' && $action_name != 'captcha') {
+		if ($_SESSION['access'] !== true && $controller_name != 'login' && $action_name != 'captcha') {
 			Fn::redirectToController('login');
 			return;
 		}

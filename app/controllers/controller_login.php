@@ -6,10 +6,30 @@ class Controller_Login extends Controller {
 	function action_logon() {
 	//$_SESSION['access'] = false;
 	//$_SESSION['access'] = true;
+		if ($_REQUEST['method']=='open'){
+			$result = '';
+			$cnn = new Cnn();
+			$res = $cnn->user_find('');
+			if (!isset($res)) {
+				Fn::debugToLog("logon open", "Incorrect username or pass:" . urldecode($_REQUEST['username']));
+				$result = 'Ошибка авторизации!<br><br>Вы ввели неправильное имя пользователя или пароль!';
+			}else{
+				if ($_SESSION['access'] == true) {
+					Fn::debugToLog("logon open", "user:" . urldecode($_REQUEST['username']) . ' доступ разрешен!');
+					$result = 'success';
+				}else{
+					Fn::debugToLog("logon open", "user:" . urldecode($_REQUEST['username']) . ' доступ ограничен!');
+					$result = 'wait';
+				}
+			}
+			die($result);
+			return;
+		}
 		$realm = 'B2B';
 		if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
 			header('HTTP/1.1 401 Unauthorized');
 			header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . md5(uniqid()) . '",opaque="' . md5($realm) . '"');
+			//header('Authenticate000: Digest realm="' . $realm . '",qop="auth",nonce="' . md5(uniqid()) . '",opaque="' . md5($realm) . '"');
 			die('Ошибка авторизации!');
 		}
 		$data = $this->http_digest_parse($_SERVER['PHP_AUTH_DIGEST']);

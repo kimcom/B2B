@@ -30,6 +30,8 @@ if (!isset($_SESSION['UserID']))
     $_SESSION['UserID'] = 0;
 if (!isset($_SESSION['UserName']))
     $_SESSION['UserName'] = "";
+if (!isset($_SESSION['UserFIO']))
+    $_SESSION['UserFIO'] = "";
 if (!isset($_SESSION['UserEMail']))
     $_SESSION['UserEMail'] = "";
 if (!isset($_SESSION['UserPost']))

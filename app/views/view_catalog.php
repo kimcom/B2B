@@ -19,7 +19,7 @@ $(document).ready(function () {
 		if (!el.checked) cats.splice(cats.indexOf(id),1);
 		//console.log(new Date(), id, el.checked, cats, cats.join(';'));
 		if (!search_global) {
-			newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group_search=" + cats.join(';') + "&f1=Article&f2=Name&f3=Price&f4=PriceRR&f5=Margin&f6=Unit_in_pack&f7=FreeBalance&f8=FreeBalance23&f9=Qty";
+			newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group_search=" + cats.join(';') + "&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=FreeBalance&f10=FreeBalance23&f11=Qty";
 			//console.log(new Date(), newurl);
 			$("#grid1").jqGrid('setGridParam', {url: newurl, page: 1, width: 800});
 			$("#grid1").trigger('reloadGrid');
@@ -59,7 +59,7 @@ $(document).ready(function () {
 			row = $("#treegrid").jqGrid('getLocalRow',cat_id);
 			if (search_global) {
 				if (row.rgt - row.lft!=1) {$('#grid1').jqGrid('clearGridData');return;}
-				newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group=" + cat_id + "&f1=Article&f2=Name&f3=Price&f4=PriceRR&f5=Margin&f6=Unit_in_pack&f7=FreeBalance&f8=FreeBalance23&f9=Qty";
+				newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group=" + cat_id + "&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=FreeBalance&f10=FreeBalance23&f11=Qty";
 				$("#grid1").jqGrid('setGridParam', {url: newurl, page: 1, width: 800});
 				$("#grid1").jqGrid('setCaption', 'Список товаров из категории: '+row.name);
 				$("#grid1").trigger('reloadGrid');
@@ -71,17 +71,22 @@ $(document).ready(function () {
 
 	good_edit = function (el,goodid,val){
 		$.post('/engine/order_edit',{action:'order_edit', goodid:goodid, qty:val}, function (json) {
+			console.log(json);
 //			console.log(JSON.stringify(json.row));
 			if (json.success) {
 				$(el).val(val==0?'':val);
 				$.post('/engine/order_info',{action: 'order_info', orderid: 5}, function (json) {
 					if (json.success) $("#div_order").html(json.html);
 				});
+			}else{
+				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
+				$("#dialog>#text").html(json.message);
+				$("#dialog").dialog("open");
 			}
 		});
 	}
 	formatQty = function (cellValue, options, rowObject) {
-		var html = '<input type="number" class="TAC editable inline-edit-cell" style="line-height:17px;width:60%;" min=0 value="'+rowObject[8]+'" onkeypress="if(event.keyCode==13)$(this).emulateTab();" onchange="good_edit(this,'+options.rowId+',$(this).val());">' + 
+		var html = '<input type="number" class="TAC editable inline-edit-cell" style="line-height:17px;width:60%;" min=0 value="'+rowObject[10]+'" onkeypress="if(event.keyCode==13)$(this).emulateTab();" onchange="good_edit(this,'+options.rowId+',$(this).val());">' + 
 				   '<span class="ml5 mr5 glyphicon glyphicon-remove" onclick="good_edit($(this).prev(),'+options.rowId+',0);"></span>';
 		return html;
     }
@@ -90,7 +95,7 @@ $(document).ready(function () {
 		styleUI : 'Bootstrap',
 		caption: "Список товаров",
 		mtype: "GET",
-		url: "/engine/jqgrid3?action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Price&f4=PriceRR&f5=Margin&f6=Unit_in_pack&f7=FreeBalance&f8=FreeBalance23&f9=Qty",
+		url: "/engine/jqgrid3?action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=FreeBalance&f10=FreeBalance23&f11=Qty",
 		responsive: true,
 		scroll: true, 
 		height: 462, // если виртуальная подгрузка страниц
@@ -124,6 +129,19 @@ $(document).ready(function () {
 					}
 				}
 			},
+			{label:'Бренд',		name:'Brand',		index:'Brand',		width: 100, sorttype: "text", align: "center", 	search: true, hidedlg: false,
+				searchoptions: { 
+					dataInit: function (element) {
+						$(element).attr("autocomplete","off").typeahead({ 
+							autoSelect: false, items:'20', minLength:3,	appendTo : "body",
+							source: function(query, proxy) {
+									$.ajax({ url: '/engine/select_search?action=brand_name', dataType: "json", data: {name: query}, success : proxy });
+								}
+							});
+					}
+				}
+			},
+			{label:'Цена ОПТ',		name:'PriceBase',	index:'PriceBase',	width: 50, sorttype: "number", search: false, align: "right"},
 			{label:'Цена',			name:'Price',		index:'Price',		width: 50, sorttype: "number", search: false, align: "right"},
 			{label:'РРЦ',			name:'PriceRR',		index:'PriceRR',	width: 50, sorttype: "number", search: false, align: "right"},
 			{label:'Нац.',			name:'Margin',		index:'Margin',		width: 50, sorttype: "number", search: false, align: "right"},

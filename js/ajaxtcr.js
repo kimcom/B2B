@@ -80,7 +80,8 @@ AjaxTCR.comm = {
 /** Default HTTP request method 
  * @private
  */
-DEFAULT_REQUEST_METHOD : "GET",
+//DEFAULT_REQUEST_METHOD : "GET",
+DEFAULT_REQUEST_METHOD : "POST",
 
 /** Default async option 
  * @private
@@ -343,7 +344,7 @@ getDefault : function(option){
 	
 	/* basic communication defaults */
 	request.method = AjaxTCR.comm.DEFAULT_REQUEST_METHOD;
-    request.async = AjaxTCR.comm.DEFAULT_ASYNC;
+	request.async = AjaxTCR.comm.DEFAULT_ASYNC;
 	request.preventCache = AjaxTCR.comm.DEFAULT_PREVENT_CACHE;
 	request.requestContentType = AjaxTCR.comm.DEFAULT_CONTENT_TYPE;
 	request.requestContentTransferEncoding = AjaxTCR.comm.DEFAULT_CONTENT_TRANSFER_ENCODING;
@@ -365,7 +366,7 @@ getDefault : function(option){
 	request.onReceived = null;
 
 	/* communication status flags */    
-    request.abort = false;
+	request.abort = false;
 	request.inProgress = true;
 	request.received = false;
 	
@@ -439,9 +440,10 @@ getDefault : function(option){
 	request.statusIndicator = null;
 	
     /* apply options defined by user */
-    for (option in options)
-      request[option] = options[option];
-	  
+    for (option in options){
+	request[option] = options[option];
+	//if (option=='username') request[option] = decodeURIComponent(options[option]);
+    }
 	if (request.isPrefetch)
 		request.cacheResponse = true;
 		
@@ -513,7 +515,7 @@ getDefault : function(option){
 	
 	/* normalize the transport value */	
 	request.transport = request.transport.toLowerCase();
-	
+
 	if (request.transport == "script" || request.transport == "image")
 		request.method = "GET";
 	
@@ -634,7 +636,7 @@ _makeRequest : function (request) {
 	/* Call back for ready state 0 if set */
 	if (request.onCreate)
 	  request.onCreate(request);
-									  
+
 	if (request.transport == "xhr")
 		AjaxTCR.comm._sendXHR(request);
 	else if (request.transport == "iframe")
@@ -666,6 +668,8 @@ _sendXHR : function(request){
 							
 	/* open the request */
 	try{
+//console.log(request.method, request.url, request.async, request.username, request.password);
+//console.log(request);
 		request.xhr.open(request.method, request.url, request.async, request.username, request.password);
 	}
 	catch(e){
@@ -675,14 +679,13 @@ _sendXHR : function(request){
 	
 	/* clear an abort flag in case this is a retry */
 	request.abort = false;
-									
+
 	/* set headers indicating we did this with Ajax and what our transaction id is */
 	if (request.transportIndicator)
 	{
 	   request.xhr.setRequestHeader(AjaxTCR.comm.DEFAULT_TRANSPORT_HEADER,AjaxTCR.comm.DEFAULT_XHR_TRANSPORT_VALUE);
 	   request.xhr.setRequestHeader("X-Request-Id",request.requestID);
 	}
-									  
 	/* Set signature header */
 	if (request.signRequest)
 	 	request.xhr.setRequestHeader(request.requestSignature, request.signRequest);
@@ -711,14 +714,16 @@ _sendXHR : function(request){
 			request.headerObj[request.headers[i].name] =  request.headers[i].value + "," + request.headerObj[request.headers[i].name];
 	}
 									
-	for (var header in request.headerObj)
+	for (var header in request.headerObj){
 		request.xhr.setRequestHeader(header, request.headerObj[header]);
-									
+	}
 	
 	if (!request.oneway)
 	{
 		/* bind the success callback */
-		request.xhr.onreadystatechange = function () {AjaxTCR.comm._handleReadyStateChange(request);};
+		request.xhr.onreadystatechange = function () {
+		    AjaxTCR.comm._handleReadyStateChange(request);
+		};
 									
 		/* set a timeout if set */
 		if (request.async && request.timeout && request.timeoutTimerID == null)
@@ -1161,7 +1166,7 @@ _handleResponse : function(response){
 	  
 	/* If Request Queue is being used, send next request */
 	AjaxTCR.comm.queue._checkRequestQueue(response);
-									},
+},
 /**
   * Private method called after response comes in to run numerous callbacks.
   * Checks http and response status to see which callbacks should be employed.
@@ -1175,7 +1180,6 @@ _handleCallbacks : function(response) {
 										 
 	 /* clear inProgress flag */
  	 response.inProgress = false;
-	 
 	 /* Calculate Template Data if necessary */
 	if (response.template &&  response.templateRender == "client")
 	{
@@ -1223,7 +1227,6 @@ _handleCallbacks : function(response) {
 			catch(e){}
 		}
 	}
-	
 	 /* Check if user wants to automatically consume output */
 	 if (response.outputTarget && response.useRaw && (response.transport == "xhr" || response.transport == "iframe"))
 	 {
@@ -1271,12 +1274,10 @@ _handleCallbacks : function(response) {
 			}
 		}
 	 }
-		
-	
-	 /* check to see if the user wants a specific callback for this request */
+
+	/* check to see if the user wants a specific callback for this request */
 	 if (response["on" + response.httpStatus] && !response.fail)
 	 	response["on" + response.httpStatus](response);
-	 
 	 /* see if it is one of our retry statuses */
 	 if (response.retries)
 	 {
@@ -1366,17 +1367,24 @@ _handleCallbacks : function(response) {
   *  @param {Object} response The object that contains all the settings for the request
   */
  _handleReadyStateChange : function(response) { 	
-	/* check if abort flag is set, if so bail out */	
-	if (response.abort)
+     /* check if abort flag is set, if so bail out */	
+    if (response.abort)
 	   return; 
-										 
+//		UNSENT : 0,
+//		OPEN :   1,
+//		SENT : 2,
+//		LOADING : 3,
+//		DONE : 4,
 	 /* Check each readyState */
-	if (response.xhr.readyState == AjaxTCR.comm.OPEN && response.onOpen)
-		 response.onOpen(response);
+    if	    (response.xhr.readyState == AjaxTCR.comm.OPEN && response.onOpen)
+    {
+		 response.onOpen(response);}
     else if (response.xhr.readyState == AjaxTCR.comm.SENT && response.onSent)
-		 response.onSent(response);
-	else if (response.xhr.readyState == AjaxTCR.comm.LOADING && response.onLoading)
-		 response.onLoading(response);
+    {
+		 response.onSent(response);}
+    else if (response.xhr.readyState == AjaxTCR.comm.LOADING && response.onLoading)
+    {
+		 response.onLoading(response);}
     else if (response.xhr.readyState == AjaxTCR.comm.DONE) 
 	{
 		if (response.signedResponse)
@@ -1391,7 +1399,13 @@ _handleCallbacks : function(response) {
 			response.onReceived(response);
 		
 		/* Danger: Firefox problems so we try-catch here */
-	 	try { response.httpStatus = response.xhr.status; response.httpStatusText = response.xhr.statusText} catch(e) {response.httpStatus=3507;response.httpStatusText="Unknown Loss";}
+	 	try { 
+		    response.httpStatus = response.xhr.status; 
+		    response.httpStatusText = response.xhr.statusText
+		} catch(e) {
+		    response.httpStatus=3507;
+		    response.httpStatusText="Unknown Loss";
+		}
 		response.responseText = response.xhr.responseText;
 		response.responseXML = response.xhr.responseXML;
 		

@@ -2,6 +2,8 @@
 <script src="/js/jquery.uploadfile.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+	var mode_manager = <?php echo ($_SESSION['ClientID']==-1 && $_SESSION['AccessLevel']>10)?'true':'false';?>;
+	var clientid;
 	$("#dialog").dialog({autoOpen: false, modal: true, width: 400, //height: 300,
 		buttons: [{text: "Закрыть", click: function () { $(this).dialog("close");}}],
 		show: {effect: "clip", duration: 500},
@@ -27,12 +29,14 @@ $(document).ready(function () {
 		//multiSort: true,
 		datatype: "json",
 		colModel: [
-		    {label: '№ заказа', name: 'o_OrderID', index: 'o.OrderID', width: 100, sorttype: "number", search: false, align: "center"},
-		    {label: 'Состояние', name: 'State', index: 'State', width: 120, sorttype: "text", search: false, align: "left"},
-		    {label: 'Дата создания', name: 'DT_create', index: 'DT_create', width: 130, sorttype: "date", search: false, align: "center"},
-		    {label: 'Сумма', name: 'Sum', index: 'Sum', width: 100, sorttype: "number", search: false, align: "right"},
-		    {label: 'Адрес дост.', name: 'DeliveryAddress', index: 'DeliveryAddress', width: 200, sorttype: "text", search: false, align: "left"},
-		    {label: 'Примечание', name: 'Notes', index: 'Notes', width: 200, sorttype: "text", search: false, align: "left"},
+		    {label: '№ заказа',		name: 'o_OrderID', index: 'o.OrderID', width: 100, sorttype: "number", search: false, align: "center"},
+		    {label: 'Партнер',		name: 'o_ClientName', index: 'o.ClientName', width: 120, sorttype: "text", search: false, align: "left"},
+		    {label: 'Состояние',	name: 'State', index: 'State', width: 120, sorttype: "text", search: false, align: "left"},
+		    {label: 'Дата создания',name: 'DT_create', index: 'DT_create', width: 130, sorttype: "date", search: false, align: "center"},
+		    {label: 'Сумма',		name: 'Sum', index: 'Sum', width: 100, sorttype: "number", search: false, align: "right"},
+		    {label: 'Адрес дост.',	name: 'DeliveryAddress', index: 'DeliveryAddress', width: 200, sorttype: "text", search: false, align: "left"},
+		    {label: 'Примечание',	name: 'Notes', index: 'Notes', width: 200, sorttype: "text", search: false, align: "left"},
+		    {label: 'Автор',		name: 'u_FIO', index: 'u.FIO', width: 120, sorttype: "text", search: false, align: "left"},
 		],
 		rowNum: 20,
 		rowList: [20, 30, 40, 50, 100, 200, 300],
@@ -66,46 +70,49 @@ $(document).ready(function () {
 		if ($(this).attr('state')) {
 			$("#divGrid").appendTo( $($(this).attr('href')));
 			$("#divGrid").removeClass("hide");
-			$("#grid1").jqGrid('setGridParam', {datatype: "json", url: "/engine/jqgrid3?action=order_list_b2b&grouping=OrderID&o.Status="+$(this).attr('state')+"&f1=OrderID&f2=State&f3=DT_create&f4=Sum&f5=DeliveryAddress&f6=Notes", page: 1});
+			$("#grid1").jqGrid('setGridParam', {datatype: "json", url: "/engine/jqgrid3?action=order_list_b2b&grouping=OrderID&o.Status="+$(this).attr('state')+"&f1=OrderID&f2=ClientName&f3=State&f4=DT_create&f5=Sum&f6=DeliveryAddress&f7=Notes&f8=Author", page: 1});
 			$("#grid1").trigger('reloadGrid');
 		}
 		$(this).tab('show');
 	});
 	
 	$("#div_order_list button").click(function(e){
-		id = e.target.id;
-		//console.log(id, e);
+		var id = e.target.id;
 		if (id == 'order_edit') {
-			var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-			if (id == null) {
+			var rowid = $("#grid1").jqGrid('getGridParam', 'selrow');
+			rowdata = $("#grid1").getRowData(rowid);
+			if (rowid == null) {
 				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
 				$("#dialog>#text").html('Пожалуйста, выберите заказ в списке!');
 				$("#dialog").dialog("open");
 				return false;
 			}
-			$.post('/engine/order_edit', {action: 'order_setcurrent',orderid:id}, function (json) {
-			//console.log(json);
-			    if (!json.success) {
-					$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
-					$("#dialog>#text").html(json.message);
-					$("#dialog").dialog("open");
-			    } else {
-					window.location.href = window.location.href;
-			    }
-			});
+			if (rowdata.State == "предварительный") {
+				$.post('/engine/order_edit', {action: 'order_setcurrent',orderid:rowid}, function (json) {
+					if (!json.success) {
+						$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
+						$("#dialog>#text").html(json.message);
+						$("#dialog").dialog("open");
+					} else {
+						window.location.href = window.location.href;
+					}
+				});
+			} else {
+				id = 'order_view';
+			}
 		}
 		if (id == 'order_view')	{
-			var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-			if (id == null) {
+			var rowid = $("#grid1").jqGrid('getGridParam', 'selrow');
+			if (rowid == null) {
 				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
 				$("#dialog>#text").html('Пожалуйста, выберите заказ в списке!');
 				$("#dialog").dialog("open");
 				return false;
 		    }
-			$.post('/engine/order_info_full',{action: 'order_info', orderid: id, view: true}, function (json) {
+			$.post('/engine/order_info_full',{action: 'order_info', orderid: rowid, view: true}, function (json) {
 				if (json.success){
 					$("#view").html(json.html);
-					$("#view").dialog({title:'Просмотр информации о заказе №'+id});
+					$("#view").dialog({title:'Просмотр информации о заказе №'+rowid});
 					$("#view").dialog("open");
 				}else{
 				    $("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
@@ -115,14 +122,14 @@ $(document).ready(function () {
 			});
 		}
 		if (id == 'order_delete') {
-			var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-			if (id == null) {
+			var rowid = $("#grid1").jqGrid('getGridParam', 'selrow');
+			if (rowid == null) {
 				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
 				$("#dialog>#text").html('Пожалуйста, выберите заказ в списке!');
 				$("#dialog").dialog("open");
 				return false;
 		    }
-			$("#question>#text").html("После удаления<br>заказ восстановить невозможно!<br><br>Удалить заказ № " + id + "?");
+			$("#question>#text").html("После удаления<br>заказ восстановить невозможно!<br><br>Удалить заказ № " + rowid + "?");
 			$("#question").dialog('option', 'buttons', [{text: "Удалить", click: order_delete_from_list}, {text: "Отмена", click: function () { $(this).dialog("close"); }}]);
 			$("#question").dialog('open');
 		}
@@ -142,13 +149,24 @@ $(document).ready(function () {
 	order_info = function () {
 		$.post('/engine/order_info_full',{action: 'order_info'}, function (json) {
 			if (json.success){
+				clientid = json.clientid;
+				if(json.orderid>0) $("#a_tab_0").html('Текущий заказ № '+json.orderid);
 				$("#div_order_active").html(json.html);
-				$('#select_companyID').attr("autocomplete","off").typeahead({ 
-					autoSelect: false, items: '20', minLength: 3, appendTo: "body",
-					source: function (query, proxy) {
-						$.ajax({url: '/engine/select_search?action=partners_b2b', dataType: "json", data: {name: query}, success: proxy});
-					}
+				$.post('/engine/select2?action=partners_b2b', function (json) {
+					$("#select_companyID").select2({enable: false, multiple: false, placeholder: "Укажите фирму для пользователя", data: {results: json, text: 'text'}});
+					$("#select_companyID").on("change", function (e) { 
+						if (e.val.length>0)
+							good_edit('order_edit_client',null,0,0,0,0,0,e.val);
+					});
+					$("#select_companyID").select2("val", clientid);
+					$("#select_companyID").select2("enable", mode_manager);
 				});
+//				$('#select_companyID').attr("autocomplete","off").typeahead({ 
+//					autoSelect: false, items: '20', minLength: 3, appendTo: "body",
+//					source: function (query, proxy) {
+//						$.ajax({url: '/engine/select_search?action=partners_b2b', dataType: "json", data: {name: query}, success: proxy});
+//					}
+//				});
 				$("#import").uploadFile({
 					url:"../engine/upload",
 					fileName:"file_csv",
@@ -254,9 +272,9 @@ $(document).ready(function () {
 		});
 	}
 	
-	good_edit = function (action, el, goodid, qty, info, delivery, notes) {
+	good_edit = function (action, el, goodid, qty, info, delivery, notes, newclientid) {
 //		console.log(action, el, goodid, qty, info);
-		$.post('/engine/order_edit', {action: action, goodid: goodid, qty: qty, info: info, delivery: delivery, notes: notes}, function (json) {
+		$.post('/engine/order_edit', {action: action, goodid: goodid, qty: qty, info: info, delivery: delivery, notes: notes, clientid: newclientid}, function (json) {
 //			console.log(JSON.stringify(json));
 			if (!json.success){
 				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');

@@ -152,6 +152,7 @@ class Fn {
 	public static function session_unset($full = false){
 		unset($_SESSION['UserID']);
 		unset($_SESSION['UserName']);
+		unset($_SESSION['UserFIO']);
 		unset($_SESSION['UserEMail']);
 		unset($_SESSION['UserPost']);
 		unset($_SESSION['ClientID']);

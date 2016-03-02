@@ -41,6 +41,7 @@
 		<script src="/js/select2.min.js" type="text/javascript"></script>
 <!--		<script src="/js/select24full.js" type="text/javascript"></script>-->
 		<script src="/js/bootstrap3-typeahead.js" type="text/javascript"></script>
+<!--		<script src="/js/typeahead.jquery.js" type="text/javascript"></script>-->
 		<script src="/js/jquery.flexslider.js" type="text/javascript"></script>
 		<script src="/js/emulatetab.joelpurra.min.js" type="text/javascript"></script>
 <!--		<script src="../../js/jquery.jqGrid.js" type="text/javascript"></script>-->

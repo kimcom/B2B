@@ -22,7 +22,7 @@ $(document).ready(function(){
 	});
 	
 	// выбор темы сообщения
-	var a_select_topic = [{id: 1, text: 'Нашел ошибку'}, {id: 2, text: 'Предлагаю...'}, {id: 3, text: 'Здравствуйте!'}];
+	var a_select_topic = [{id: 1, text: 'Найдена ошибка'}, {id: 2, text: 'Предложение'}, {id: 3, text: 'Пожелания'}, {id: 4, text: 'Прочее'}];
 	$("#select_topic").select2({data: a_select_topic, placeholder: "Выберите тему"});
 	
 	// обработка кнопки "Отправить"
@@ -32,7 +32,7 @@ $(document).ready(function(){
 		if($("#name").val().length < 1)	   err_msg += "<h4>- не указано имя</h4>";
 		if($("#email").val().length < 1)   err_msg += "<h4>- не указан e-mail</h4>";
 		if($("#select_topic").val() == "") err_msg += "<h4>- не указана тема сообщения";
-		if($("#message").val() < 1)		   err_msg += "<h4>- не введено сообщение</h4>";
+		if($("#message").val().length < 1) err_msg += "<h4>- не введено сообщение</h4>";
 		
 		if(err_msg.length == ""){
 			$.post("/engine/feedback",{
@@ -43,14 +43,16 @@ $(document).ready(function(){
 				captcha: $("#reg_captcha").val()
 				}, function (json) {
 						if(json.success != false){	
-							$("#dialog>#text").html("<h4>Сообщение успешно отправлено!</h4>");
+							//$("#dialog>#text").html("<h4>Сообщение успешно отправлено!</h4>");
+							$("#dialog>#text").html(json.message);
 							$("#dialog").dialog("open");
 
+							$('#captcha').attr('src', '/engine/captcha?' + Math.random());
 							$("#reg_captcha").val("");
 							$("#select_topic").select2("val", -1);
 							$("#message").val("");
 						}else{
-							$("#dialog>#text").html();
+							$("#dialog>#text").html(json.message);
 							$("#dialog").dialog("open");
 						}
 					}
@@ -68,7 +70,7 @@ $(document).ready(function(){
 <div class="container-fluid min530" id="contact-main-container">
 	<div class="bs-docs-section w40p ml30">
 		<div class="bs-callout bs-callout-info" id="parent_s2id_select_topic">
-			<h3 style="color:#3F2DB1;margin-top:0px;">Здесь Вы можете отправить нам сообщение:</h3>
+			<h3 style="color:#3F2DB1;margin-top:0px;">Вы можете отправить нам сообщение:</h3>
 			<h4>Ваше имя:</h4>
 			<input id="name" type="text" class="form-control TAL w100p" value="<?php echo $row['FIO']; ?>">
 			
