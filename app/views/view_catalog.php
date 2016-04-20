@@ -71,7 +71,7 @@ $(document).ready(function () {
 
 	good_edit = function (el,goodid,val){
 		$.post('/engine/order_edit',{action:'order_edit', goodid:goodid, qty:val}, function (json) {
-			console.log(json);
+			//console.log(json);
 //			console.log(JSON.stringify(json.row));
 			if (json.success) {
 				$(el).val(val==0?'':val);
@@ -105,7 +105,7 @@ $(document).ready(function () {
 		datatype: "json",
 //		colModel: colm,
 	    colModel: [
-			{label:'Артикул',		name:'Article',		index:'Article',	width: 100, sorttype: "text",	search: true,
+			{label:'Артикул',		name:'Article',		index:'Article',	width: 80, sorttype: "text",	search: true,
 				searchoptions: { 
 					dataInit: function (element) {
 					    $(element).attr("autocomplete", "off").typeahead({
@@ -117,7 +117,7 @@ $(document).ready(function () {
 					}
 			    }
 			},
-			{label:'Название',		name:'Name',		index:'Name',		width: 220, sorttype: "text",	search: true, hidedlg: false,
+			{label:'Название',		name:'Name',		index:'Name',		width: 250, sorttype: "text",	search: true, hidedlg: false,
 				searchoptions: { 
 					dataInit: function (element) {
 						$(element).attr("autocomplete","off").typeahead({ 
@@ -129,7 +129,7 @@ $(document).ready(function () {
 					}
 				}
 			},
-			{label:'Бренд',		name:'Brand',		index:'Brand',		width: 100, sorttype: "text", align: "center", 	search: true, hidedlg: false,
+			{label:'Бренд',		name:'Brand',		index:'Brand',		width: 80, sorttype: "text", align: "center", 	search: true, hidedlg: false,
 				searchoptions: { 
 					dataInit: function (element) {
 						$(element).attr("autocomplete","off").typeahead({ 
@@ -171,7 +171,7 @@ $(document).ready(function () {
 					}
 			    }
 			},
-			{label:'Заказ',			name:'Qty',			index:'Qty',		width: 90, sorttype: "number", search: false, align: "center", hidedlg: true,
+			{label:'Заказ',			name:'Qty',			index:'Qty',		width: 90, sorttype: "number", search: false, align: "center", //hidedlg: true,
 				formatter: formatQty
 			},
 		],

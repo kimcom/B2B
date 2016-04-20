@@ -38,6 +38,10 @@ class Route {
 			Fn::redirectToController('login');
 			return;
 		}
+		if ($_SESSION['ClientID'] == 0 && $controller_name != 'login' && $action_name != 'captcha') {
+			Fn::redirectToController('login');
+			return;
+		}
 		if ($_SESSION['access'] && $controller_name == 'login' && $action_name == 'index') {
 			Fn::redirectToControllerAndAction('main','index');
 			return;

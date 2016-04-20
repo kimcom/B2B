@@ -29,14 +29,14 @@ $(document).ready(function () {
 		//multiSort: true,
 		datatype: "json",
 		colModel: [
-		    {label: '№ заказа',		name: 'o_OrderID', index: 'o.OrderID', width: 100, sorttype: "number", search: false, align: "center"},
-		    {label: 'Партнер',		name: 'o_ClientName', index: 'o.ClientName', width: 120, sorttype: "text", search: false, align: "left"},
+		    {label: '№ заказа',		name: 'o_OrderID', index: 'o.OrderID', width: 100, sorttype: "number", search: true, align: "center"},
+		    {label: 'Партнер',		name: 'ClientName', index: 'cl.Name', width: 120, sorttype: "text", search: true, align: "left"},
 		    {label: 'Состояние',	name: 'State', index: 'State', width: 120, sorttype: "text", search: false, align: "left"},
-		    {label: 'Дата создания',name: 'DT_create', index: 'DT_create', width: 130, sorttype: "date", search: false, align: "center"},
+		    {label: 'Дата создания',name: 'DT_create', index: 'o.DT_create', width: 130, sorttype: "date", search: true, align: "center"},
 		    {label: 'Сумма',		name: 'Sum', index: 'Sum', width: 100, sorttype: "number", search: false, align: "right"},
-		    {label: 'Адрес дост.',	name: 'DeliveryAddress', index: 'DeliveryAddress', width: 200, sorttype: "text", search: false, align: "left"},
-		    {label: 'Примечание',	name: 'Notes', index: 'Notes', width: 200, sorttype: "text", search: false, align: "left"},
-		    {label: 'Автор',		name: 'u_FIO', index: 'u.FIO', width: 120, sorttype: "text", search: false, align: "left"},
+		    {label: 'Адрес дост.',	name: 'DeliveryAddress', index: 'DeliveryAddress', width: 200, sorttype: "text", search: true, align: "left"},
+		    {label: 'Примечание',	name: 'Notes', index: 'Notes', width: 200, sorttype: "text", search: true, align: "left"},
+		    {label: 'Автор',		name: 'u_FIO', index: 'u.FIO', width: 120, sorttype: "text", search: true, align: "left"},
 		],
 		rowNum: 20,
 		rowList: [20, 30, 40, 50, 100, 200, 300],
@@ -60,6 +60,7 @@ $(document).ready(function () {
 		}
     });
 	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: false, cloneToTop: true});
+	$("#grid1").jqGrid('filterToolbar', { autosearch: true, searchOnEnter: true});
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
 	$("#pgrid1").addClass('ui-jqgrid-pager-empty');
