@@ -48,6 +48,10 @@ if (!isset($_SESSION['AccessLevel']))
     $_SESSION['AccessLevel'] = 0;
 if (!isset($_SESSION['CurrentOrderID']))
     $_SESSION['CurrentOrderID'] = 0;
+if (!isset($_SESSION['CurrentDocID']))
+    $_SESSION['CurrentDocID'] = 0;
 if (!isset($_SESSION['ViewRemain']))
     $_SESSION['ViewRemain'] = 0;
+if (!isset($_SESSION['Auth']))
+    $_SESSION['Auth'] = '';
 ?>

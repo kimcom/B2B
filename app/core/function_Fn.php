@@ -137,6 +137,7 @@ class Fn {
 				$num = count($data);
 				//$data[$num++] = $row;
 				array_push($values, ($data));
+				//Fn::debugToLog("Строка $row ($num полей)", json_encode($data));
 				//echo "Строка $row ($num полей): ".json_encode($data)."<br>";//.' '.json_encode($data)."\n";
 					//for ($c=0; $c < $num; $c++) {
 					//echo $data[$c] . "<br />\n";
@@ -161,7 +162,9 @@ class Fn {
 		unset($_SESSION['access']);
 		unset($_SESSION['AccessLevel']);
 		unset($_SESSION['CurrentOrderID']);
+		unset($_SESSION['CurrentDocID']);
 		unset($_SESSION['ViewRemain']);
+		unset($_SESSION['Auth']);
 		if ($full) {
 			unset($_SESSION['banners1']);
 			unset($_SESSION['banners2']);

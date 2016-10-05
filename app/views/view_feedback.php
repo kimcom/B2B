@@ -20,6 +20,11 @@ $(document).ready(function(){
 		show: {effect: "explode", duration: 200},
 	    hide: {effect: "explode", duration: 300}
 	});
+	$("#dialog_progress").dialog({
+		autoOpen: false, modal: true, width: 400, height: 350,
+		show: {effect: "explode",duration: 1000},
+		hide: {effect: "explode", duration: 1000}
+    });
 	
 	// выбор темы сообщения
 	var a_select_topic = [{id: 1, text: 'Найдена ошибка'}, {id: 2, text: 'Предложение'}, {id: 3, text: 'Пожелания'}, {id: 4, text: 'Прочее'}];
@@ -27,6 +32,7 @@ $(document).ready(function(){
 	
 	// обработка кнопки "Отправить"
 	$("#send_email").click(function(){
+		$("#send_email").prop('disabled',true);
 		err_msg = "";
 		
 		if($("#name").val().length < 1)	   err_msg += "<h4>- не указано имя</h4>";
@@ -35,6 +41,8 @@ $(document).ready(function(){
 		if($("#message").val().length < 1) err_msg += "<h4>- не введено сообщение</h4>";
 		
 		if(err_msg.length == ""){
+			$("#dialog_progress").dialog( "option", "title", 'Выполняется отправка сообщения...');
+			$("#dialog_progress").dialog("open");
 			$.post("/engine/feedback",{
 				email: $("#email").val(),
 				fio: $("#name").val(),
@@ -42,6 +50,8 @@ $(document).ready(function(){
 				message: $("#message").val(),
 				captcha: $("#reg_captcha").val()
 				}, function (json) {
+						$("#send_email").prop('disabled',false);
+						$("#dialog_progress").dialog("close");
 						if(json.success != false){	
 							//$("#dialog>#text").html("<h4>Сообщение успешно отправлено!</h4>");
 							$("#dialog>#text").html(json.message);
@@ -60,6 +70,7 @@ $(document).ready(function(){
 		}else{
 			$("#dialog>#text").html(err_msg);
 			$("#dialog").dialog("open");
+			$("#send_email").prop('disabled',false);
 		}
 	});
 })
@@ -74,7 +85,7 @@ $(document).ready(function(){
 			<h4>Ваше имя:</h4>
 			<input id="name" type="text" class="form-control TAL w100p" value="<?php echo $row['FIO']; ?>">
 			
-			<h4 style="margin-top:5px">Ваше E-mail:</h4>
+			<h4 style="margin-top:5px">Ваш E-mail:</h4>
 			<input id="email" type="email" class="form-control TAL w100p" value="<?php echo $row['Email']; ?>">
 			
 			<h4 style="margin-top:5px">Тема сообщения:</h4>
@@ -83,8 +94,8 @@ $(document).ready(function(){
 			<h4 style="margin-top:8px">Сообщение:</h4>
 			<textarea id="message" class="form-control w100p" rows="4"></textarea>
 
-		<!-- КАПЧА -->
-		<div style="margin-top:10px" class="input-group w100p">
+			<!-- КАПЧА -->
+			<div style="margin-top:10px" class="input-group w100p">
 				<span class="input-group-addon w25p p5 h75">Проверочный<br>код:</span>
 				<img class="form-control w50p h75" src="" id="captcha"><br>
 				<span class="input-group-addon w25p">
@@ -97,13 +108,17 @@ $(document).ready(function(){
 				<span class="input-group-addon w25p"></span>
 			</div>
 
-		<button style="margin-top:10px" id="send_email" type="button" class="btn btn-success btn-sm minw150 mb5 w100p" title="Отправить"><span class="glyphicon glyphicon-ok mr5"></span>Отправить</button>
+			<button style="margin-top:10px" id="send_email" type="button" class="btn btn-success btn-sm minw150 mb5 w100p" title="Отправить"><span class="glyphicon glyphicon-ok mr5"></span>Отправить</button>
 		</div>	
 	</div>
-	</div>
+</div>
 
 <div id="dialog" title="Отправка сообщения:">
     <p id='text'></p>
+</div>
+
+<div id="dialog_progress" title="Ожидайте!">
+	<img class="ml30 mt20 border0 w300" src="/image/progress_circle3.gif">
 </div>
 
 <style>

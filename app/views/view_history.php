@@ -2,7 +2,9 @@
 <div class="container bs-docs-container">
 	<h3 class="mt0">История изменений в системе B2B</h3>
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
-		<li class="active"><a href="#tab_20160220" role="tab" data-toggle="tab">2016-02-20</a></li>
+		<li class="active"><a href="#tab_20160609" role="tab" data-toggle="tab">2016-06-09</a></li>
+		<li class="0active"><a href="#tab_20160429" role="tab" data-toggle="tab">2016-04-29</a></li>
+		<li class="0active"><a href="#tab_20160220" role="tab" data-toggle="tab">2016-02-20</a></li>
 		<li class="0active"><a href="#tab_20160213" role="tab" data-toggle="tab">2016-02-13</a></li>
 		<li class="0active"><a href="#tab_20160212" role="tab" data-toggle="tab">2016-02-12</a></li>
 		<li class="0active"><a href="#tab_20160210" role="tab" data-toggle="tab">2016-02-10</a></li>
@@ -11,7 +13,56 @@
 		<li class="0active"><a href="#tab_20160119" role="tab" data-toggle="tab">2016-01-19</a></li>
 	</ul>
 	<div class="tab-content">
-		<div id="tab_20160220" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+		<div id="tab_20160609" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+			<div class="bs-docs-section m10">
+				<h4 class="m0 mt5">Раздел: Прайс</h4>
+				<div class="bs-callout bs-callout-info text-left ml20">
+					<h4>Статус: Добавление</h4>
+					<h4>Реализовано API (application programming interface)</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>
+							<ul>
+								<li>Возможны варианты получения прайса в интерактивном режиме
+									<ul>
+										<li>Прайс в виде файла - формат CSV<br>
+										</li>
+										<li>Прайс в виде текста - формат CSV<br>
+										</li>
+										<li>Прайс в виде объекта - формат JSON<br>
+										</li>
+									</ul>
+								</li><br>
+								<li>ВНИМАНИЕ!<br>
+									Файл генерируется от 2 до 5 секунд.<br>
+									Информация об остатках товаров и ценах обновляется каждые 2 часа.<br>
+									Информация о Ваших скидках обновляется только по воскресениям в 2:00.
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="tab_20160429" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1">
+			<div class="bs-docs-section m10">
+				<h4 class="m0 mt5">Раздел: Накладные</h4>
+				<div class="bs-callout bs-callout-info">
+					<h4>Статус: Добавление</h4>
+					<ul class='list-unstyled 0font12 m0 mt5'>
+						<li class='m0'>
+							<ul><br>
+								<li>Создан раздел "Накладные"</li><br>
+								<li>В данном разделе пользователи системы B2B<br>
+									имеют возможность видеть свои накладные,<br>
+									а также могут выгружать накладные в формате CSV
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="tab_20160220" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1">
 			<div class="bs-docs-section m10">
 				<h4 class="m0 mt5">Раздел: Каталог</h4>
 				<div class="bs-callout bs-callout-info">

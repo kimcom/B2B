@@ -1542,7 +1542,7 @@ $.fn.jqGrid = function( pin ) {
 		},
 		formatCol = function (pos, rowInd, tv, rawObject, rowId, rdata){
 			var cm = ts.p.colModel[pos], cellAttrFunc,
-			ral = cm.align, result="style=\"", clas = cm.classes, nm = cm.name, celp, acp=[];
+			ral = cm.align, result="style=\"word-break: break-word;height:auto;white-space:normal;", clas = cm.classes, nm = cm.name, celp, acp=[];
 			if(ral) { result += "text-align:"+ral+";"; }
 			if(cm.hidden===true) { result += "display:none;"; }
 			if(rowInd===0) {

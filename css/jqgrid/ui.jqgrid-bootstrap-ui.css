@@ -9,6 +9,7 @@ and open the template in the editor.
 */
 
 .ui-jqgrid tr.jqgrow td { height: 26px;}
+/*.ui-jqgrid tr.jqgrow td { height: 50px; word-break: break-word;}*/
 .ui-jqgrid .ui-pg-input,.ui-jqgrid .ui-jqgrid-toppager .ui-pg-input { height:20px }
 .ui-state-hover
 {

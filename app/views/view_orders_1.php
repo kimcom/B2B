@@ -1,11 +1,8 @@
 <!--<link href="/css/uploadfile.css" rel="stylesheet">-->
 <script src="/js/jquery.uploadfile.js"></script>
-<link rel="stylesheet" href="/css/jquery.ajax-combobox.css">
-<script src="/js/jquery.ajax-combobox.7.3.1.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	var mode_manager = <?php echo ($_SESSION['ClientID']==-1 && $_SESSION['AccessLevel']>10)?'true':'false';?>;
-//	var mode_manager = false;
 	var clientid;
 	$("#dialog").dialog({autoOpen: false, modal: true, width: 400, //height: 300,
 		buttons: [{text: "Закрыть", click: function () { $(this).dialog("close");}}],
@@ -156,25 +153,21 @@ $(document).ready(function () {
 				clientid = json.clientid;
 				if(json.orderid>0) $("#a_tab_0").html('Текущий заказ № '+json.orderid);
 				$("#div_order_active").html(json.html);
-//				$.post('/engine/select2?action=partners_b2b', function (json) {
-//					$("#select_companyID").select2({enable: false, multiple: false, placeholder: "Укажите фирму для пользователя", data: {results: json, text: 'text'}});
-//					$("#select_companyID").on("change", function (e) { 
-//						if (e.val.length>0)
-//							good_edit('order_edit_client',null,0,0,0,0,0,e.val);
-//					});
-//					$("#select_companyID").select2("val", clientid);
-//					$("#select_companyID").select2("enable", mode_manager);
+				$.post('/engine/select2?action=partners_b2b', function (json) {
+					$("#select_companyID").select2({enable: false, multiple: false, placeholder: "Укажите фирму для пользователя", data: {results: json, text: 'text'}});
+					$("#select_companyID").on("change", function (e) { 
+						if (e.val.length>0)
+							good_edit('order_edit_client',null,0,0,0,0,0,e.val);
+					});
+					$("#select_companyID").select2("val", clientid);
+					$("#select_companyID").select2("enable", mode_manager);
+				});
+//				$('#select_companyID').attr("autocomplete","off").typeahead({ 
+//					autoSelect: false, items: '20', minLength: 3, appendTo: "body",
+//					source: function (query, proxy) {
+//						$.ajax({url: '/engine/select_search?action=partners_b2b', dataType: "json", data: {name: query}, success: proxy});
+//					}
 //				});
-				
-				$('#select_companyID').ajaxComboBox('/engine/combobox?action=partners_b2b',{lang : 'en', init_record : clientid,
-					disabled: !mode_manager
-				});
-				$("#select_companyID").prop( "disabled", !mode_manager);
-				$("#select_companyID").on("change", function (e) { 
-					if ($("#select_companyID_primary_key").length>0)
-						good_edit('order_edit_client',null,0,0,0,0,0,$("#select_companyID_primary_key").val());
-				});
-				
 				$("#import").uploadFile({
 					url:"../engine/upload",
 					fileName:"file_csv",

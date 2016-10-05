@@ -19,7 +19,7 @@ $(document).ready(function () {
 		if (!el.checked) cats.splice(cats.indexOf(id),1);
 		//console.log(new Date(), id, el.checked, cats, cats.join(';'));
 		if (!search_global) {
-			newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group_search=" + cats.join(';') + "&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=FreeBalance&f10=FreeBalance23&f11=Qty&f12=OPT_ID";
+			newurl = "/engine/jqgrid3?action=good_downlist_b2b&sid=5&group_search=" + cats.join(';') + "&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=InvNumber&f10=Notes&f11=FreeBalance28&f12=Qty";
 			//console.log(new Date(), newurl);
 			$("#grid1").jqGrid('setGridParam', {url: newurl, page: 1, width: 800});
 			$("#grid1").trigger('reloadGrid');
@@ -59,7 +59,7 @@ $(document).ready(function () {
 			row = $("#treegrid").jqGrid('getLocalRow',cat_id);
 			if (search_global) {
 				if (row.rgt - row.lft!=1) {$('#grid1').jqGrid('clearGridData');return;}
-				newurl = "/engine/jqgrid3?action=good_list_b2b&sid=5&group=" + cat_id + "&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=FreeBalance&f10=FreeBalance23&f11=Qty&f12=OPT_ID";
+				newurl = "/engine/jqgrid3?action=good_downlist_b2b&sid=5&group=" + cat_id + "&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=InvNumber&f10=Notes&f11=FreeBalance28&f12=Qty";
 				$("#grid1").jqGrid('setGridParam', {url: newurl, page: 1, width: 800});
 				$("#grid1").jqGrid('setCaption', 'Список товаров из категории: '+row.name);
 				$("#grid1").trigger('reloadGrid');
@@ -70,7 +70,7 @@ $(document).ready(function () {
 	$('#gbox_treegrid .ui-jqgrid-caption').addClass('btn-success');
 
 	good_edit = function (el,goodid,val){
-		$.post('/engine/order_edit',{action:'order_edit', goodid:goodid, qty:val}, function (json) {
+		$.post('/engine/order_edit',{action:'order_edit', goodid:goodid, qty:val, invnumber:true}, function (json) {
 			//console.log(json);
 //			console.log(JSON.stringify(json.row));
 			if (json.success) {
@@ -86,17 +86,16 @@ $(document).ready(function () {
 		});
 	}
 	formatQty = function (cellValue, options, rowObject) {
-		val = rowObject[10]; if (val==null) val = '';
-		var html = '<input type="number" class="TAC editable inline-edit-cell" style="line-height:17px;width:60%;" min=0 value="'+val+'" onkeypress="if(event.keyCode==13)$(this).emulateTab();" onchange="good_edit(this,'+options.rowId+',$(this).val());">' + 
+		var html = '<input type="number" class="TAC editable inline-edit-cell" style="line-height:17px;width:60%;" min=0 value="'+rowObject[11]+'" onkeypress="if(event.keyCode==13)$(this).emulateTab();" onchange="good_edit(this,'+options.rowId+',$(this).val());">' + 
 				   '<span class="ml5 mr5 glyphicon glyphicon-remove" onclick="good_edit($(this).prev(),'+options.rowId+',0);"></span>';
 		return html;
     }
 
 	$("#grid1").jqGrid({
 		styleUI : 'Bootstrap',
-		caption: "Список товаров",
+		caption: "Список уцененных товаров",
 		mtype: "GET",
-		url: "/engine/jqgrid3?action=good_list_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=FreeBalance&f10=FreeBalance23&f11=Qty&f12=OPT_ID",
+		url: "/engine/jqgrid3?action=good_downlist_b2b&sid=5&group=-1&f1=Article&f2=Name&f3=Brand&f4=PriceBase&f5=Price&f6=PriceRR&f7=Margin&f8=Unit_in_pack&f9=InvNumber&f10=Notes&f11=FreeBalance28&f12=Qty",
 		responsive: true,
 		scroll: true, 
 		height: 462, // если виртуальная подгрузка страниц
@@ -104,6 +103,7 @@ $(document).ready(function () {
 		//height: 'auto', //если надо управлять страницами
 		//multiSort: true,
 		datatype: "json",
+//		colModel: colm,
 	    colModel: [
 			{label:'Артикул',		name:'Article',		index:'Article',	width: 100, sorttype: "text",	search: true,
 				searchoptions: { 
@@ -141,29 +141,20 @@ $(document).ready(function () {
 					}
 				}
 			},
-			{label:'Цена ОПТ',		name:'PriceBase',	index:'PriceBase',	width: 70, sorttype: "number", search: false, align: "right"},
-			{label:'Цена',			name:'Price',		index:'Price',		width: 70, sorttype: "number", search: false, align: "right"},
+			{label:'Цена ОПТ',		name:'PriceBase',	index:'PriceBase',	width: 50, sorttype: "number", search: false, align: "right"},
+			{label:'Цена',			name:'Price',		index:'Price',		width: 50, sorttype: "number", search: false, align: "right"},
 			{label:'РРЦ',			name:'PriceRR',		index:'PriceRR',	width: 50, sorttype: "number", search: false, align: "right"},
 			{label:'Нац.',			name:'Margin',		index:'Margin',		width: 50, sorttype: "number", search: false, align: "right"},
 			{label:'В уп.',			name:'Unit_in_pack',index:'Unit_in_pack',width:50, sorttype: "number", search: false, align: "center"},
-			{label:'Харьков',		name:'FreeBalance', index:'FreeBalance',width: 50, sorttype: "number", search: true, align: "center",
+			{label:'InvNumber',		name:'InvNumber',	index:'InvNumber',	width:50,  sorttype: "number", search: false, align: "center"},
+			{label:'Причина уценки',name:'Notes',		index:'Notes',		width: 100, sorttype: "text",search: true, hidedlg: false},
+			{label:'Склад',			name:'FreeBalance28',index:'FreeBalance28',width: 50, sorttype: "number", search: true, align: "center",
 				stype:'integer',
 				searchoptions: { clearSearch:false,
 					dataInit: function (element) {
 						p = $(this).jqGrid('getGridParam', 'postData');
-					    p.FreeBalance = true;
+					    p.FreeBalance28 = true;
 						$(element).prop("checked",true);
-						$(element).css('margin-left','15px');
-						$(element).width("18px");
-						$(element).attr("type", "checkbox");
-						$(element).change(function(e){ $("#grid1").trigger('triggerToolbar'); });
-					}
-			    }
-			},
-			{label:'Киев',		name:'FreeBalance23', index:'FreeBalance23',width: 50, sorttype: "number", search: true, align: "center",
-				stype:'integer',
-				searchoptions: { clearSearch:false,
-					dataInit: function (element) {
 						$(element).css('margin-left','15px');
 						$(element).width("18px");
 						$(element).attr("type", "checkbox");
@@ -174,7 +165,6 @@ $(document).ready(function () {
 			{label:'Заказ',			name:'Qty',			index:'Qty',		width: 90, sorttype: "number", search: false, align: "center", //hidedlg: true,
 				formatter: formatQty
 			},
-			{label:'Код 1С',		name:'OPT_ID', index:'OPT_ID',width: 70, sorttype: "number", search: true, align: "center", hidden: true}
 		],
 		rowNum: 20,
 		rowList: [20, 30, 40, 50, 100, 200, 300],
@@ -184,6 +174,8 @@ $(document).ready(function () {
 		gridview : true,
 	    pager: "#pgrid1", 
 		pagerpos: "left",
+		//altclass:"ui-priority-secondary2",
+		//altRows:true,
 	});
 	$('#gbox_grid1 .ui-jqgrid-caption').addClass('btn-info');
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: false, cloneToTop: true});
@@ -201,8 +193,7 @@ $(document).ready(function () {
 					p.group_search = cats.join(';');
 				}
 			}
-			if($("#gs_FreeBalance").prop("checked")) p.FreeBalance = true;
-			if($("#gs_FreeBalance23").prop("checked")) p.FreeBalance23 = true;
+			if($("#gs_FreeBalance28").prop("checked")) p.FreeBalance28 = true;
 		},
 		afterSearch: function () {
 			p = $(this).jqGrid('getGridParam', 'postData');
@@ -215,10 +206,6 @@ $(document).ready(function () {
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
 	$("#pgrid1").addClass('ui-jqgrid-pager-empty');
-	$('#grid1').jqGrid('hideCol','Unit_in_pack');
-	$('#grid1').jqGrid('hideCol','PriceRR');
-	$('#grid1').jqGrid('hideCol','Margin');
-	$('#grid1').jqGrid('hideCol','FreeBalance23');
 
 	$("#treegrid").gridResize();
     $("#grid1").gridResize();
@@ -232,6 +219,9 @@ $(document).ready(function () {
 		});
 		div = $('[aria-describedby=colchooser_grid1]');
 		div_header = $('[aria-describedby=colchooser_grid1]').find('.ui-dialog-titlebar');
+		//$(div_header).addClass('btn-yellow');
+		//$(div_header).addClass('btn-primary');
+		//$(div_header).addClass('btn-blue');
 		$(div_header).addClass('btn-orange');
 		div_setting = $('#div_setting').clone().removeClass('hide');
 		$(div_setting).attr('id','div_setting_open');
@@ -243,6 +233,7 @@ $(document).ready(function () {
 		$(btn).prepend('<span class="glyphicon glyphicon-ok m5 pull-left"></span>');
 		$(btn).parent().prepend('<button onclick="config_reset();" type="button" class="ui-button ui-widget ui-corner-all ui-button-text-only btn btn-yellow 0btn-xs minw150 mb5" title="Восстановить настройки по умолчанию"><span class="glyphicon glyphicon-edit m5 pull-left"></span><span class="ui-button-text">Сбросить все настройки</span></button>');
 		toogle_search(false);
+//		console.log($(div).find('.popover'));
 	});	
 
 	$.post('/engine/order_info',{action: 'order_info', orderid: 5}, function (json) {
@@ -262,17 +253,8 @@ $(document).ready(function () {
 		//console.log(search_global);
 		$('#treegrid').trigger('reloadGrid');
 	}
-	grid_size = function () {	
-		var cm = $("#grid1").jqGrid('getGridParam','colModel');
-		for (key in cm) {
-			$('#grid1').jqGrid('setColWidth', cm[key]['name'], parseInt(cm[key]['width']), true);
-		    $('#grid1').jqGrid((cm[key]['hidden']) ? 'hideCol' : 'showCol', cm[key]['name']);
-		}
-		var gw = $("#grid1").jqGrid('getGridParam', 'width');
-		$("#grid1").jqGrid('setGridWidth', gw + 17)
-    }
 
-	$.post('/engine/config',{action: 'get', section: 'catalog'}, function (json) {
+	$.post('/engine/config',{action: 'get', section: 'catalog_down'}, function (json) {
 //		console.log(json,json.setting.length);
 		if (json.success) {
 			//console.log(json.setting);
@@ -290,7 +272,7 @@ $(document).ready(function () {
 					for (field in cm) { //for (fld in cm[key]) {
 						//console.log(field, cm[field]);
 						if (field=='height') $('#'+obj).jqGrid('setGridHeight', parseInt(cm[field]));
-						//if (field=='width') $('#'+obj).jqGrid('setGridWidth', parseInt(cm[field]));
+						if (field=='width') $('#'+obj).jqGrid('setGridWidth', parseInt(cm[field]));
 						if (field=='remapColumns' && cm[field].length > 0) $('#'+obj).jqGrid("remapColumns", cm[field], true);
 					}
 				}
@@ -304,14 +286,14 @@ $(document).ready(function () {
 					}}
 				}
 			}
-			grid_size();
 		}
 	});
-	grid_size();
+//	setTimeout(function(){
+//	}, 300);
 	
 	config_reset = function (){
 		conf = new Object();
-		conf.action = 'reset'; conf.section = 'catalog'; 
+		conf.action = 'reset'; conf.section = 'catalog_down'; 
 		//conf.object = 'treegrid'; conf.param = 'param'; conf.value = JSON.stringify(cm);
 		$("#question>#text").html("Восстановить настройки по умолчанию?");
 		$("#question").dialog('option', 'buttons', [{text: "Удалить", click: function () {
@@ -330,7 +312,7 @@ $(document).ready(function () {
 	}
 	config_save = function (){
 		conf = new Object();
-		conf.action = 'set'; conf.section = 'catalog'; 
+		conf.action = 'set'; conf.section = 'catalog_down'; 
 		//получаем search_global
 		conf.object = 'global'; conf.param = 'search'; conf.value = ''+search_global+'';
 		$.post('/engine/config',{ action: conf.action, section:conf.section, object: conf.object, param: conf.param, value:	conf.value}, function (json) {

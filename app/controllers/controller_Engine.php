@@ -1,5 +1,31 @@
 <?php
 class Controller_Engine extends Controller {
+//получение настроек пользователя
+	function action_filter_save() {
+//Fn::debugToLog('filter_save', ($_POST['filter']));
+		$filename = "Users\\Setting\\" . $_SESSION['UserID'] . '_' . $_REQUEST['section'] . '_' . $_REQUEST['gridid'] . ".txt";
+		$bl = file_put_contents($filename, $_REQUEST['filter']);
+		if ($bl == false)
+			Fn::debugToLog("Engine", 'ошибка при записи фильтра в файл: ' . $filename);
+	}
+	function action_filter_restore() {
+		$filename = "Users\\Setting\\" . $_SESSION['UserID'] . '_' . $_REQUEST['section'] . '_' . $_REQUEST['gridid'] . ".txt";
+		$handle = @fopen($filename, "r");
+		$response = new stdClass();
+		if ($handle != null) {
+			$response->success = true;
+			$response->message = 'ok';
+			$response->data = fread($handle, filesize($filename));
+			echo json_encode($response);
+		} else {
+			//Fn::debugToLog("Engine", 'ошибка при чтении фильтра из файла: ' . $filename);
+			$response->success = false;
+			$response->message = 'Возникла ошибка при получении настроек!<br><br>Сообщите разработчику!';
+			$response->data = 0;
+			echo json_encode($response);
+		}
+	}
+
 	public function action_captcha() {
 	// создаем случайное число и сохраняем в сессии
 		$randomnr = rand(1000, 9999);
@@ -58,6 +84,19 @@ class Controller_Engine extends Controller {
 	public function action_order_info_full() {
 		$cnn = new Cnn();
 		$cnn->order_info_full();
+	}
+
+	public function action_doc_edit() {
+		$cnn = new Cnn();
+		$cnn->doc_edit();
+	}
+	public function action_doc_info_full() {
+		$cnn = new Cnn();
+		$cnn->doc_info_full();
+	}
+	public function action_doc_export_csv() {
+		$cnn = new Cnn();
+		$cnn->doc_export_csv();
 	}
 
 	public function action_tree_NS() {
@@ -148,5 +187,8 @@ class Controller_Engine extends Controller {
 		return $cnn->feedback();
 	}
 	
-	
+	function action_combobox(){
+		$cnn = new Cnn();
+		return $cnn->combobox();
+	}
 }

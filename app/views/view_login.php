@@ -73,6 +73,11 @@ $(document).ready(function () {
 		show: {effect: "clip", duration: 500},
 		hide: {effect: "clip", duration: 500}
     });
+	$("#dialog_progress").dialog({
+		autoOpen: false, modal: true, width: 420, height: 350,
+		show: {effect: "explode", duration: 1000},
+		hide: {effect: "explode", duration: 1000}
+	});
 	$("#div_register").dialog({
 		autoOpen: false, modal: true, width: 520, height: 'auto',
 		show: {effect: "explode", duration: 1000},
@@ -92,6 +97,9 @@ $(document).ready(function () {
 			$("#dialog").dialog("open");
 			return;
 		}
+		$("#btn_forgot").prop('disabled',true);
+		$("#dialog_progress").dialog( "option", "title", 'Выполняется отправка сообщения...');
+		$("#dialog_progress").dialog("open");
 		$.post("/login/forgot",{
 				email: $("#fgt_email").val()
 		    }, function (json) {
@@ -103,6 +111,8 @@ $(document).ready(function () {
 					//console.log(json.sql);
 					$("#dialog").css('background-color', '#FFE3E2');
 				}
+				$("#btn_forgot").prop('disabled',false);
+				$("#dialog_progress").dialog("close");
 				$("#dialog>#text").html(json.message);
 				$("#dialog").dialog("open");
 	    });
@@ -338,4 +348,8 @@ $(document).ready(function () {
 
 <div id="dialog" title="Авторизация в системе компании <?php echo $_SESSION['company']; ?>">
 	<p id='text'></p>
+</div>
+
+<div id="dialog_progress" title="Ожидайте!">
+	<img class="ml30 mt20 border0 w300" src="/image/progress_circle3.gif">
 </div>

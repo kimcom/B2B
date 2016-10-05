@@ -1,0 +1,17 @@
+2016-09-26 17:08:18 logon: user:alik доступ разрешен!
+2016-09-26 17:53:46 send: Date: Mon, 26 Sep 2016 17:53:46 UT
+From: =?UTF-8?B?0JDQtNC80LjQvdC40YHRgtGA0LDRhtC40Y8g0YHQsNC50YLQsCBCMkIg0KHRg9C30LjRgNGM0LXihKI==?=<b2b@priroda.ua>
+Reply-To:   =?UTF-8?B?0JzQsNC70LjQvdC40L0g0J4u0JUu=?= <kimcom@ukr.net>
+To:   =?UTF-8?B?0JzQsNC70LjQvdC40L0g0J4u0JUu=?= <kimcom@ukr.net>
+Subject: =?UTF-8?B?0JzQsNC70LjQvdC40L0g0J4u0JUuID4+PiDQndCw0LnQtNC10L3QsCDQvtGI0LjQsdC60LA==?=
+Sender: <b2b@priroda.ua>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Priority: 3
+X-Mailer: PHP/5.6.15
+
+Сообщение от пользователя: Малинин О.Е.
+E-mail:	kimcom@ukr.net
+тест
+

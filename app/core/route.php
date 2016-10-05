@@ -34,22 +34,26 @@ class Route {
 //			Fn::redirectToControllerAndAction('main', 'orders');
 //			return;
 //		}
-		if ($_SESSION['access'] !== true && $controller_name != 'login' && $action_name != 'captcha') {
-			Fn::redirectToController('login');
-			return;
+		if ($controller_name != 'api') {
+			if ($_SESSION['access'] !== true && $controller_name != 'login' && $action_name != 'captcha') {
+				Fn::redirectToController('login');
+				return;
+			}
+			if ($_SESSION['ClientID'] == 0 && $controller_name != 'login' && $action_name != 'captcha') {
+				Fn::redirectToController('login');
+				return;
+			}
+			if ($_SESSION['access'] && $controller_name == 'login' && $action_name == 'index') {
+				Fn::redirectToControllerAndAction('main','index');
+				return;
+			}
 		}
-		if ($_SESSION['ClientID'] == 0 && $controller_name != 'login' && $action_name != 'captcha') {
-			Fn::redirectToController('login');
-			return;
-		}
-		if ($_SESSION['access'] && $controller_name == 'login' && $action_name == 'index') {
-			Fn::redirectToControllerAndAction('main','index');
-			return;
+		if ($controller_name == 'api') {
+			$action_name = str_replace('.', '_', $action_name);
 		}
 
 		if ($controller_name == 'css') return;
-		if ($controller_name == 'favicon.ico')
-			return;
+		if ($controller_name == 'favicon.ico') return;
 		if (!empty($routes[2]))
 			if ($routes[2] == 'favicon.ico')return;
 		if ($controller_name == 'images')	return;
