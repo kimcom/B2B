@@ -111,7 +111,7 @@ $(document).ready(function () {
 					    $(element).attr("autocomplete", "off").typeahead({
 						autoSelect: false, items: '20', minLength: 3, appendTo: "body",
 						source: function (query, proxy) {
-						    $.ajax({url: '/engine/select_search?action=good_article', dataType: "json", data: {name: query}, success: proxy});
+						    $.ajax({url: '/engine/select_search?action=good_article_b2b', dataType: "json", data: {name: query}, success: proxy});
 						}
 					    });
 					}
@@ -123,7 +123,7 @@ $(document).ready(function () {
 						$(element).attr("autocomplete","off").typeahead({ 
 							autoSelect: false, items:'20', minLength:3,	appendTo : "body",
 							source: function(query, proxy) {
-									$.ajax({ url: '/engine/select_search?action=good_name', dataType: "json", data: {name: query}, success : proxy });
+									$.ajax({ url: '/engine/select_search?action=good_name_b2b', dataType: "json", data: {name: query}, success : proxy });
 								}
 							});
 					}
@@ -135,7 +135,7 @@ $(document).ready(function () {
 						$(element).attr("autocomplete","off").typeahead({ 
 							autoSelect: false, items:'20', minLength:3,	appendTo : "body",
 							source: function(query, proxy) {
-									$.ajax({ url: '/engine/select_search?action=brand_name', dataType: "json", data: {name: query}, success : proxy });
+									$.ajax({ url: '/engine/select_search?action=brand_name_b2b', dataType: "json", data: {name: query}, success : proxy });
 								}
 							});
 					}
@@ -455,5 +455,3 @@ $(document).ready(function () {
 <div id="question" title="ВНИМАНИЕ!">
 	<p id='text' class="center"></p>
 </div>
-
-<span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-sort-ltr ui-disabled glyphicon glyphicon-triangle-bottom"></span>

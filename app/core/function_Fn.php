@@ -125,6 +125,7 @@ class Fn {
 	public static function csv_to_array2($file_name) {
 		$values = array();
 		$row = 1;
+		if (file_exists($file_name) === false) return $values;
 		$handle = fopen($file_name, "r");
 		//Fn::debugToLog("csv_to_array2", $handle);
 		if ($handle !== FALSE) {

@@ -11,9 +11,35 @@
 		<li class="0active"><a href="#tab_20160201" role="tab" data-toggle="tab">2016-02-01</a></li>
 		<li class="0active"><a href="#tab_20160125" role="tab" data-toggle="tab">2016-01-25</a></li>
 		<li class="0active"><a href="#tab_20160119" role="tab" data-toggle="tab">2016-01-19</a></li>
+		<li class="0active"><a href="#tab_order" role="tab" data-toggle="tab">Загрузка заказа</a></li>
 	</ul>
 	<div class="tab-content">
 		<div id="tab_20160609" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1 active">
+			<div class="bs-docs-section m10" style="margin-bottom:0;">
+				<h4 class="m0 mt5">Загрузка заказа из CSV файла</h4>
+				<div class="bs-callout bs-callout-info text-left ml20">
+					<h4>Описание формата:</h4>
+					<ul class='list-unstyled m0 mt5'>
+						<li class='m0'>
+							<ul>
+								<li>1. названия колонок не нужно указывать в первой строке</li>
+								<li>2. формат строки: "Код товара", "Артикул", "Название", Цена, Кол-во</li>
+								<li>3. разделитель дробной части "."</li>
+							</ul>
+						</li>
+					</ul>
+					<h4>Пример:</h4>
+					<ul class='list-unstyled m0 mt5'>
+						<li class='m0'>
+							<ul>
+								<li>"6638"," - ","Помпа д/фонт. PFN-2000",1187.77,11.00<br></li>
+								<li>"6798"," - ","Игрушка д/кот. Мячик мех. на резинке",6.80,1.00</li>
+								<li>"22880"," - ","Дряпка Диван - люкс КОРИЧ/БЕЖ",424.66,1.00</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="bs-docs-section m10">
 				<h4 class="m0 mt5">Раздел: Прайс</h4>
 				<div class="bs-callout bs-callout-info text-left ml20">
@@ -22,7 +48,7 @@
 					<ul class='list-unstyled 0font12 m0 mt5'>
 						<li class='m0'>
 							<ul>
-								<li>Возможны варианты получения прайса в интерактивном режиме
+								<li><strong>Возможны варианты получения прайса в интерактивном режиме</strong>
 									<ul>
 										<li>Прайс в виде файла - формат CSV<br>
 										</li>
@@ -31,8 +57,8 @@
 										<li>Прайс в виде объекта - формат JSON<br>
 										</li>
 									</ul>
-								</li><br>
-								<li>ВНИМАНИЕ!<br>
+								</li>
+								<li><strong>ВНИМАНИЕ!</strong><br>
 									Файл генерируется от 2 до 5 секунд.<br>
 									Информация об остатках товаров и ценах обновляется каждые 2 часа.<br>
 									Информация о Ваших скидках обновляется только по воскресениям в 2:00.
@@ -342,6 +368,33 @@
 				<div class="bs-callout bs-callout-info">
 					<h4>Статус: Добавление</h4>
 					<p>Реализована возможность менять размер списка товаров и категорий/групп товаров.</p>
+				</div>
+			</div>
+		</div>
+		<div id="tab_order" class="tab-pane w100p min500 ui-corner-all borderColor frameL border1">
+			<div class="bs-docs-section m10" style="margin-bottom:0;">
+				<h4 class="m0 mt5">Загрузка заказа из CSV файла</h4>
+				<div class="bs-callout bs-callout-info text-left ml20">
+					<h4>Описание формата:</h4>
+					<ul class='list-unstyled m0 mt5'>
+						<li class='m0'>
+							<ul>
+								<li>1. названия колонок не нужно указывать в первой строке</li>
+								<li>2. формат строки: "Код товара", "Артикул", "Название", Цена, Кол-во</li>
+								<li>3. разделитель дробной части "."</li>
+							</ul>
+						</li>
+					</ul>
+					<h4>Пример:</h4>
+					<ul class='list-unstyled m0 mt5'>
+						<li class='m0'>
+							<ul>
+								<li>"6638"," - ","Помпа д/фонт. PFN-2000",1187.77,11.00<br></li>
+								<li>"6798"," - ","Игрушка д/кот. Мячик мех. на резинке",6.80,1.00</li>
+								<li>"22880"," - ","Дряпка Диван - люкс КОРИЧ/БЕЖ",424.66,1.00</li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

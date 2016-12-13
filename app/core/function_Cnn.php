@@ -303,7 +303,7 @@ E-mail:" . $_SESSION['adminEmail'] . "
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
 //Fn::paramToLog();
-		$filename = "E:/Sites/b2b.priroda.com.ua/prices/price_".$_SESSION['ClientID'].".csv";
+		$filename = "prices/price_".$_SESSION['ClientID'].".csv";
 		if (file_exists($filename)) unlink ($filename);
 
 		$stmt = $this->db->prepare("CALL b2b.pr_price('price_csv', :_Auth)");
@@ -639,7 +639,7 @@ Fn::debugToLog("json", json_encode($result));
 		$url = str_replace("=<", "<", $url);
 		$url = str_replace("=<>", "<>", $url);
 if ($action == 'good_list_b2b' || $action == 'good_downlist_b2b'){
-	if (isset($Name)||isset($Article)||isset($OPT_ID)) 
+	if (isset($Name)||isset($Article)||isset($Brand)||isset($OPT_ID)) 
 		$url = str_replace("&group=$group", "", $url);
 	$url .= '&b2bOrderID='.$_SESSION['CurrentOrderID'].'&b2bClientID='.$_SESSION['ClientID'];
 		//Fn::debugToLog('jqgrid3 проверка', "&group=$group");
@@ -1219,15 +1219,37 @@ Fn::debugToLog('jqgrid3 url', $url);
 		$response->html = "";
 		$str = '';
 		$str0 = '';
-		$csv = Fn::csv_to_array2('users_csv/'.$filename);
+		$csv = Fn::csv_to_array2('users_csv/' . $filename);
 		if ($csv === false) {
 			$response->message = 'ошибка при получении массива из файла!';
 			return;
 		}
-		$opt_ids = array_column($csv,0);
-		$str_opt_ids = "'".implode("','", $opt_ids)."'";
-//Fn::debugToLog($Source, json_encode($opt_ids));
+		$opt_ids = array_column($csv, 0);
+		$str_opt_ids = "'" . implode("','", $opt_ids) . "'";
+//Fn::debugToLog($Source, json_encode($opt_ids).' cnt:'.count($opt_ids));
 //Fn::debugToLog($Source, json_encode($str_opt_ids));
+		if (count($opt_ids) == 0) {
+			$str = '';
+			//$str .= '<link href="/css/docs.min.css" rel="stylesheet">';
+			$str .= '<h3>ВНИМАНИЕ!</h3>';
+			$str .= '<h3>Вы загрузили файл с неправильным форматом данных!</h3><br>';
+			$str .= '<h4>Описание формата:</h4>';
+			//$str .= '<br>';
+			$str .= '<p>1. названия колонок не нужно указывать в первой строке<br>
+						2. формат строки: "Код товара", "Артикул", "Название", Цена, Кол-во<br>
+						3. разделитель дробной части "."</p>';
+			$str .= '<h4>Пример:</h4>';
+			$str .= '<p>"6638"," - ","Помпа д/фонт. PFN-2000",1187.77,11.00<br>
+						"6798"," - ","Игрушка д/кот. Мячик мех. на резинке",6.80,1.00<br>
+						"22880"," - ","Дряпка Диван - люкс КОРИЧ/БЕЖ",424.66,1.00<br>
+						"8950"," - ","Нутра соб син  1",73.26,1.00
+					</p>';
+			$response->html = $str;
+			$response->success = true;
+			header("Content-type: application/json;charset=utf-8");
+			echo json_encode($response);
+			return;
+		}
 		//echo json_encode($opt_ids).'<br>';
 		$stmt = $this->db->prepare("call pr_goods_check('goods_list', @_id, :_ClientID, :_StoreID, :_OPT_ID, :_GoodIDs)");
 		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
@@ -1245,9 +1267,9 @@ Fn::debugToLog('jqgrid3 url', $url);
 				$rowset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				foreach ($rowset as $row) {
 					$key = array_search($row['OPT_ID'], $opt_ids);
-					if ($key!==FALSE) {
+					if ($key !== FALSE) {
 						$csv[$key]['Price'] = $row['Price'];
-						$csv[$key]['QtyFB'] = ($_SESSION['StoreID']==23)?$row['QtyFreeBalance23']:$row['QtyFreeBalance'];
+						$csv[$key]['QtyFB'] = ($_SESSION['StoreID'] == 23) ? $row['QtyFreeBalance23'] : $row['QtyFreeBalance'];
 						$csv[$key]['GoodID'] = $row['GoodID'];
 						//echo json_encode($csv[$key]) . '<br>';
 					}
@@ -1256,13 +1278,13 @@ Fn::debugToLog('jqgrid3 url', $url);
 		}
 //Fn::debugToLog("csv", json_encode($csv));
 //return;
-		$head  = '<link href="../css/bs-default/bootstrap.css" rel="stylesheet">';
+		$head = '<link href="../css/bs-default/bootstrap.css" rel="stylesheet">';
 		$head .= '<link href="../css/fs.css" rel="stylesheet">';
 		//$str .= '<h4 class = "mt0">StoreID:'.$_SESSION['StoreID'].'</h4>';
 		$str0 .= '<button id = "order_import" type = "button" class = "btn btn-lilac btn-sm minw150 mb5"><span class = "glyphicon glyphicon-import mr5"></span>Загрузить заказ</button >';
 		$str0 .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые НЕ попадут в заказ:</h4>';
-		$str  .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые попадут в заказ:</h4>';
-		$tr    = '<table class = "table table-striped table-bordered font12 minw400" cellspacing = "0" width = "100%">
+		$str .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые попадут в заказ:</h4>';
+		$tr = '<table class = "table table-striped table-bordered font12 minw400" cellspacing = "0" width = "100%">
 					<thead><tr>
 						<th class = "w10p center">Код</th>
 						<th class = "w10p center">Артикул</th>
@@ -1275,26 +1297,31 @@ Fn::debugToLog('jqgrid3 url', $url);
 						<th class = "w10p center">Примечание</th>
 					</tr></thead><tbody>';
 		$str0 .= $tr;
-		$str  .= $tr;
+		$str .= $tr;
 		foreach ($csv as $key => $row) {
 			if (is_array($row)) {
-				$perc = $row['Price']*100/$row[3]-100;
-				$clr_price	= (abs($perc) >= 2)?'bc13':'';
-				$clr_qty	= ($row[4]>$row['QtyFB'])?'bc3':'';
-				$msg_qty	= ($row[4]>$row['QtyFB'])?'не хватает':'достаточно';
-				if ($row['GoodID'] == null)	$msg_qty = 'неверный код товара';
+				$perc = $row['Price'] * 100 / $row[3] - 100;
+				$clr_price = (abs($perc) >= 2) ? 'bc13' : '';
+				$clr_qty = ($row[4] > $row['QtyFB']) ? 'bc3' : '';
+				$msg_qty = ($row[4] > $row['QtyFB']) ? 'не хватает' : 'достаточно';
+				if ($row['GoodID'] == null)
+					$msg_qty = 'неверный код товара';
 				$tr = '<tr>
-							<td class="TAL">'.$row[0].'</td>
-							<td class="TAL">'.$row[1].'</td>
-							<td class="TAL">'.$row[2].'</td>
-							<td class="TAR '.$clr_price.'">'.Fn::nf($row[3]).'</td>
-							<td class="TAR '.$clr_price.'">'.Fn::nf($row['Price']).'</td>
-							<td class="TAC">'.Fn::nf($row['Price']-$row[3],1).'</td>
-							<td class="TAR">'.Fn::nfx($row[4]).'</td>
-							<td class="TAC '.$clr_qty.'">'.$msg_qty.'</td>
-							<td class="TAC">'.'</td>
+							<td class="TAL">' . $row[0] . '</td>
+							<td class="TAL">' . $row[1] . '</td>
+							<td class="TAL">' . $row[2] . '</td>
+							<td class="TAR ' . $clr_price . '">' . Fn::nf($row[3]) . '</td>
+							<td class="TAR ' . $clr_price . '">' . Fn::nf($row['Price']) . '</td>
+							<td class="TAC">' . Fn::nf($row['Price'] - $row[3], 1) . '</td>
+							<td class="TAR">' . Fn::nfx($row[4]) . '</td>
+							<td class="TAC ' . $clr_qty . '">' . $msg_qty . '</td>
+							<td class="TAC">' . '</td>
 						</tr>';
-				if ($row[4] > $row['QtyFB']) {$str0 .= $tr;} else {$str .= $tr;}
+				if ($row[4] > $row['QtyFB']) {
+					$str0 .= $tr;
+				} else {
+					$str .= $tr;
+				}
 			}
 		}
 		$str .= "</tbody></table>";
@@ -1302,7 +1329,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 //		echo $head;
 //		echo $str0;
 //		echo $str;
-		$response->html = $str0.  $str;
+		$response->html = $str0 . $str;
 		$response->success = true;
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
