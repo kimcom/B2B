@@ -1,4 +1,29 @@
 <link href="/css/docs.min.css" rel="stylesheet">
+
+<div style="position:absolute;bottom:0px;margin-bottom:0px;">
+	<img id="img_brands" class="w100p" src="/image/brands-pattern.png" style="position:relative;bottom:0px;margin-bottom:0px;">
+	<a href="http://www.flexi-northamerica.com/us/" title="Flexi">		<img src="/image/brands/Flexi.png"		style="position:absolute;top:13.0%;left:3.4%;margin-left:1%;width:7%;"></a>
+	<a href="http://www.8in1.eu/" title="8in1">							<img src="/image/brands/8in1.png"		style="position:absolute;top: 2.0%;left:2.5%;margin-left:15%;width:9%;"></a>
+	<a href="https://www.tetra.net/" title="Tetra">						<img src="/image/brands/Tetra.png"		style="position:absolute;top: 6.0%;left:2.5%;margin-left:30%;width:7%;"></a>
+	<a href="http://www.priroda.ua" title="Природа">					<img src="/image/brands/priroda20.png"	style="position:absolute;top: 5.0%;left:2.5%;margin-left:40%;width:15%;"></a>
+	<a href="http://www.gimborn.eu/" title="Gimborn">					<img src="/image/brands/Gimborn.png"	style="position:absolute;top: 4.5%;left:2.5%;margin-left:57%;width:11%;"></a>
+	<a href="https://www.juwel-aquarium.de/" title="Juwel">				<img src="/image/brands/Juwel.png"		style="position:absolute;top:10.0%;left:2.5%;margin-left:71%;width:11%;"></a>
+	<a href="https://www.canina.de/" title="Canina">					<img src="/image/brands/Canina.png"		style="position:absolute;top: 7.0%;left:2.8%;margin-left:82%;width:14.3%;"></a>
+
+	<a href="https://www.hunter.de/en/home.html" title="Hunter">		<img src="/image/brands/Hunter.png"		style="position:absolute;top:42.5%;left:3.0%;margin-left:1%;width:7%;"></a>
+	<a href="http://www.aquael.com.pl/en/" title="AquaEl">				<img src="/image/brands/Aquael.png"		style="position:absolute;top:38.0%;left:2.6%;margin-left:14%;width:10%;"></a>
+	<a href="https://www.trixie.de/heimtierbedarf/en/" title="Trixie">	<img src="/image/brands/Trixie.png"		style="position:absolute;top:33.0%;left:2.6%;margin-left:29%;width:8%;"></a>
+	<a href="https://brit-petfood.com/en" title="VAFO">					<img src="/image/brands/Brit.png"		style="position:absolute;top:33.5%;left:3.3%;margin-left:57%;width:9.5%;"></a>
+
+	<a href="http://www.grandalfa.ru/" title="Гранд-Альфа">				<img src="/image/brands/Edel.png"		style="position:absolute;top:72.5%;left:3.5%;margin-left:1%;width:6%;"></a>
+	<a href="http://www.tropical.pl/" title="Tropical">					<img src="/image/brands/Tropical.png"	style="position:absolute;top:69.5%;left:2.9%;margin-left:15%;width:7.2%;"></a>
+	<a href="http://ca-en.hagen.com" title="Hagen">						<img src="/image/brands/Hagen.png"		style="position:absolute;top:66.0%;left:2.8%;margin-left:29%;width:8.2%;"></a>
+	<a href="" title="Pet-Fashion">										<img src="/image/brands/Pet-Fashion.png"style="position:absolute;top:65.0%;left:3.6%;margin-left:41%;width:11.8%;"></a>
+	<a href="http://www.vitakraft.com/" title="Vitakraft">				<img src="/image/brands/Vitakraft.png"	style="position:absolute;top:63.0%;left:3.4%;margin-left:57%;width:9.3%;"></a>
+	<a href="http://www.furminator.net/en-eu" title="FURminator">		<img src="/image/brands/Furminator.png"	style="position:absolute;top:52.0%;left:3.2%;margin-left:70%;width:11.8%;"></a>
+	<a href="" title="Cats-Best">										<img src="/image/brands/Cats-Best.png"	style="position:absolute;top:64.0%;left:3.4%;margin-left:84%;width:9.3%;"></a>
+</div>
+	
 <div class="container bs-docs-container">
 	<h3 class="mt0">Используемые элементы</h3>
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">

@@ -305,8 +305,10 @@ E-mail:" . $_SESSION['adminEmail'] . "
 //Fn::paramToLog();
 		$filename = "prices/price_".$_SESSION['ClientID'].".csv";
 		if (file_exists($filename)) unlink ($filename);
-
-		$stmt = $this->db->prepare("CALL b2b.pr_price('price_csv', :_Auth)");
+		
+		$action = 'price_csv';
+		$stmt = $this->db->prepare("CALL b2b.pr_price(:action, :_Auth)");
+		$stmt->bindParam(":action", $action);
 		$stmt->bindParam(":_Auth", $auth);
 // вызов хранимой процедуры
 		$stmt->execute();
@@ -342,6 +344,36 @@ E-mail:" . $_SESSION['adminEmail'] . "
 		} while ($stmt->nextRowset());
 //Fn::debugToLog("rowset", json_encode($rowset));
 		return $rowset;
+	}
+
+	public function barcode_generate_csv() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+		$filename = "prices/barcode.csv";
+		//$filename = "E:/Sites/b2b.priroda.ua/prices/barcode.csv";
+		if (file_exists($filename))
+			unlink($filename);
+
+		$stmt = $this->db->prepare("CALL b2b.pr_price('barcode_csv', :_Auth)");
+		$stmt->bindParam(":_Auth", $auth);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$result = false;
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+Fn::debugToLog("rowset", json_encode($rowset));
+			if ($rowset) {
+				foreach ($rowset as $row) {
+					$result = $row[0];
+					break;
+				}
+			}
+		} while ($stmt->nextRowset());
+Fn::debugToLog("row", $result);
+		return $result ? $filename : $result;
 	}
 
 	public function feedback() {
@@ -639,7 +671,7 @@ Fn::debugToLog("json", json_encode($result));
 		$url = str_replace("=<", "<", $url);
 		$url = str_replace("=<>", "<>", $url);
 if ($action == 'good_list_b2b' || $action == 'good_downlist_b2b'){
-	if (isset($Name)||isset($Article)||isset($Brand)||isset($OPT_ID)) 
+	if (isset($g_Name)||isset($g_Article)||isset($Brand)||isset($OPT_ID)) 
 		$url = str_replace("&group=$group", "", $url);
 	$url .= '&b2bOrderID='.$_SESSION['CurrentOrderID'].'&b2bClientID='.$_SESSION['ClientID'];
 		//Fn::debugToLog('jqgrid3 проверка', "&group=$group");
@@ -919,10 +951,10 @@ Fn::debugToLog('jqgrid3 url', $url);
 				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
 				$response->success = true;
 				if ($cnt == 1) {
-						$str .= '<table id="table_order" class="table table-striped table-bordered font11 minw300 maxw300" cellspacing="0"  width="100%">';
+						$str .= '<table id="table_order" class="table table-striped table-bordered minw300 maxw300" cellspacing="0"  width="100%">';
 					foreach ($rowset as $row) {
 						$str .= '<thead>
-									<tr><th colspan=4 class="btn-warning" style="height:36px;vertical-align:middle;"><span class="font14 fontb">Заказ № ' . $row['OrderID'] . '</span></th></tr>
+									<tr><th colspan=4 class="title2" style="height:36px;vertical-align:middle;"><span class0="title2">Заказ № ' . $row['OrderID'] . '</span></th></tr>
 									<tr><th colspan=4 style="height:27px;">Статус: ' . (($row['Status']==0)?'предварительный':'в обработке') . '</th></tr>
 								 </thead>';
 					}
@@ -1013,24 +1045,24 @@ Fn::debugToLog('jqgrid3 url', $url);
 						$str .= '
 								 <div class="row">
 									<div id="div_order_buttons" class = "col-md-12 col-xs-12 TAL hidden-print">
-<button id="good_add"	type="button" class="btn btn-primary	btn-sm minw150 mb5"><span class="glyphicon glyphicon-plus mr5"></span>Добавить товар</button>
-<button id="import"		type="button" class="btn btn-lilac		btn-sm minw150 mb5"><span class="glyphicon glyphicon-import mr5"></span>Импорт CSV</button>
-<button id="export"		type="button" class="btn btn-warning	btn-sm minw150 mb5"><span class="glyphicon glyphicon-export mr5"></span>Експорт в CSV</button>
-<button id="delete"		type="button" class="btn btn-danger		btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash mr5"></span>Удалить заказ</button>
-<button id="print"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-print mr5"></span>Печать заказа</button>
-<button id="state"		type="button" class="btn btn-success	btn-sm minw150 mb5" title="Отправить заказ поставщику?"><span class="glyphicon glyphicon-ok mr5"></span>В обработку</button>
+<button id="good_add"	type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-plus mr5"></span>Добавить товар</button>
+<button id="import"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-import mr5"></span>Импорт CSV</button>
+<button id="export"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-export mr5"></span>Експорт в CSV</button>
+<button id="delete"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash mr5"></span>Удалить заказ</button>
+<button id="print"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-print mr5"></span>Печать заказа</button>
+<button id="state"		type="button" class="btn btn-b2b btn-sm minw150 mb5" title="Отправить заказ поставщику?"><span class="glyphicon glyphicon-ok mr5"></span>В обработку</button>
 									</div>
 								 </div>';
 						$str .= '
 								 <div class="row">
 									<div class = "col-md-12 col-xs-12">
 										<div class = "floatL">
-											<div class="input-group input-group-sm w300">
+											<div class="input-group input-group-lg w300">
 											   <span class = "input-group-addon w130">Заказ №</span>
 											   <span class = "input-group-addon form-control TAC">' . $row['OrderID'] . '</span>
 											   <span class = "input-group-addon w10"></span>
 											</div>
-											<div class="input-group input-group-sm w300">
+											<div class="input-group input-group-lg w300">
 											   <span class = "input-group-addon w130">Статус:</span>
 											   <span class = "input-group-addon form-control TAC">' . $row['State'] . '</span>
 											   <span class = "input-group-addon w10"></span>
@@ -1038,12 +1070,12 @@ Fn::debugToLog('jqgrid3 url', $url);
 										</div>
 										<div class="floatL ml5">&nbsp</div>
 										<div class="floatL">
-										   <div class="input-group input-group-sm w450">
+										   <div class="input-group input-group-lg w450">
 											  <span class = "input-group-addon w130">Адрес доставки:</span>
 											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['DeliveryAddress'].'" onchange="good_edit(\'order_edit_delivery\',this,0,0,0,$(this).val(),0);">
 											  <span class = "input-group-addon w10"></span>
 										   </div>
-										   <div class="input-group input-group-sm w450">
+										   <div class="input-group input-group-lg w450">
 											  <span class = "input-group-addon w130">Примечание:</span>
 											  <input type = "text" class = "form-control" ' . ((!$view) ? '' : 'disabled') . ' autofocus value = "'.$row['Notes'].'" onchange="good_edit(\'order_edit_notes\',this,0,0,0,0,$(this).val());">
 											  <span class = "input-group-addon w10"></span>
@@ -1051,7 +1083,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 										</div>
 										<div class="floatL ml5">&nbsp</div>
 										<div class="floatL">
-										   <div class="input-group input-group-sm w300">
+										   <div class="input-group input-group-lg w300">
 											  <span class = "input-group-addon w80">Заказчик:</span>
 									';
 						if (!$view) {$str .= '<input id="select_companyID" type="text">';} else 
@@ -1059,7 +1091,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 						$str .= '
 											  <span class = "input-group-addon w10"></span>
 										   </div>
-										   <div class="input-group input-group-sm w300">
+										   <div class="input-group input-group-lg w300">
 											  <span class = "input-group-addon w80">Автор:</span>
 											  <span class = "input-group-addon form-control w210 TAL">' . $row['FIO'] . '</span>
 											  <span class = "input-group-addon w10"></span>
@@ -1073,17 +1105,17 @@ Fn::debugToLog('jqgrid3 url', $url);
 				}
 				if ($cnt == 2) {
 					$str .= '<div class="panel panel-default mt10 mr5 0maxw1000">';
-					$str .= '<table id="table_order" class="table table-striped table-bordered font12 minw400" cellspacing="0"  width="100%">';
+					$str .= '<table id="table_order" class="table table-striped table-bordered minw400" cellspacing="0"  width="100%">';
 					$str .= '<thead><tr>
-									<th class="w100 center">Артикул</th>
-									<th class="w300 center">Название</th>
-									<th class="w100 center">Примечание</th>
-									<th class="w50  center">К-во</th>
-									<th class="w50  center">Прайс</th>
-									<th class="w30  center">%</th>
-									<th class="w50  center">Скидка</th>
-									<th class="w50  center">Цена</th>
-									<th class="w70  center">Сумма</th></tr>
+									<th class="font-exo2b font16 w100 center">Артикул</th>
+									<th class="font-exo2b font16 w300 center">Название</th>
+									<th class="font-exo2b font16 w100 center">Примечание</th>
+									<th class="font-exo2b font16 w50  center">К-во</th>
+									<th class="font-exo2b font16 w50  center">Прайс</th>
+									<th class="font-exo2b font16 w30  center">%</th>
+									<th class="font-exo2b font16 w50  center">Скидка</th>
+									<th class="font-exo2b font16 w50  center">Цена</th>
+									<th class="font-exo2b font16 w70  center">Сумма</th></tr>
 								 </thead><tbody>';
 					foreach ($rowset as $row) {
 						$str .= '<tr>
@@ -1251,6 +1283,8 @@ Fn::debugToLog('jqgrid3 url', $url);
 			return;
 		}
 		//echo json_encode($opt_ids).'<br>';
+//Fn::debugToLog("",json_encode($opt_ids));
+//Fn::debugToLog("","call pr_goods_check('goods_list', @_id,".$_SESSION['ClientID'].','.$_SESSION['StoreID'],','.$str_opt_ids.','.$goodids.")");
 		$stmt = $this->db->prepare("call pr_goods_check('goods_list', @_id, :_ClientID, :_StoreID, :_OPT_ID, :_GoodIDs)");
 		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
 		$stmt->bindParam(":_StoreID", $_SESSION['StoreID']);
@@ -1269,7 +1303,8 @@ Fn::debugToLog('jqgrid3 url', $url);
 					$key = array_search($row['OPT_ID'], $opt_ids);
 					if ($key !== FALSE) {
 						$csv[$key]['Price'] = $row['Price'];
-						$csv[$key]['QtyFB'] = ($_SESSION['StoreID'] == 23) ? $row['QtyFreeBalance23'] : $row['QtyFreeBalance'];
+						//$csv[$key]['QtyFB'] = ($_SESSION['StoreID'] == 23) ? $row['QtyFreeBalance23'] : $row['QtyFreeBalance'];
+						$csv[$key]['QtyFB'] = $row['QtyFreeBalance'];
 						$csv[$key]['GoodID'] = $row['GoodID'];
 						//echo json_encode($csv[$key]) . '<br>';
 					}
@@ -1281,29 +1316,30 @@ Fn::debugToLog('jqgrid3 url', $url);
 		$head = '<link href="../css/bs-default/bootstrap.css" rel="stylesheet">';
 		$head .= '<link href="../css/fs.css" rel="stylesheet">';
 		//$str .= '<h4 class = "mt0">StoreID:'.$_SESSION['StoreID'].'</h4>';
-		$str0 .= '<button id = "order_import" type = "button" class = "btn btn-lilac btn-sm minw150 mb5"><span class = "glyphicon glyphicon-import mr5"></span>Загрузить заказ</button >';
+		$str0 .= '<button id = "order_import" type = "button" class = "btn btn-b2b btn-sm minw150 mb5"><span class = "glyphicon glyphicon-import mr5"></span>Загрузить заказ</button >';
 		$str0 .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые НЕ попадут в заказ:</h4>';
 		$str .= '<h4 class = "mt0">ВНИМАНИЕ! Список товаров, которые попадут в заказ:</h4>';
-		$tr = '<table class = "table table-striped table-bordered font12 minw400" cellspacing = "0" width = "100%">
+		$tr = '<table class = "table table-striped table-bordered minw400" cellspacing = "0" width = "100%">
 					<thead><tr>
-						<th class = "w10p center">Код</th>
-						<th class = "w10p center">Артикул</th>
-						<th class = "w30p center">Название</th>
-						<th class = "w10p center">Цена<br>в файле</th>
-						<th class = "w10p center">Цена<br>текущая</th>
-						<th class = "w5p center">Разница<br>в грн.</th>
-						<th class = "w5p center">К-во</th>
-						<th class = "w10p center">Наличие</th>
-						<th class = "w10p center">Примечание</th>
+						<th class = "font-exo2b font16 w10p center">Код</th>
+						<th class = "font-exo2b font16 w10p center">Артикул</th>
+						<th class = "font-exo2b font16 w30p center">Название</th>
+						<th class = "font-exo2b font16 w10p center">Цена<br>в файле</th>
+						<th class = "font-exo2b font16 w10p center">Цена<br>текущая</th>
+						<th class = "font-exo2b font16 w5p center">Разница<br>в грн.</th>
+						<th class = "font-exo2b font16 w5p center">К-во</th>
+						<th class = "font-exo2b font16 w10p center">Наличие</th>
+						<th class = "font-exo2b font16 w10p center">Примечание</th>
 					</tr></thead><tbody>';
 		$str0 .= $tr;
 		$str .= $tr;
 		foreach ($csv as $key => $row) {
 			if (is_array($row)) {
-				$perc = $row['Price'] * 100 / $row[3] - 100;
+				$perc = 0;
+				if ($row[3] <> 0) $perc = $row['Price'] * 100 / $row[3] - 100;
 				$clr_price = (abs($perc) >= 2) ? 'bc13' : '';
 				$clr_qty = ($row[4] > $row['QtyFB']) ? 'bc3' : '';
-				$msg_qty = ($row[4] > $row['QtyFB']) ? 'не хватает' : 'достаточно';
+				$msg_qty = ($row[4] > $row['QtyFB']) ? 'не хватает ' . ($row[4] - $row['QtyFB']) : 'достаточно';
 				if ($row['GoodID'] == null)
 					$msg_qty = 'неверный код товара';
 				$tr = '<tr>
@@ -1373,7 +1409,8 @@ Fn::debugToLog('jqgrid3 url', $url);
 					$key = array_search($row['OPT_ID'], $opt_ids);
 					if ($key!==FALSE) {
 						$csv[$key]['Price'] = $row['Price'];
-						$csv[$key]['QtyFB'] = ($_SESSION['StoreID']==23)?$row['QtyFreeBalance23']:$row['QtyFreeBalance'];
+						//$csv[$key]['QtyFB'] = ($_SESSION['StoreID']==23)?$row['QtyFreeBalance23']:$row['QtyFreeBalance'];
+						$csv[$key]['QtyFB'] = $row['QtyFreeBalance'];
 						$csv[$key]['GoodID'] = $row['GoodID'];
 //						Fn::debugToLog('dddd', json_encode($csv[$key]));
 					}
@@ -1542,8 +1579,8 @@ Fn::debugToLog('jqgrid3 url', $url);
 							$str .= '
 								 <div class="row">
 									<div id="div_doc_buttons" class = "col-md-12 col-xs-12 TAL hidden-print">
-<button id="export"		type="button" class="btn btn-warning	btn-sm minw150 mb5"><span class="glyphicon glyphicon-export mr5"></span>Експорт в CSV</button>
-<button id="print"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-print mr5"></span>Печать заказа</button>
+<button id="export"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-export mr5"></span>Експорт в CSV</button>
+<button id="print"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-print mr5"></span>Печать заказа</button>
 									</div>
 								 </div>';
 						$str .= '
@@ -1603,17 +1640,17 @@ Fn::debugToLog('jqgrid3 url', $url);
 				}
 				if ($cnt == 2) {
 					$str .= '<div class="panel panel-default mt10 mr5 0maxw1000">';
-					$str .= '<table class="table table-striped table-bordered font12 minw400" cellspacing="0"  width="100%">';
+					$str .= '<table class="table table-striped table-bordered minw400" cellspacing="0"  width="100%">';
 					$str .= '<thead><tr>
-									<th class="w100 center">Артикул</th>
-									<th class="w300 center">Название</th>
-									<th class="w100 center">Примечание</th>
-									<th class="w50  center">К-во</th>
-									<th class="w50  center">Прайс</th>
-									<th class="w30  center">%</th>
-									<th class="w50  center">Скидка</th>
-									<th class="w50  center">Цена</th>
-									<th class="w70  center">Сумма</th></tr>
+									<th class="font-exo2b font16 w100 center">Артикул</th>
+									<th class="font-exo2b font16 w300 center">Название</th>
+									<th class="font-exo2b font16 w100 center">Примечание</th>
+									<th class="font-exo2b font16 w50  center">К-во</th>
+									<th class="font-exo2b font16 w50  center">Прайс</th>
+									<th class="font-exo2b font16 w30  center">%</th>
+									<th class="font-exo2b font16 w50  center">Скидка</th>
+									<th class="font-exo2b font16 w50  center">Цена</th>
+									<th class="font-exo2b font16 w70  center">Сумма</th></tr>
 								 </thead><tbody>';
 					foreach ($rowset as $row) {
 						$str .= '<tr>

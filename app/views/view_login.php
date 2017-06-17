@@ -1,4 +1,5 @@
 <script src="/js/ajaxtcr.js" type="text/javascript"></script> 
+<script src="/js/jquery.wallpaper.js" type="text/javascript"></script> 
 <script src="http://ulogin.ru/js/ulogin.js"></script>
 <!--<script src="/js/ulogin.js"></script>-->
 <script type="text/javascript">
@@ -18,20 +19,22 @@ $(document).ready(function () {
 	}
 		
 	var imgload = false;
-	$("#img_main").load(function () {
-	    imgload = true;
-	    $(window).resize();
-	});
+//	$.wallpaper('../image/photo_1.png');
+	$.wallpaper([
+		'../image/photo_1.jpg',
+		'../image/photo_2.jpg',
+		'../image/photo_3.jpg'
+	]);
+	
 	$(window).resize(function () {
 	    if (!imgload) return;
 	    dl = $("#div_logon").height();
+	    db = $("#img_brands").height();
 	    scr = $(window).height();
-	    imgh = $("#img_main").height();
-	    if (imgh == 0)
 		imgh = 999999;
 	    h = Math.min(screen.height, $(window).height(), imgh);
 	    //$("#log").html("|screen:"+screen.height+" |window:"+$(window).height()+" |imgh:"+imgh+" |logon:"+dl+" |h:"+h);
-	    $("#div_logon").css("margin-top", (h - dl) / 2 + "px");
+	    $("#div_logon").css("margin-top", (h - dl - db) / 2 + "px");
 	    $("#div_logon").fadeIn(1000);
 	});
 	$("#div_main").keyup(function( event ) {
@@ -218,19 +221,19 @@ $(document).ready(function () {
 	}
 });
 </script>
-<div id="div_main" class="container-fluid p0" style="z-index: 1000;">
-	<img id="img_main" class="w100p" src="/image/gosprom_color.jpg">
+<div id="div_main" class="container-fluid p0 min4750" style="z-index: 1;">
 	<div id="div_logon" class="carousel-caption-login maxw400 minw400" style="display: none;">
-		<form>
-		<h2 class="center m0 fontb">
+		<img id="img_main" style="" src="/image/logo_big.png">
+		<p class="mt40">
+			<span class="center m0" style="font-family:'Exo2l';font-size: 44px;">
 			Добро пожаловать
-		</h2>
-		<h3 class="center m0 fontb">
+		</p>
+<!--		<h3 class="center m0 fontb">
 			на сайт компании<br><?php echo $_SESSION['company']; ?>
-		</h3>
-		<h4 class="center fontb">
+		</h3>-->
+		<p class="center" style="font-family:'Exo2r';font-size: 18px;">
 			система для оптовых покупателей
-		</h4>
+		</p>
 		<div class="form-group mb10 w200 floatL">
 			<label class="sr-only" for="user">User name:</label>
 			<input type="text"	   class="form-control maxw150 minw150 center-block" id="user" placeholder="Пользователь" required autofocus>
@@ -239,19 +242,44 @@ $(document).ready(function () {
 			<label class="sr-only" for="pass">Password:</label>
 			<input type="password" class="form-control maxw150 minw150 center-block" id="pass" placeholder="Пароль" required autofocus>
 		</div>
-		<div class="form-group mb10 w200 center-block floatL">
-			<a id="a_register" class="font12 c0" href="#">Регистрация</a>
+		<div class="form-group mb10 w200 center-block floatL" style="font-family:'Exo2r';font-size: 14px;">
+			<a id="a_register" class="c0" href="#">Регистрация</a>
 		</div>
-		<div class="form-group mb10 w200 center-block floatL">
-			<a id="a_forgot" class="font12 c0" href="#">Я забыл пароль</a>
+		<div class="form-group mb10 w200 center-block floatL" style="font-family:'Exo2r';font-size: 14px;">
+			<a id="a_forgot" class="c0" href="#">Я забыл пароль</a>
 		</div>
 		<div class="form-group mb10 w400 center-block floatL">
-			<button id="btn_logon" type="button" class="btn btn-lg btn-info w150 minw150 maxw150">Войти</button>
+			<button id="btn_logon" type="button" class="btn btn-lg btn-primary w150 minw150 maxw150" style="background-color:rgb(27,96,171);border-color:rgb(27,96,171);font-family:'Exo2r';font-size: 16px;">Войти</button>
 		</div>
 		</form>
 	</div>
 	<div id="log"></div>
 </div>
+<!--<img id="img_brands" class="w100p" src="/image/brands2.png" style="position:absolute;bottom:0px;margin-bottom:0px;">-->
+<div id="img_brands" style="position:absolute;bottom:0px;margin-bottom:0px;">
+	<img class="w100p" src="/image/brands-pattern.png" style="position:relative;bottom:0px;margin-bottom:0px;">
+	<a target="_blank" href="http://www.flexi-northamerica.com/us/" title="Flexi">		<img src="/image/brands/Flexi.png"		style="position:absolute;top:13.0%;left:3.4%;margin-left:1%;width:7%;"></a>
+	<a target="_blank" href="http://www.8in1.eu/" title="8in1">							<img src="/image/brands/8in1.png"		style="position:absolute;top: 2.0%;left:2.5%;margin-left:15%;width:9%;"></a>
+	<a target="_blank" href="https://www.tetra.net/" title="Tetra">						<img src="/image/brands/Tetra.png"		style="position:absolute;top: 6.0%;left:2.5%;margin-left:30%;width:7%;"></a>
+	<a target="_blank" href="http://www.priroda.ua" title="Природа">					<img src="/image/brands/priroda20.png"	style="position:absolute;top: 5.0%;left:2.5%;margin-left:40%;width:15%;"></a>
+	<a target="_blank" href="http://www.gimborn.eu/" title="Gimborn">					<img src="/image/brands/Gimborn.png"	style="position:absolute;top: 4.5%;left:2.5%;margin-left:57%;width:11%;"></a>
+	<a target="_blank" href="https://www.juwel-aquarium.de/" title="Juwel">				<img src="/image/brands/Juwel.png"		style="position:absolute;top:10.0%;left:2.5%;margin-left:71%;width:11%;"></a>
+	<a target="_blank" href="https://www.canina.de/" title="Canina">					<img src="/image/brands/Canina.png"		style="position:absolute;top: 7.0%;left:2.8%;margin-left:82%;width:14.3%;"></a>
+
+	<a target="_blank" href="https://www.hunter.de/en/home.html" title="Hunter">		<img src="/image/brands/Hunter.png"		style="position:absolute;top:42.5%;left:3.0%;margin-left:1%;width:7%;"></a>
+	<a target="_blank" href="http://www.aquael.com.pl/en/" title="AquaEl">				<img src="/image/brands/Aquael.png"		style="position:absolute;top:38.0%;left:2.6%;margin-left:14%;width:10%;"></a>
+	<a target="_blank" href="https://www.trixie.de/heimtierbedarf/en/" title="Trixie">	<img src="/image/brands/Trixie.png"		style="position:absolute;top:33.0%;left:2.6%;margin-left:29%;width:8%;"></a>
+	<a target="_blank" href="https://brit-petfood.com/en" title="VAFO">					<img src="/image/brands/Brit.png"		style="position:absolute;top:33.5%;left:3.3%;margin-left:57%;width:9.5%;"></a>
+
+	<a target="_blank" href="" title="Edel">											<img src="/image/brands/Edel.png"		style="position:absolute;top:72.5%;left:3.5%;margin-left:1%;width:6%;"></a>
+	<a target="_blank" href="http://www.tropical.pl/" title="Tropical">					<img src="/image/brands/Tropical.png"	style="position:absolute;top:69.5%;left:2.9%;margin-left:15%;width:7.2%;"></a>
+	<a target="_blank" href="http://ca-en.hagen.com" title="Hagen">						<img src="/image/brands/Hagen.png"		style="position:absolute;top:66.0%;left:2.8%;margin-left:29%;width:8.2%;"></a>
+	<a target="_blank" href="" title="Pet-Fashion">										<img src="/image/brands/Pet-Fashion.png"style="position:absolute;top:65.0%;left:3.6%;margin-left:41%;width:11.8%;"></a>
+	<a target="_blank" href="http://www.vitakraft.com/" title="Vitakraft">				<img src="/image/brands/Vitakraft.png"	style="position:absolute;top:63.0%;left:3.4%;margin-left:57%;width:9.3%;"></a>
+	<a target="_blank" href="http://www.furminator.net/en-eu" title="FURminator">		<img src="/image/brands/Furminator.png"	style="position:absolute;top:52.0%;left:3.2%;margin-left:70%;width:11.8%;"></a>
+	<a target="_blank" href="" title="Cats-Best">										<img src="/image/brands/Cats-Best.png"	style="position:absolute;top:64.0%;left:3.4%;margin-left:84%;width:9.3%;"></a>
+</div>
+
 <div id="div_register" style="padding: 0; z-index: 2000;">
 	<button type="button" onclick="$(this).parent().dialog('close');" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Закрыть" style="top:15px;z-index:1500;">
 		<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>

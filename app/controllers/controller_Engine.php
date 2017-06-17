@@ -129,8 +129,8 @@ class Controller_Engine extends Controller {
 	}
 	public function action_banners() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
-		if ($id=='1') $_SESSION['banners1'] = $_SESSION['banners1'] == false;
-		if ($id=='2') $_SESSION['banners2'] = $_SESSION['banners2'] == false;
+//		if ($id=='1') $_SESSION['banners1'] = $_SESSION['banners1'] == false;
+//		if ($id=='2') $_SESSION['banners2'] = $_SESSION['banners2'] == false;
 		header('Location:' . $_SERVER['HTTP_REFERER']);
 	}
 	

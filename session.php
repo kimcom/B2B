@@ -15,11 +15,11 @@
 	$_SESSION['server_pass'] = '149521';
 
 if (!isset($_SESSION['sitename']))
-    $_SESSION['sitename'] = 'Система для оптовых клиентов компании Сузирье™';
+    $_SESSION['sitename'] = 'Система для оптовых клиентов компании Сузiрья™';
 if (!isset($_SESSION['titlename']))
-    $_SESSION['titlename'] = 'B2B Сузирье™';
+    $_SESSION['titlename'] = 'B2B Сузiрья™';
 if (!isset($_SESSION['company']))
-	$_SESSION['company'] = 'Сузирье™';
+	$_SESSION['company'] = 'Сузiрья™';
 if (!isset($_SESSION['dbname']))
 	$_SESSION['dbname'] = 'b2b';
 if (!isset($_SESSION['siteEmail']))
@@ -54,4 +54,5 @@ if (!isset($_SESSION['ViewRemain']))
     $_SESSION['ViewRemain'] = 0;
 if (!isset($_SESSION['Auth']))
     $_SESSION['Auth'] = '';
+$_SESSION['banners2'] = true;
 ?>

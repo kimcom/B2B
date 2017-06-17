@@ -104,7 +104,7 @@ $.extend(AjaxComboBox.prototype, /** @lends AjaxComboBox.prototype */ {
 		return $.extend({
 			// 基本設定
 			source      : source,
-			lang        : 'ja',
+			lang        : 'ru',
 			plugin_type : 'combobox',
 			init_record : false,
 			db_table    : 'tbl',
@@ -366,6 +366,32 @@ $.extend(AjaxComboBox.prototype, /** @lends AjaxComboBox.prototype */ {
 					select_ng   : 'Attention : Please choose from among the list.',
 					select_ok   : 'OK : Correctly selected.',
 					not_found   : 'not found'
+				};
+				break;
+
+			// Russian
+			case 'ru':
+				message = {
+					add_btn     : 'Добавить',
+					add_title   : 'добавить окно',
+					del_btn     : 'Удалить',
+					del_title   : 'удалить окно',
+					next        : 'След.',
+					next_title  : 'След.' + this.option.per_page + ' (Right key)',
+					prev        : 'Пред.',
+					prev_title  : 'Пред.' + this.option.per_page + ' (Left key)',
+					first_title : 'Первая (Shift + Left key)',
+					last_title  : 'Последняя (Shift + Right key)',
+					get_all_btn : 'Все записи (Down key)',
+					get_all_alt : '(кнопка)',
+					close_btn   : 'Закрыть (Tab key)',
+					close_alt   : '(кнопка)',
+					loading     : 'загрузка...',
+					loading_alt : '(загрузка)',
+					page_info   : 'num_page_top - num_page_end of cnt_whole',
+					select_ng   : 'Внимание : Сделайте выбор из списка.',
+					select_ok   : 'OK : Correctly selected.',
+					not_found   : 'нет записей'
 				};
 				break;
 

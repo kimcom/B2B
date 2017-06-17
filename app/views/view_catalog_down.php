@@ -129,7 +129,7 @@ $(document).ready(function () {
 		},
 		gridComplete: function() {if(!fs) {fs = true; filter_restore("#grid1");}},
 	});
-	$('#gbox_grid1 .ui-jqgrid-caption').addClass('btn-info');
+	$('#gbox_grid1 .ui-jqgrid-caption').addClass('title2-btn');
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: false, cloneToTop: true});
 	$("#grid1").jqGrid('filterToolbar', { autosearch: true, searchOnEnter: true,
 		beforeSearch: function () {
@@ -156,16 +156,16 @@ $(document).ready(function () {
 		});
 		div = $('[aria-describedby=colchooser_grid1]');
 		div_header = $('[aria-describedby=colchooser_grid1]').find('.ui-dialog-titlebar');
-		$(div_header).addClass('btn-orange');
+		$(div_header).addClass('btn-b2b');
 		div_setting = $('#div_setting').clone().removeClass('hide');
 		$(div_setting).attr('id','div_setting_open');
 		$(div_header).after($(div_setting));
 		$(div).find('#help1').popover({title:'Сохранение настроек', trigger:'hover', delay: { show: 200, hide: 200 }, html:true});
 		$(div).find('#help2').popover({title:'Настройка поиска товаров', trigger:'hover', delay: { show: 200, hide: 200 }, html:true});
 		btn = $(div).find('.ui-dialog-buttonset > button')[0];
-		$(btn).removeClass('ui-state-default').addClass('btn btn-success');
+		$(btn).removeClass('ui-state-default').addClass('btn btn-b2b');
 		$(btn).prepend('<span class="glyphicon glyphicon-ok m5 pull-left"></span>');
-		$(btn).parent().prepend('<button onclick="config_reset();" type="button" class="ui-button ui-widget ui-corner-all ui-button-text-only btn btn-yellow 0btn-xs minw150 mb5" title="Восстановить настройки по умолчанию"><span class="glyphicon glyphicon-edit m5 pull-left"></span><span class="ui-button-text">Сбросить все настройки</span></button>');
+		$(btn).parent().prepend('<button onclick="config_reset();" type="button" class="ui-button ui-widget ui-corner-all ui-button-text-only btn btn-b2b minw150 mb5" style="background-color: #5f91d0;border-color: #5f91d0;" title="Восстановить настройки по умолчанию"><span class="glyphicon glyphicon-edit m5 pull-left"></span><span class="ui-button-text">Сбросить все настройки</span></button>');
 		toogle_search(false);
 //		console.log($(div).find('.popover'));
 	});	
@@ -292,7 +292,7 @@ $(document).ready(function () {
 </div>
 <div class="hide">
 	<div id="btns" class="pull-right mr20 hidden-print">
-		<button id="btn_setting" type="button" class="btn btn-info btn-xs pull-left mr5"><span class="glyphicon glyphicon-list-alt	mr5"></span>Настройки</button>
+		<button id="btn_setting" type="button" class="btn title2-btn btn-xs pull-left mr5 mt5"><span class="glyphicon glyphicon-list-alt	mr5"></span>Настройки</button>
 	</div>
 </div>
 <div id="div_setting" class="hide">

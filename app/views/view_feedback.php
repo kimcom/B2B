@@ -126,7 +126,7 @@ $(document).ready(function(){
 		background: url(/image/email.jpg) no-repeat;
 		background-size: 40%;
 		background-position-x: 85%;
-		background-position-y: 60%;
+		background-position-y: 80%;
 	}
 	
 	#parent_s2id_select_topic {

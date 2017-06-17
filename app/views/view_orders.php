@@ -318,16 +318,24 @@ if ($_SESSION['ClientID']!=0) {
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane m0 w100p min530 ui-corner-tab1 borderColor frameL border1 active" id="tab_order_action">
-			<div class="ml5 mt5" id="div_order_active" accept="text/csv"></div>
+			<div class="ml5 mt5" id="div_order_active" accept="text/csv">
+				
+				<div class="input-group input-group- w300">
+						<span class = "input-group-addon w130">Заказ №</span>
+						<span class = "input-group-addon form-control TAC">111111fewwfwf</span>
+						<span class = "input-group-addon w10"></span>
+					</div>
+
+			</div>
 		</div>
 		<div class="tab-pane m0 w100p min530 ui-corner-all borderColor frameL border1" id="tab_order_list1">
 			<div class="ml5 mt5" id="div_order_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="order_add"		type="button" class="btn btn-primary	btn-sm minw150 mb5"><span class="glyphicon glyphicon-plus		mr5"></span>Новый заказ</button>
-						<button id="order_edit"		type="button" class="btn btn-success	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Редактировать заказ</button>
-						<button id="order_delete"	type="button" class="btn btn-danger		btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash		mr5"></span>Удалить заказ</button>
-						<button id="order_view"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt	mr5"></span>Просморт заказа</button>
+						<button id="order_add"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-plus		mr5"></span>Новый заказ</button>
+						<button id="order_edit"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Редактировать заказ</button>
+						<button id="order_delete"	type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash		mr5"></span>Удалить заказ</button>
+						<button id="order_view"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt	mr5"></span>Просморт заказа</button>
 					</div>
 				</div>
 			</div>
@@ -336,7 +344,7 @@ if ($_SESSION['ClientID']!=0) {
 			<div class="ml5 mt5" id="div_order_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="order_view"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt mr5"></span>Просморт заказа</button>
+						<button id="order_view"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt mr5"></span>Просморт заказа</button>
 					</div>
 				</div>
 			</div>
@@ -345,7 +353,7 @@ if ($_SESSION['ClientID']!=0) {
 			<div class="ml5 mt5" id="div_order_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="order_view"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt mr5"></span>Просморт заказа</button>
+						<button id="order_view"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt mr5"></span>Просморт заказа</button>
 					</div>
 				</div>
 			</div>
@@ -354,7 +362,7 @@ if ($_SESSION['ClientID']!=0) {
 			<div class="ml5 mt5" id="div_order_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="order_view"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt mr5"></span>Просморт заказа</button>
+						<button id="order_view"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt mr5"></span>Просморт заказа</button>
 					</div>
 				</div>
 			</div>

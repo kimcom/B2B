@@ -4,14 +4,14 @@
 	if ($url=='/main/catalog')	$active2 = 'active';
 	if ($url=='/main/sales')	$active3 = 'active';
 	if ($url=='/main/price')	$active4 = 'active';
-	if ($url=='/main/promo')	$active5 = 'active';
 	if ($url=='/main/catalog_down')	$active6 = 'active';
 	if ($url=='/main/helper')	$active11 = 'active';
 	if ($url=='/main/profile' || $url == '/main/setting') $active20 = 'active';
 	if ($url=='/main/feedback')	$active21 = 'active';
 ?>
 
-<nav class="navbar navbar-<?php echo $_SESSION['nav_style']; ?>" role="navigation">
+<nav id="navbar" class="navbar navbar-<?php echo $_SESSION['nav_style']; ?>" role="navigation">
+<!--<nav id="navbar" class="navbar navbar-static-top navbar-<?php echo $_SESSION['nav_style']; ?>" role="navigation">-->
 	<div class="container-fluid p0">
 		<!-- Название компании и кнопка, которая отображается для мобильных устройств группируются для лучшего отображения при свертывание -->
 		<div class="navbar-header">
@@ -22,7 +22,8 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand h50 m0 p0" href=".." style="margin-left: 0px;">
-				<img id="div_brand" class="floatL h50" src="/image/logo_b2b.png">
+				<img id="div_brand1" class="floatL h50" src="/image/b2b.jpg">
+				<img id="div_brand2" class="floatL" src="/image/logo_b2b.png">
 			</a>
 		</div>
 		<!-- Группируем ссылки, формы, выпадающее меню и прочие элементы -->
@@ -64,9 +65,9 @@ if ($_SESSION['UserID'] < 10) {
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="/main/profile">Профиль</a></li>
+						<li><a href="/main/profile">Профиль (<?php echo $_SESSION['AccessLevel']; ?>)</a></li>
 <?php
-if ($_SESSION['UserID'] < 100) {
+if ($_SESSION['AccessLevel'] > 100000) {
 ?>
 						<li><a href="/engine/banners?id=1">Баннер 1 - <?php echo ($_SESSION['banners1']) ? 'выключить' : 'включить';?></a></li>
 						<li><a href="/engine/banners?id=2">Баннер 2 - <?php echo ($_SESSION['banners2']) ? 'выключить' : 'включить';?></a></li>

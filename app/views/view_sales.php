@@ -318,7 +318,7 @@ if ($_SESSION['ClientID']!=0) {
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
 <!--						<button id="doc_add"		type="button" class="btn btn-primary	btn-sm minw150 mb5"><span class="glyphicon glyphicon-plus		mr5"></span>Новый документ</button>-->
-						<button id="doc_edit"		type="button" class="btn btn-success	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
+						<button id="doc_edit"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
 <!--						<button id="doc_delete"	type="button" class="btn btn-danger		btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash		mr5"></span>Удалить документ</button>-->
 <!--						<button id="doc_view"		type="button" class="btn btn-info		btn-sm minw150 mb5"><span class="glyphicon glyphicon-list-alt	mr5"></span>Просморт документа</button>-->
 					</div>
@@ -329,7 +329,7 @@ if ($_SESSION['ClientID']!=0) {
 			<div class="ml5 mt5" id="div_doc_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="doc_edit"		type="button" class="btn btn-success	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
+						<button id="doc_edit"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
 					</div>
 				</div>
 			</div>
@@ -338,7 +338,7 @@ if ($_SESSION['ClientID']!=0) {
 			<div class="ml5 mt5" id="div_doc_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="doc_edit"		type="button" class="btn btn-success	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
+						<button id="doc_edit"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
 					</div>
 				</div>
 			</div>
@@ -347,7 +347,7 @@ if ($_SESSION['ClientID']!=0) {
 			<div class="ml5 mt5" id="div_doc_list" >
 				<div class="row">
 					<div class = "col-md-12 col-xs-12 TAL hidden-print">
-						<button id="doc_edit"		type="button" class="btn btn-success	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
+						<button id="doc_edit"		type="button" class="btn btn-b2b	btn-sm minw150 mb5"><span class="glyphicon glyphicon-edit		mr5"></span>Открыть документ</button>
 					</div>
 				</div>
 			</div>

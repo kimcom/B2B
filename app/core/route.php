@@ -12,7 +12,8 @@ class Route {
 		
 		// получаем имя контроллера	
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
-		if (!empty($routes[1])) {
+//Fn::debugToLog("routes", json_encode($routes));
+		if (!empty($routes[1]) && $routes[1]!='?refresh') {
 			$controller_name = $routes[1];
 			$pos = strpos($controller_name, '?');
 			if ($pos !== FALSE)

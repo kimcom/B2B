@@ -120,5 +120,40 @@ class Controller_Api extends Controller {
 		//Fn::debugToLog('res', json_encode($response));
 		echo json_encode($response);
 	}
+
+	function action_barcode_csv() {
+		//Fn::debugToLog("access1", 'yes');
+		if (!$this->access)
+			return;
+		$v = $_REQUEST['v'];
+		if (!isset($v)) {
+			echo "Не задан вариант отдачи файла";
+			return;
+		}
+		$cnn = new Cnn();
+		$filename = $cnn->barcode_generate_csv();
+		//header("Content-type: application/json;charset=utf8");
+		//echo json_encode($response);
+		//echo "test ". $filename;
+		if ($v == 1) {
+			$dt = date('Y/m/d');
+			$path = 'php://output';
+			header('Content-Description: File Transfer');
+			header("Content-Type: application/octet-stream");
+			header("Accept-Ranges: bytes");
+			//		header('Content-Type: application/csv;charset=cp1251');
+			header("Content-Disposition: attachment; filename=\"" . "barcode_" . $dt . ".csv\";");
+			header('Content-Transfer-Encoding: binary');
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Pragma: public");
+			header('Content-Length: ' . filesize($filename));
+			//file_put_contents($path, $str);
+			readfile($filename);
+		} else if ($v == 2) {
+			readfile($filename);
+		}
+	}
+
 }
 ?>

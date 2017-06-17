@@ -67,7 +67,7 @@ $(document).ready(function () {
 		}
     });
 	$("#treegrid_name").remove();
-	$('#gbox_treegrid .ui-jqgrid-caption').addClass('btn-success');
+	$('#gbox_treegrid .ui-jqgrid-caption').addClass('title1');
 
 	good_edit = function (el,goodid,val){
 		$.post('/engine/order_edit',{action:'order_edit', goodid:goodid, qty:val}, function (json) {
@@ -105,7 +105,7 @@ $(document).ready(function () {
 		//multiSort: true,
 		datatype: "json",
 	    colModel: [
-			{label:'Артикул',		name:'Article',		index:'Article',	width: 100, sorttype: "text",	search: true,
+			{label:'Артикул',		name:'g.Article',		index:'g.Article',	width: 100, sorttype: "text",	search: true,
 				searchoptions: { 
 					dataInit: function (element) {
 					    $(element).attr("autocomplete", "off").typeahead({
@@ -117,7 +117,7 @@ $(document).ready(function () {
 					}
 			    }
 			},
-			{label:'Название',		name:'Name',		index:'Name',		width: 200, sorttype: "text",	search: true, hidedlg: false,
+			{label:'Название',		name:'g.Name',		index:'g.Name',		width: 200, sorttype: "text",	search: true, hidedlg: false,
 				searchoptions: { 
 					dataInit: function (element) {
 						$(element).attr("autocomplete","off").typeahead({ 
@@ -133,7 +133,7 @@ $(document).ready(function () {
 				searchoptions: { 
 					dataInit: function (element) {
 						$(element).attr("autocomplete","off").typeahead({ 
-							autoSelect: false, items:'20', minLength:3,	appendTo : "body",
+							autoSelect: false, items:'20', minLength:1,	appendTo : "body",
 							source: function(query, proxy) {
 									$.ajax({ url: '/engine/select_search?action=brand_name_b2b', dataType: "json", data: {name: query}, success : proxy });
 								}
@@ -185,11 +185,15 @@ $(document).ready(function () {
 	    pager: "#pgrid1", 
 		pagerpos: "left",
 	});
-	$('#gbox_grid1 .ui-jqgrid-caption').addClass('btn-info');
+	$('#gbox_grid1 .ui-jqgrid-caption').addClass('title2');
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: false, cloneToTop: true});
 	$("#grid1").jqGrid('filterToolbar', { autosearch: true, searchOnEnter: true,
 		beforeSearch: function () {
 			p = $(this).jqGrid('getGridParam', 'postData');
+			//var myUrl = $(this).jqGrid('getGridParam', 'url');
+			//console.log(p.group, p.group_search, myUrl);
+			//p.group = -1;
+			//p.group_search = -1;
 			var catid = $('#treegrid').jqGrid('getGridParam','selrow');
 			if (!search_global) {
 				if (catid==null) {
@@ -232,16 +236,16 @@ $(document).ready(function () {
 		});
 		div = $('[aria-describedby=colchooser_grid1]');
 		div_header = $('[aria-describedby=colchooser_grid1]').find('.ui-dialog-titlebar');
-		$(div_header).addClass('btn-orange');
+		$(div_header).addClass('btn-b2b');
 		div_setting = $('#div_setting').clone().removeClass('hide');
 		$(div_setting).attr('id','div_setting_open');
 		$(div_header).after($(div_setting));
 		$(div).find('#help1').popover({title:'Сохранение настроек', trigger:'hover', delay: { show: 200, hide: 200 }, html:true});
 		$(div).find('#help2').popover({title:'Настройка поиска товаров', trigger:'hover', delay: { show: 200, hide: 200 }, html:true});
 		btn = $(div).find('.ui-dialog-buttonset > button')[0];
-		$(btn).removeClass('ui-state-default').addClass('btn btn-success');
+		$(btn).removeClass('ui-state-default').addClass('btn btn-b2b');
 		$(btn).prepend('<span class="glyphicon glyphicon-ok m5 pull-left"></span>');
-		$(btn).parent().prepend('<button onclick="config_reset();" type="button" class="ui-button ui-widget ui-corner-all ui-button-text-only btn btn-yellow 0btn-xs minw150 mb5" title="Восстановить настройки по умолчанию"><span class="glyphicon glyphicon-edit m5 pull-left"></span><span class="ui-button-text">Сбросить все настройки</span></button>');
+		$(btn).parent().prepend('<button onclick="config_reset();" type="button" class="ui-button ui-widget ui-corner-all ui-button-text-only btn btn-b2b minw150 mb5" style="background-color: #5f91d0;border-color: #5f91d0;" title="Восстановить настройки по умолчанию"><span class="glyphicon glyphicon-edit m5 pull-left"></span><span class="ui-button-text">Сбросить все настройки</span></button>');
 		toogle_search(false);
 	});	
 
@@ -410,14 +414,14 @@ $(document).ready(function () {
 </div>
 <div class="hide">
 	<div id="btns" class="pull-right mr20 hidden-print">
-		<button id="btn_setting" type="button" class="btn btn-info btn-xs pull-left mr5"><span class="glyphicon glyphicon-list-alt	mr5"></span>Настройки</button>
+		<button id="btn_setting" type="button" class="btn title2-btn btn-xs pull-left mr5 mt5 title2-btn"><span class="glyphicon glyphicon-list-alt	mr5"></span>Настройки</button>
 	</div>
 </div>
 <div id="div_setting" class="hide">
 	<div class="row mt5">
 	<div class="col-md-12 pl30 mt5">
-		<button id="help1" type="button" class="btn btn-info btn-xs w430" data-container="body" data-toggle="popover" data-placement="right" data-content="
-				<ul class='list-unstyled font12 m0 mt5'>
+		<button id="help1" type="button" class="btn btn-b2b btn-xs w430" style="background-color: #5f91d0;border-color: #5f91d0;" data-container="body" data-toggle="popover" data-placement="right" data-content="
+				<ul class='list-unstyled font14 font-exo2t m0 mt5'>
 					<li class='m0'>При входе в каталог будут восстановлены:
 						<ul>
 							<li>Высота и ширина `Категорий товаров`</li>
@@ -430,9 +434,9 @@ $(document).ready(function () {
 				</ul>">
 			<span class="glyphicon glyphicon-save-file"></span> Ваши настройки для каталога будут сохранены! 
 		</button>
-		<h4 class="font13 fontb mb2 text-success">Настройка поиска в списке товаров:</h4>
-		<button id="help2" state="" type="button" onclick="toogle_search(true);" class="btn btn-success btn-xs w430" data-container="body" data-toggle="popover" data-placement="right" data-content="
-			<ul class='list-unstyled font12 m0 mt5'>
+		<h4 class="font13 fontb mb2 text-primary">Настройка поиска в списке товаров:</h4>
+		<button id="help2" state="" type="button" onclick="toogle_search(true);" class="btn btn-b2b btn-xs w430" style="background-color: #5f91d0;border-color: #5f91d0;" data-container="body" data-toggle="popover" data-placement="right" data-content="
+			<ul class='list-unstyled font14 font-exo2t m0 mt5'>
 				<li class='m0'>Данная настройка влияет на поиск товаров:
 					<ul>
 						<li>Если установлен глобальный поиск:

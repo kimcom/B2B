@@ -14,6 +14,8 @@ if ($_SESSION['AccessLevel']<100) {
 if ($uid==null) return;
 $href1 = "http://".$_SERVER['HTTP_HOST']."/api/price.csv?auth=".$_SESSION['Auth'];
 $href2 = "http://".$_SERVER['HTTP_HOST']."/api/price.json?auth=".$_SESSION['Auth'];
+$href3 = "http://" . $_SERVER['HTTP_HOST'] . "/api/barcode.csv?auth=" . $_SESSION['Auth'];
+$href4 = "http://" . $_SERVER['HTTP_HOST'] . "/api/price.xls?auth=" . $_SESSION['Auth'];
 
 //$cnn = new Cnn();
 //$row = $cnn->user_info($uid);
@@ -91,12 +93,14 @@ $(document).ready(function () {
 <div class="container center min300">
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
 		<li class="active">	<a id="a_tab_0" href="#tab_content" role="tab" data-toggle="tab">Прайс-лист</a></li>
+		<li class="">	<a id="a_tab_1" href="#tab_barcode" role="tab" data-toggle="tab">Штрих-коды</a></li>
 	</ul>
 	<div class="tab-content">
 		<div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderColor frameL border1" id="tab_content">
 			<div class='p5 ui-corner-all frameL border0 w700'>
 				<div class="hidden-print mt5">
-					<a class="btn btn-success active" role="button" href="<?php echo $href1 . '&v=1'; ?>"><span class="glyphicon glyphicon-save	mr5"></span>Получить прайс CSV</a>
+					<a class="btn btn-b2b active1" role="button" href="<?php echo $href1 . '&v=1'; ?>"><span class="glyphicon glyphicon-save	mr5"></span>Получить прайс CSV</a>
+<!--					<a class="btn btn-b2b active1" role="button" href="<?php echo $href4 . '&v=1'; ?>"><span class="glyphicon glyphicon-save	mr5"></span>Получить прайс EXCEL</a>-->
 				</div>
 				<div class="bs-callout bs-callout-info text-left ml20">
 					<h4>Описание API (application programming interface)</h4>
@@ -124,6 +128,13 @@ $(document).ready(function () {
 							</ul>
 						</li>
 					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane min530 m0 w100p ui-corner-all borderColor frameL border1" id="tab_barcode">
+			<div class='p5 ui-corner-all frameL border0 w100p'>
+				<div class="hidden-print mt5">
+					<a class="btn btn-b2b active" role="button" href="<?php echo $href3 . '&v=1'; ?>"><span class="glyphicon glyphicon-save	mr5"></span>Получить список штрих-кодов в CSV формате</a>
 				</div>
 			</div>
 		</div>

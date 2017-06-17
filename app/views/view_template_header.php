@@ -9,6 +9,7 @@
         <meta name="author" content="ALIK-UANIC">
         <meta http-equiv="Last-Modified" content="<?php echo gmdate("D, d M Y H:i:s"); ?> GMT">
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?<?php echo rand(1111111111, 9999999999);?>">
+<!--		<link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">-->
         <link rel="stylesheet" type="text/css" href="../../css/<?php echo $_SESSION['bs_style'];?>/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.css">
 		<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.theme.css">
@@ -56,12 +57,16 @@
 		<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
 		<script src="../../js/jquery.easing.js" type="text/javascript"></script>
 		<script src="../../js/jquery.slidorion.min.js" type="text/javascript"></script>-->
+<?php
+if ($content_view != 'view_login.php') {
+?>
 		<style type="text/css">
             body {
-/*                padding-top: 140px;
-                padding-bottom: 0px;*/
-/*                min-height: 600px;*/
+				background: url('/image/pattern.jpg') repeat-y;
             }
         </style>
+<?php
+}
+?>
     </head>
 	<body>
