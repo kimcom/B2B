@@ -1282,6 +1282,14 @@ li {
 .ui-jqgrid{
     font-size: 16px;
 }
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-family: Exo2l,sans-serif;
+    font-size: 16px;
+}
+
 .ui-jqgrid .ui-jqgrid-titlebar {
     font-size: 19px;
 /*    font-weight: bold;*/
@@ -1504,3 +1512,13 @@ fieldset[disabled] .btn-b2b.focus {
 .font-exo2r{ font-family: Exo2r; font-weight: normal; }
 .font-exo2sb{ font-family: Exo2sb; font-weight: normal; }
 .font-exo2b{ font-family: Exo2b; font-weight: normal; }
+
+.label_new {
+    margin-left: -46px;
+    margin-top: 17px;
+    position: absolute;
+    color: #ff0000;
+}
+.label_new_tree {
+    color: #ff0000;
+}

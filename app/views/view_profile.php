@@ -86,82 +86,82 @@ $(document).ready(function () {
 
 <div class="container center min300">
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
-		<li class="active">	<a id="a_tab_0" href="#tab_content" role="tab" data-toggle="tab">Профиль пользователя</a></li>
+		<li class="active">	<a id="a_tab_0" class="h40" href="#tab_content" role="tab" data-toggle="tab">Профиль пользователя</a></li>
 	</ul>
 	<div class="floatL hidden-print">
 		<button id="button_save" type="button" class="btn btn-success minw200 h40 m0 p0"><span class="glyphicon glyphicon-save	mr5"></span>Сохранить данные</button>
 	</div>
 	<div class="tab-content">
 		<div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderColor frameL border1" id="tab_content">
-			<div class='p5 ui-corner-all frameL border0 w500'>
-				<div class="input-group input-group-sm w100p">
+			<div class='p5 ui-corner-all frameL border0 w550'>
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">ID пользователя:</span>
 					<span id="userID" name="userID" type="text" class="input-group-addon form-control TAL"><?php echo $row['UserID']; ?></span>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Логин:</span>
 					<span id="userName" name="userName" class="input-group-addon form-control TAL"><?php echo $row['Username']; ?></span>                   
 					<span class="input-group-addon w20p"></span>
 				</div>
-<!--				<div class="input-group input-group-sm w100p">
+				<!--<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Текущий пароль</span>
 					<input id="userPass" name="userPass" type="password" class="form-control TAL" placeholder="Текущий пароль" value="">
 					<span class="input-group-addon w20p"></span>
 				</div>-->
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Новый пароль</span>
 					<input id="password_new1" name="password_new1" type="password" class="form-control TAL" placeholder="Новый пароль" value="" <?php echo $mode_user;?>>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Повтор пароля</span>
 					<input id="password_new2" name="password_new2" type="password" class="form-control" placeholder="Повторите пароль" TAL value="" <?php echo $mode_user; ?>>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">ФИО</span>
 					<input id="fio" name="fio" type="text" class="form-control TAL" value="<?php echo $row['FIO']; ?>" <?php echo $mode_user; ?>>
 					<span class="input-group-addon w20p"></span>
 				</div>            
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Компания:</span>
 					<input id="company" name="company" type="text" class="form-control TAL" value="<?php echo $row['Company']; ?>" <?php echo $mode_user; ?>>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Должность:</span>
 					<input id="post" name="post" type="text" class="form-control TAL" value="<?php echo $row['Post']; ?>" <?php echo $mode_user; ?>>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">E-mail:</span>
 					<input id="eMail" name="eMail" type="text" class="form-control TAL" value="<?php echo $row['Email']; ?>" disabled>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Телефон:</span>
 					<input id="userPhone" name="userPhone" type="text" class="form-control TAL" value ="<?php echo $row['Phone']; ?>" <?php echo $mode_user; ?>>
 					<span class="input-group-addon w20p"></span>
 				</div>
 			</div>
-			<div class='p5 ui-corner-all frameL border0 w500'>
-				<div class="input-group input-group-sm w100p">
+			<div class='p5 ui-corner-all frameL border0 w550'>
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Уровень доступа:</span>
 					<input id="accessLevel" name="accessLevel" type="text" class="form-control TAL" value="<?php echo $row['AccessLevel']; ?>" disabled>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Компания:</span>
 					<div id="select_companyID" class="w100p"></div>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Склад:</span>
 					<div id="select_storeID" class="w100p"></div>
 					<span class="input-group-addon w20p"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-lg w100p">
 					<span class="input-group-addon w25p TAL">Остатки:</span>
 					<div id="select_viewRemain" class="w100p"></div>
 					<span class="input-group-addon w20p"></span>

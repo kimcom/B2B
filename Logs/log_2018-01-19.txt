@@ -1,0 +1,2 @@
+2018-01-19 00:07:49 price-list user:alik: sid=5&grouping=g_goodID&group=&catType=&catBrand=1452;1462&goodID=&b2bCompanyID=735&orderby=g.Name asc&_search=false&nd=1516313269635&rows=10000000&page=1&sidx=&sord=asc
+2018-01-19 00:09:23 price-list user:alik: sid=5&grouping=catTypeName;g_goodID&group=&catType=&catBrand=1452;1462&goodID=&b2bCompanyID=735&orderby=catTypeName asc, g.Name asc&_search=false&nd=1516313363699&rows=10000000&page=1&sidx=field0 asc, &sord=asc

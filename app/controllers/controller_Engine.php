@@ -1,14 +1,14 @@
 <?php
 class Controller_Engine extends Controller {
 //получение настроек пользователя
-	function action_filter_save() {
+	public function action_filter_save() {
 //Fn::debugToLog('filter_save', ($_POST['filter']));
 		$filename = "Users\\Setting\\" . $_SESSION['UserID'] . '_' . $_REQUEST['section'] . '_' . $_REQUEST['gridid'] . ".txt";
 		$bl = file_put_contents($filename, $_REQUEST['filter']);
 		if ($bl == false)
 			Fn::debugToLog("Engine", 'ошибка при записи фильтра в файл: ' . $filename);
 	}
-	function action_filter_restore() {
+	public function action_filter_restore() {
 		$filename = "Users\\Setting\\" . $_SESSION['UserID'] . '_' . $_REQUEST['section'] . '_' . $_REQUEST['gridid'] . ".txt";
 		$handle = @fopen($filename, "r");
 		$response = new stdClass();
@@ -24,6 +24,19 @@ class Controller_Engine extends Controller {
 			$response->data = 0;
 			echo json_encode($response);
 		}
+	}
+
+	public function action_setting_set() {
+		$cnn = new Cnn();
+		return $cnn->set_report_setting();
+	}
+	public function action_setting_get() {
+		$cnn = new Cnn();
+		return $cnn->get_report_setting_list();
+	}
+	public function action_setting_get_byName() {
+		$cnn = new Cnn();
+		return $cnn->get_report_setting_byName();
 	}
 
 	public function action_captcha() {
@@ -177,18 +190,72 @@ class Controller_Engine extends Controller {
 		return $cnn->order_csv_import();
 	}
 
-	function action_user_info_save() {
+	public function action_user_info_save() {
 		$cnn = new Cnn();
 		return $cnn->user_info_save();
 	}
 	
-	function action_feedback() {
+	public function action_feedback() {
 		$cnn = new Cnn();
 		return $cnn->feedback();
 	}
 	
-	function action_combobox(){
+	public function action_combobox(){
 		$cnn = new Cnn();
 		return $cnn->combobox();
 	}
+
+	public function action_report5_data() {
+		$cnn = new Cnn();
+		return $cnn->get_report5_data();
+	}
+
+	public function action_get_file() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		$userFileName = $file_name;
+		$report_name = "Users\\Files\\" . $_SESSION['UserID'] . '_' . $report_name . ".xls";
+//Fn::debugToLog('get file', $report_name.' '.  $file_name);
+		$path = 'php://output';
+		$userFileName = $userFileName . ' ' . date('Y-m-d H:i:s') . '.xls';
+		$handle = @fopen($report_name, "r");
+		if ($handle != null) {
+//Fn::debugToLog('get file', filesize($report_name));
+			$content = fread($handle, filesize($report_name));
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+//			header("Content-Disposition: attachment; filename=$userFileName;");
+			header("Content-Disposition: attachment; filename=\"" . $userFileName . "\";");
+			header('Content-Transfer-Encoding: binary');
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Pragma: public");
+			header('Content-Length: ' . filesize($report_name));
+			//header("Content-type: application/vnd.ms-excel");
+			file_put_contents($path, $content);
+		}
+	}
+	public function action_set_file() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+		$report_name = "Users\\Files\\" . $_SESSION['UserID'] . '_' . $report_name . ".xls";
+//Fn::debugToLog('set file', $report_name);
+		//$html = iconv('utf-8', 'cp1251', $html);
+		$html = mb_convert_encoding($html, 'cp1251', 'utf-8');
+		$content = <<<EOF
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=windows-1251">
+</head>
+<body>
+	{$html}
+</body>
+</html>
+EOF;
+//Fn::debugToLog("html", $content);
+		$bl = file_put_contents($report_name, $content);
+//Fn::debugToLog('set file',$bl);
+	}
+
 }

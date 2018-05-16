@@ -4,7 +4,9 @@
 	if ($url=='/main/catalog')	$active2 = 'active';
 	if ($url=='/main/sales')	$active3 = 'active';
 	if ($url=='/main/price')	$active4 = 'active';
-	if ($url=='/main/catalog_down')	$active6 = 'active';
+	if ($url=='/main/api')		$active5 = 'active';
+if ($url=='/main/catalog_down')	$active6 = 'active';
+	if ($url=='/main/catalog_new')	$active7 = 'active';
 	if ($url=='/main/helper')	$active11 = 'active';
 	if ($url=='/main/profile' || $url == '/main/setting') $active20 = 'active';
 	if ($url=='/main/feedback')	$active21 = 'active';
@@ -36,7 +38,9 @@ if ($_SESSION['ClientID'] != 0) {
 				<li class="center minw100 <?php echo $active3; ?>"><a href="/main/sales">Накладные</a></li>
 				<li class="center minw100 <?php echo $active2; ?>"><a href="/main/catalog">Каталог</a></li>
 				<li class="center minw100 <?php echo $active6; ?>"><a href="/main/catalog_down">Уценка</a></li>
-				<li class="center minw100 <?php echo $active4; ?>"><a href="/main/price">Прайс</a></li>
+				<li class="center minw100 <?php echo $active7; ?>"><span class="label_new glyphicon glyphicon-star-empty"></span><a href="/main/catalog_new">Новинки</a></li>
+<?php if ($_SESSION['ClientID'] == -1) {?><li class="center minw100 <?php echo $active4; ?>"><a href="/main/price">Прайс</a></li><?php } ?>
+				<li class="center minw100 <?php echo $active5; ?>"><a href="/main/api">API</a></li>
 <?php } ?>
 <!--				<li class="minw100 <?php echo $active4; ?>"><a href="/main/news">Новинки</a></li>
 				<li class="minw100 <?php echo $active5; ?>"><a href="/main/promo">Акции</a></li>-->

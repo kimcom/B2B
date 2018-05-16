@@ -12,6 +12,9 @@ class Controller_Main extends Controller {
 	function action_catalog_down() {
 		$this->view->generate('view_catalog_down.php', 'view_template.php');
 	}
+	function action_catalog_new() {
+		$this->view->generate('view_catalog_new.php', 'view_template.php');
+	}
 
 	function action_orders() {
 		$this->view->generate('view_orders.php', 'view_template.php');
@@ -21,7 +24,14 @@ class Controller_Main extends Controller {
 	}
 	
 	function action_price() {
-		$this->view->generate('view_price.php', 'view_template.php');
+		if ($_SESSION['ClientID']<>-1){
+			Fn::redirectToControllerAndAction('engine', '404');
+		}else{
+			$this->view->generate('view_price.php', 'view_template.php');
+		}
+	}
+	function action_api() {
+		$this->view->generate('view_api.php', 'view_template.php');
 	}
 	function action_profile() {
 		$this->view->generate('view_profile.php', 'view_template.php');

@@ -219,12 +219,19 @@ $(document).ready(function () {
 				});
 				$("#div_order_buttons button").click(function(e){
 					id = e.target.id;
-					//console.log(id, e);
+					console.log(id, e);
 					if (id == 'state') {
 						$("#question>#text").html("После отправки в обработку<br>редактировать заказ невозможно!<br><br>Отправить в обработку заказ № " + $('#orderid').val() + "?");
 						$("#question").dialog('option', 'buttons', [{text: "Отправить", click: order_send}, {text: "Отмена", click: function () {$(this).dialog("close");}}]);
 						$("#question").dialog('open');
 					}
+					if (id == 'userstate') {
+						$("#question>#text").html("После передачи заказа<br>клиенту на корректировку<br>Вы не сможете редактировать заказ!<br><br>Передать заказ № " + $('#orderid').val() + " клиенту ?");
+						$("#question").dialog('option', 'buttons', [{text: "Передать", click: order_send2}, {text: "Отмена", click: function () {
+							    $(this).dialog("close");
+							}}]);
+						$("#question").dialog('open');
+					    }
 					if (id == 'print') window.print();
 					if (id == 'export') { $('html').append($('<iframe src="/engine/order_export_csv" style="display:none;"></iframe>')); }
 					if (id == 'delete') {
@@ -240,6 +247,19 @@ $(document).ready(function () {
 	order_send = function (e) {
 		$(this).dialog("close");
 		$.post('/engine/order_edit', {action: 'order_send'}, function (json) {
+			//console.log(json);
+			if (!json.success) {
+				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
+				$("#dialog>#text").html(json.message);
+				$("#dialog").dialog("open");
+			} else {
+				window.location.href = window.location.href;
+			}
+		});
+	}
+	order_send2 = function (e) {
+		$(this).dialog("close");
+		$.post('/engine/order_edit', {action: 'order_send2'}, function (json) {
 			//console.log(json);
 			if (!json.success) {
 				$("#dialog").css('background-color', 'linear-gradient(to bottom, #f7dcdb 0%, #c12e2a 100%)');
@@ -322,7 +342,7 @@ if ($_SESSION['ClientID']!=0) {
 				
 				<div class="input-group input-group- w300">
 						<span class = "input-group-addon w130">Заказ №</span>
-						<span class = "input-group-addon form-control TAC">111111fewwfwf</span>
+						<span class = "input-group-addon form-control TAC"></span>
 						<span class = "input-group-addon w10"></span>
 					</div>
 

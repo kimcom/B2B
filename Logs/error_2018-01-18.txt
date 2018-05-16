@@ -1,0 +1,2 @@
+2018-01-18 21:07: stmt error 42000: 1305 FUNCTION b2b.GET_CAT_NAMES does not exist
+2018-01-18 23:43: stmt error 42000: 1305 FUNCTION b2b.SPLIT_STRING does not exist

@@ -21,7 +21,7 @@ $(document).ready(function () {
 			//console.log(json);
 			if (json.success) {
 				$(el).val(val==0?'':val);
-				$.post('/engine/order_info',{action: 'order_info', orderid: 5}, function (json) {
+				$.post('/engine/order_info',{action: 'order_info'}, function (json) {
 					if (json.success) $("#div_order").html(json.html);
 				});
 			}else{
@@ -56,7 +56,7 @@ $(document).ready(function () {
 					    $(element).attr("autocomplete", "off").typeahead({
 						autoSelect: false, items: '20', minLength: 3, appendTo: "body",
 						source: function (query, proxy) {
-						    $.ajax({url: '/engine/select_search?action=good_article', dataType: "json", data: {name: query}, success: proxy});
+						    $.ajax({url: '/engine/select_search?action=good_article_b2b', dataType: "json", data: {name: query}, success: proxy});
 						}
 					    });
 					}
@@ -68,7 +68,7 @@ $(document).ready(function () {
 						$(element).attr("autocomplete","off").typeahead({ 
 							autoSelect: false, items:'20', minLength:3,	appendTo : "body",
 							source: function(query, proxy) {
-									$.ajax({ url: '/engine/select_search?action=good_name', dataType: "json", data: {name: query}, success : proxy });
+									$.ajax({ url: '/engine/select_search?action=good_name_b2b', dataType: "json", data: {name: query}, success : proxy });
 								}
 							});
 					}
@@ -80,7 +80,7 @@ $(document).ready(function () {
 						$(element).attr("autocomplete","off").typeahead({ 
 							autoSelect: false, items:'20', minLength:3,	appendTo : "body",
 							source: function(query, proxy) {
-									$.ajax({ url: '/engine/select_search?action=brand_name', dataType: "json", data: {name: query}, success : proxy });
+									$.ajax({ url: '/engine/select_search?action=brand_name_b2b', dataType: "json", data: {name: query}, success : proxy });
 								}
 							});
 					}
@@ -170,7 +170,7 @@ $(document).ready(function () {
 //		console.log($(div).find('.popover'));
 	});	
 
-	$.post('/engine/order_info',{action: 'order_info', orderid: 5}, function (json) {
+	$.post('/engine/order_info',{action: 'order_info'}, function (json) {
 		if (json.success) $("#div_order").html(json.html);
 	});
 

@@ -124,7 +124,7 @@ class Cnn {
 			$message = "
 Здравствуйте, " . $fio . "!
 
-Вы можете войти в систему по адресу http://" . $_SERVER['HTTP_HOST'] . "/logon
+Вы можете войти в систему по адресу http://" . $_SERVER['HTTP_HOST'] . "/login
 
 Ваш логин : " . $user . "
 Ваш пароль: " . $pass . "
@@ -583,6 +583,7 @@ Fn::debugToLog("json", json_encode($result));
 	public function tree_NS() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::paramToLog();
+//Fn::debugToLog("SQL", "CALL pr_tree_b2b('category', 'CatID', $nodeid, $n_level, $n_left, $n_right);");
 		$stmt = $this->db->prepare("CALL pr_tree_b2b('category', 'CatID', ?, ?, ?, ?)");
 		$stmt->bindParam(1, $nodeid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $n_level, PDO::PARAM_STR);
@@ -638,12 +639,13 @@ Fn::debugToLog("json", json_encode($result));
 		echo json_encode($response);
 	}
 	public function get_jqgrid3() {
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		foreach ($_REQUEST as $arg => $val) {
 			${$arg} = $val;
 			if ($_SESSION['ViewRemain'] > 0) if (strpos($val,'FreeBalance')!==false) ${$arg} = 'Qty'.$val;
 			if ($_REQUEST['action'] == 'good_downlist_b2b') if (strpos($val,'FreeBalance')!==false) ${$arg} = 'Qty'.$val;
+			if ($_REQUEST['action'] == 'good_newlist_b2b') if (strpos($val,'FreeBalance')!==false) ${$arg} = 'Qty'.$val;
 		}
-//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 //Fn::paramToLog();
 		$url = urldecode($_SERVER['QUERY_STRING']);
 //Fn::debugToLog('QUERY_STRING', $url);
@@ -670,7 +672,10 @@ Fn::debugToLog("json", json_encode($result));
 		$url = str_replace("=>", ">", $url);
 		$url = str_replace("=<", "<", $url);
 		$url = str_replace("=<>", "<>", $url);
-if ($action == 'good_list_b2b' || $action == 'good_downlist_b2b'){
+if ($action == 'good_list_b2b'){
+	$url = str_replace("&group=0", "&new=1", $url);
+}
+if ($action == 'good_list_b2b' || $action == 'good_downlist_b2b' || $action == 'good_newlist_b2b'){
 	if (isset($g_Name)||isset($g_Article)||isset($Brand)||isset($OPT_ID)) 
 		$url = str_replace("&group=$group", "", $url);
 	$url .= '&b2bOrderID='.$_SESSION['CurrentOrderID'].'&b2bClientID='.$_SESSION['ClientID'];
@@ -877,6 +882,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 		if ($info == '') $info = null;
 		if ($clientid == '' || $_SESSION['ClientID']!=-1) $clientid = $_SESSION['ClientID'];
 //Fn::debugToLog('set', $clientid.' '.  $orderid.' '.  $_SESSION['UserID']);
+//Fn::debugToLog('SQL', "call pr_order('$action', @_id, $clientid, $orderid, $goodid, $qty, '$info', $status, $_SESSION[UserID], '$delivery', '$notes', '$invnumber');");
 		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes, :_InvNumber)");
 		$stmt->bindParam(":action",		$action);
 		$stmt->bindParam(":_ClientID",	$clientid);
@@ -901,10 +907,15 @@ Fn::debugToLog('jqgrid3 url', $url);
 				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
 				if ($rowset) {
 					foreach ($rowset as $row) {
+//Fn::debugToLog("row",json_encode($row));
 						$response->success = ($row[0] != 0);
 						$response->message = $row[1];
 						$response->orderid = $row['CurrentOrderID'];
-						if ($row['CurrentOrderID']!=null) $_SESSION['CurrentOrderID'] = $row['CurrentOrderID'];
+						if ($response->success) {
+							if ($row['CurrentOrderID']!=null) {
+								$_SESSION['CurrentOrderID'] = $row['CurrentOrderID'];
+							};
+						}
 						break;
 					}
 				}
@@ -923,9 +934,9 @@ Fn::debugToLog('jqgrid3 url', $url);
 		$response->message = "";
 		$response->html = "";
 		
-//		$_SESSION['CurrentOrderID'] = 5;
 		$action = 'order_info';
 //
+//Fn::debugToLog('SQL', "call pr_order('$action', @_id, $_SESSION[ClientID], $_SESSION[CurrentOrderID], $goodid, $qty, '$info', $status, $_SESSION[UserID], '$delivery', '$notes', '$invnumber');");
 		$stmt = $this->db->prepare("call pr_order(:action, @_id, :_ClientID, :_OrderID, :_GoodID, :_Qty, :_Info, :_Status, :_UserID, :_DeliveryAddress, :_Notes, :_InvNumber)");
 		$stmt->bindParam(":action", $action);
 		$stmt->bindParam(":_ClientID", $_SESSION['ClientID']);
@@ -1042,6 +1053,10 @@ Fn::debugToLog('jqgrid3 url', $url);
 						$str .= '
 								 <input id="orderid" type="hidden" value="' . $row['OrderID'] . '"/>';
 						if (!$view)
+							$btn = '';
+							if($_SESSION['ClientID']==-1) 
+$btn = '<button id="userstate"		type="button" class="btn btn-b2b btn-sm minw150 mb5" title="Передать заказ на корректировку клиенту?"><span class="glyphicon glyphicon-ok mr5"></span>Передать клиенту</button>';
+							//Fn::debugToLog ("btn", $_SESSION['ClientID'].'	'.$btn);
 						$str .= '
 								 <div class="row">
 									<div id="div_order_buttons" class = "col-md-12 col-xs-12 TAL hidden-print">
@@ -1050,6 +1065,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 <button id="export"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-export mr5"></span>Експорт в CSV</button>
 <button id="delete"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-trash mr5"></span>Удалить заказ</button>
 <button id="print"		type="button" class="btn btn-b2b btn-sm minw150 mb5"><span class="glyphicon glyphicon-print mr5"></span>Печать заказа</button>
+'.$btn.'
 <button id="state"		type="button" class="btn btn-b2b btn-sm minw150 mb5" title="Отправить заказ поставщику?"><span class="glyphicon glyphicon-ok mr5"></span>В обработку</button>
 									</div>
 								 </div>';
@@ -1778,6 +1794,158 @@ Fn::debugToLog('jqgrid3 url', $url);
 		header("Pragma: public");
 		header('Content-Length: ' . strlen($str));
 		file_put_contents($path, $str);
+	}
+
+//report setting
+	public function set_report_setting() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_report_setting('set', @id, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $_SESSION['UserID'], PDO::PARAM_STR);
+		$stmt->bindParam(2, $sid, PDO::PARAM_STR);
+		$stmt->bindParam(3, $sname, PDO::PARAM_STR);
+		$stmt->bindParam(4, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$result = false;
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+			if ($rowset) {
+				foreach ($rowset as $row) {
+					$result = $row[0];
+				}
+			}
+		} while ($stmt->nextRowset());
+		echo $result;
+	}
+	public function get_report_setting_list() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_report_setting('get list', @id, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $_SESSION['UserID'], PDO::PARAM_STR);
+		$stmt->bindParam(2, $sid, PDO::PARAM_STR);
+		$stmt->bindParam(3, $sname, PDO::PARAM_STR);
+		$stmt->bindParam(4, $url, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$result = false;
+		//$response = new stdClass();
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+			if ($rowset) {
+				$i = 0;
+				foreach ($rowset as $row) {
+					$response[$i] = array('id' => $row['SettingName'],
+						'text' => $row['SettingName']
+					);
+					$i++;
+				}
+			}
+		} while ($stmt->nextRowset());
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+		return;
+	}
+	public function get_report_setting_byName() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		if (isset($_SESSION['report9_setting']) && $sid == 9) {
+			$response = new stdClass();
+			$response->Setting = $_SESSION['report9_setting'];
+			header("Content-type: application/json;charset=utf-8");
+			echo json_encode($response);
+			//unset($_SESSION['report9_setting']);
+			return;
+		}
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+//		$url = urldecode($_SERVER['QUERY_STRING']);
+		$stmt = $this->db->prepare("CALL pr_report_setting('get by name', @id, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $_SESSION['UserID'], PDO::PARAM_STR);
+		$stmt->bindParam(2, $sid, PDO::PARAM_STR);
+		$stmt->bindParam(3, $sname, PDO::PARAM_STR);
+		$stmt->bindParam(4, $url, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$result = false;
+		$response = new stdClass();
+		do {
+			$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+			if ($rowset) {
+				foreach ($rowset as $row) {
+					//Fn::debugToLog("get by name", explode("&", $row['Setting']));
+					$response->Setting = $row['Setting'];
+					$response->UserID = $_SESSION['UserID'];
+				}
+			}
+		} while ($stmt->nextRowset());
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
+//report5 price-list
+	public function get_report5_data() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		
+Fn::debugToLog('price-list user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_reports('price-list', @id, ?, ?, ?)");
+		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
+		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
+		$stmt->bindParam(3, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		header("Content-type: application/json;charset=utf8");
+		$response = new stdClass();
+		$response->page = 1;
+		$response->total = 1;
+		$response->records = 0;
+		$response->query = "";
+		$response->error = '';
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			$response->error = $stmt->errorInfo();
+		//	Fn::debugToLog("resp", json_encode($response));
+		if ($stmt->rowCount() > 0) {
+			$t = 0;
+			do {
+				$rowset = $stmt->fetchAll();
+				if ($rowset != null) {
+					if ($t == 1) {
+						foreach ($rowset as $row) {
+							//			Fn::debugToLog($t, $row[0]);
+							$response->query = $row[0];
+							$response->records = $row[1];
+						}
+					} else if ($t == 0) {
+						//Fn::debugToLog("columnCount 2", $stmt->columnCount());
+						$columnCount = $stmt->columnCount();
+						$i = 0;
+						foreach ($rowset as $row) {
+							$response->rows[$i]['id'] = $row[0];
+							$ar = array();
+							for ($f = 0; $f < $columnCount; $f++) {
+								$ar[] = $row[$f];
+							}
+//							$ar = array_pad($ar, 8, null);
+//							for ($f = $columnCount - 7; $f < $columnCount; $f++) {
+//								$ar[] = $row[$f];
+//							}
+							//Fn::debugToLog("cell", json_encode($ar));
+							$response->rows[$i]['cell'] = $ar;
+							$i++;
+						}
+					}
+				}
+				$t++;
+			} while ($stmt->nextRowset());
+		}
+		echo json_encode($response);
 	}
 
 }
